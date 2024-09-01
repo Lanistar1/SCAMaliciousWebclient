@@ -7,8 +7,7 @@
 }
 
 body {
-  padding: 20px 20px 60px;
-  max-width: 680px;
+  background-color: #f2f3f7;
 }
 
 @layer utilities {
