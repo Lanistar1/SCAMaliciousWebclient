@@ -1,10 +1,9 @@
 import React from 'react'
-import Signin from './Signin'
-
+import Resetpassword from './Resetpassword'
 const page = () => {
   return (
     <div>
-      <Signin />
+      <Resetpassword />
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react'
-import Signin from './Signin'
+import Changepassword from './Changepassword'
 
 const page = () => {
   return (
     <div>
-      <Signin />
+      <Changepassword />
     </div>
   )
 }
