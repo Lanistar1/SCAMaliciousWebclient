@@ -36,7 +36,7 @@ export default function NotFound() {
           </div>
         </Link>
       </div>
-      <div className="absolute bottom-0 right-0 p-4">
+      <div className="absolute bottom-0 right-0 p-6">
         <Image
           src="/assets/images/logofaint.png" // Replace with your logo path
           width={100}
