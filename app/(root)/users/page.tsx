@@ -1,11 +1,7 @@
 import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      <h2 className="text-red-500">User</h2>
-    </div>
-  );
+  return <div className="p-10 w-full">User Page</div>;
 };
 
 export default page;
