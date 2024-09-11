@@ -1,7 +1,10 @@
-import React from "react";
+import React from 'react'
+import Userpage from './Userpage'
 
 const page = () => {
-  return <div className="p-10 w-full">User Page</div>;
-};
+  return (
+    <Userpage/>
+  )
+}
 
-export default page;
+export default page
