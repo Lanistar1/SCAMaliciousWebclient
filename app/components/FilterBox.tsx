@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+
 
 interface FilterModalProps {
   onClose: () => void;
@@ -97,7 +97,7 @@ export default function FilterModal({ onClose, onFilter }: FilterModalProps) {
         {/* <Button variant="outline" onClick={onClose}>
           Cancel
         </Button> */}
-        <Button onClick={handleFilter} className="w-[280px] h-[60px] bg-[#09192C33] rounded-[5px]">Filter</Button>
+        <button onClick={handleFilter} className="w-[280px] h-[60px] bg-[#09192C33] rounded-[5px]">Filter</button>
       </div>
     </div>
   );
