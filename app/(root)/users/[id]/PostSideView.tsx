@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import RecentPost from './RecentPost'
+import ReadPost from './ReadPost'
 
 
 export interface Props {
@@ -13,15 +14,19 @@ type posttype = {
     date:string;
 }
 
-interface Post {
-    itle:string;
+export interface Post {
+    title:string;
     description:string;
     date:string;
 }
 
 const PostSideView = ({Posts}:Props) => {
     const [isRecent, setIsRecent] =useState(true)
-    const [readPost, setReadPost] = useState<Post>()
+    const [readPost, setReadPost] = useState<Post>({
+        title:"",
+        description:"",
+        date:""
+    })
 
 
     const handleRead = (post:Post) => {
@@ -34,7 +39,9 @@ const PostSideView = ({Posts}:Props) => {
     }
 
   return (
-    <RecentPost Posts={Posts}/>
+    isRecent ?
+    <RecentPost Posts={Posts} handleRead={handleRead}/> :
+    <ReadPost  post={readPost} closeRead={closeRead}/>
   )
 }
 
