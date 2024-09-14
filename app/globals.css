@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .layout-padding {
   @apply px-3 md:px-10 lg:px-16 xl:px-24;
 }

@@ -13,14 +13,21 @@ export interface Filters {
   toDate: string;
 }
 
-export default function FilterModal({ onClose, onFilter }: FilterModalProps) {
+const FilterModal = ({ onClose, onFilter }: FilterModalProps) => {
   const [status, setStatus] = useState<Filters["status"]>("Active");
   const [fromDate, setFromDate] = useState<Filters["fromDate"]>("");
   const [toDate, setToDate] = useState<Filters["toDate"]>("");
 
+
+  const isAllFilled = status&& fromDate && toDate
+
   const handleFilter = () => {
-    onFilter({ status, fromDate, toDate });
-    onClose();
+    if(isAllFilled){
+
+      onFilter({ status, fromDate, toDate });
+      onClose();
+    }
+   
   };
 
   return (
@@ -97,8 +104,10 @@ export default function FilterModal({ onClose, onFilter }: FilterModalProps) {
         {/* <Button variant="outline" onClick={onClose}>
           Cancel
         </Button> */}
-        <button onClick={handleFilter} className="w-[280px] h-[60px] bg-[#09192C33] rounded-[5px]">Filter</button>
+        <button onClick={handleFilter} className={`w-[280px] h-[60px] ${isAllFilled? "bg-[#A52A2A]":"bg-[#09192C33]"} rounded-[5px]`}>Filter</button>
       </div>
     </div>
   );
 }
+
+export default  FilterModal
