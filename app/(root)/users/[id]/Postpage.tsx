@@ -69,7 +69,7 @@ interface Post {
 const page = ({id}: Props) => {
   const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
   const handleFilter = () => {
-    console.log
+
   };
     return (
         <div className="bg-gray-100 min-h-screen  px-12 py-8">

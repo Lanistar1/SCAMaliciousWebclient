@@ -1,11 +1,13 @@
 import React from 'react'
 import Image from "next/image";
 
-const UserHeader = () => {
+
+
+const UserHeader = ({title}:{title:string}) => {
   return (
     <header className="flex justify-between items-center px-12 pt-12">
   
-    <div className="text-[14px] text-center border-b border-[#A52A2A] items-center w-[79px] h-[29px]">Users</div>
+    <div className="text-[14px] text-center border-b border-[#A52A2A] items-center w-[79px] h-[29px]">{title}</div>
 
     
     <div className="flex items-center space-x-4">

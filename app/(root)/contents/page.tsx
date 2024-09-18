@@ -1,10 +1,10 @@
+'use client'
 import React from 'react'
+import ContentPage from './ContentPage'
 
 const page = () => {
   return (
-    <div>
-      Contents
-    </div>
+    <ContentPage/>
   )
 }
 
