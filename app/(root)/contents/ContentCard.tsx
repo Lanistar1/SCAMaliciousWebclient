@@ -1,7 +1,9 @@
 // components/Card.tsx
 import Image from "next/image";
+import Link from "next/link";
 
 interface CardProps {
+    id:number
     name: string;
     role: string;
     date: string;
@@ -11,16 +13,21 @@ interface CardProps {
     onViewDetails: () => void;
   }
   
-  const ContentCard: React.FC<CardProps> = ({ name, role, date, title, keywords,activeTab, onViewDetails }) => {
+  const ContentCard: React.FC<CardProps> = ({ id,name, role, date, title, keywords,activeTab, onViewDetails }) => {
+    let goto
     const getBackgroundColor = (tab : string) => {
         switch (tab) {
           case 'Awaiting Approval':
+            goto = 'awaiting-approval'
             return 'bg-[#DBDDE3] text-[#09192C] '; 
           case 'Approved':
+            goto = "approved"
             return 'bg-[#E9EEE3]  text-[#9CC031]';
           case 'Declined':
+            goto = 'declined'
             return 'bg-[#F3E9E9] text-[#FF8F6B]';
           case 'Revoked':
+            goto = 'revoked'
             return 'bg-[#EADFE2] text-[#A52A2A] ';
           default:
             return 'bg-[#D3D3D3] text-[#9CC031]';
@@ -70,12 +77,12 @@ interface CardProps {
             alt='image'
             width={26} height={2}
             />
-          <button
-            onClick={onViewDetails}
+          <Link href={`/contents/${goto}/${id}`}
+            
             className="text-[#A52A2A] text-xs  hover:text-red-700"
           >
             View Details
-          </button>
+          </Link>
           </div>
         </div>
 
@@ -95,12 +102,12 @@ interface CardProps {
             alt='image'
             width={26} height={2}
             />
-          <button
-            onClick={onViewDetails}
+           <Link href={`/contents/${goto}/${id}`}
+            
             className="text-[#A52A2A] text-xs  hover:text-red-700"
           >
             View Details
-          </button>
+          </Link>
           </div>
         </div>}
       </div>

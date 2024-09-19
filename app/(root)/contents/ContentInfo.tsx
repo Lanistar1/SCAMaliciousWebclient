@@ -101,6 +101,7 @@ const ContentInfo = ({ activeTab }: ContentInfoProps) => {
           {sampleCardData.map((card) => (
             <ContentCard
               key={card.id}
+              id={card.id}
               name={card.name}
               role={card.role}
               date={card.date}
