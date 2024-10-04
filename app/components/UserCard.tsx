@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "next/link";
+import Image from 'next/image';
 
 interface UserCardProps {
     id: number;
@@ -33,7 +34,7 @@ const UserCard = ({ ...user } : UserCardProps) => {
       {/* Action buttons */}
       <div className="text-gray-500">
           <Link href={`/users/${user.id}`}>
-          <img src="/assets/icons/icon-more-horizontal.png" alt="icon-more" className='w-[25px] h-[25px]'/>
+          <Image src={"/assets/icons/icon-more-horizontal.png"} alt="icon-more" width={25} height={25} className='w-[25px] h-[25px]'/>
           </Link>
       </div>
     </div>

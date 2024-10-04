@@ -66,7 +66,7 @@ interface Post {
     id:number
   }
 
-const page = ({id}: Props) => {
+const Page = ({id}: Props) => {
   const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
   const handleFilter = () => {
 
@@ -134,4 +134,4 @@ const page = ({id}: Props) => {
       )
 }
 
-export default page
+export default Page
