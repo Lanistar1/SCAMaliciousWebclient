@@ -1,6 +1,7 @@
 'use client '
 import React, { useEffect, useState } from 'react'
 import ReportInfo from './ReportInfo';
+import Image from 'next/image'
 import { useReports } from '@/app/actions/reactQuery';
 import { useAuthContext } from '@/app/context/AuthContext';
 
@@ -60,7 +61,7 @@ const ReportPage = () => {
           </div>
           <div>
           <button className="flex items-center h-[50px] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
-          <img src="/assets/icons/Group 1000002417.png" alt="Filter Icon" className="w-[18px] h-[12.5px] mr-2" />
+          <Image src="/assets/icons/Group 1000002417.png" alt="Filter Icon" width={18} height={12.5} className="w-[18px] h-[12.5px] mr-2" />
           <span>Filter By</span>
           </button>
             </div>
@@ -71,7 +72,7 @@ const ReportPage = () => {
         {isError && <p>Error loading data</p>}
         {data.length == 0 && <p>No data</p>}
   
-       { data && data.length > 0 ? (<ReportInfo activeTab={activeTab} data={data}/>) :  <p>No reports found for this status.</p>}
+       { data && data.length > 0 ? (<ReportInfo activeTab={query.status} data={data}/>) :  <p>No reports found for this status.</p>}
        {/* { data && data.length > 0 ? (<ReportInfo activeTab={activeTab}/>) :  <p>No reports found for this status.</p>} */}
   
   

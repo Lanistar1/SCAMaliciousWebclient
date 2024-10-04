@@ -16,7 +16,7 @@ const Reporting = ({id}: Props)  => {
    
        <div className='flex flex-col gap-y-4'>
             <div className='flex justify-between border-b '>
-                <div>today's day</div>
+                <div>todays day</div>
                 <div className={`w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}>Approved</div>
             </div>
             <div className='flex gap-3'>
@@ -90,7 +90,7 @@ const Reporting = ({id}: Props)  => {
                 </div>
                 <div className='flex flex-col items-end'>
                     <p>Declined</p>
-                    <p>Today's date is ...</p>
+                    <p>Today date is ...</p>
                 </div>
             </div>}
        </div>

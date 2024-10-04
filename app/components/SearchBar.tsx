@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import React from 'react';
 
 interface ShowFilter {
@@ -24,7 +25,7 @@ const SearchBar = ({onFilter}:ShowFilter) => {
 
 
       <button className="flex items-center h-[50px] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px]" onClick={filter}>
-        <img src="/assets/icons/Group 1000002417.png" alt="Filter Icon" className="w-[18px] h-[12.5px] mr-2" />
+        <Image src="/assets/icons/Group 1000002417.png" alt="Filter Icon" height={12.5} width={18} className="w-[18px] h-[12.5px] mr-2" />
         <span>Filter By</span>
       </button>
     </div>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { z } from "zod";
 import { useResetPassword } from "@/app/actions/reactQuery";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const resetSchema = z.object({
   code:z.number(),
