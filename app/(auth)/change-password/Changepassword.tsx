@@ -1,7 +1,63 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import Image from "next/image";
+import { z } from "zod";
+import { useChangePassword } from "@/app/actions/reactQuery";
+import { useAuthContext } from "@/app/context/AuthContext";
+import { toast } from "react-toastify";
+
+const changePasswordSchema = z.object({
+  oldPassword: z.string().min(6, "Password must be at least 6 characters"),
+  newPassword: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
+});
+
 
 const Changepassword = () => {
+
+  const [formData,setFormData] = useState({
+    oldPassword:"",
+    newPassword:"",
+    confirmPassword:""
+  })
+
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
+  const {mutateAsync:changePassword,isPending:isChangingPassword} = useChangePassword()
+  const {token,logout} = useAuthContext()
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)  =>{
+    const {name,value}= e.target
+    setFormData((prev)=>({
+      ...prev,
+      [name]:value
+    }))
+  }
+
+  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const result = changePasswordSchema.safeParse(formData)
+    if (!result.success) {
+      const formattedErrors = result.error.flatten().fieldErrors;
+      setFormErrors(formattedErrors); 
+      return;
+    }
+
+    setFormErrors({})
+
+    try {
+    // Attempt to change the password
+    await changePassword({ oldPassword: formData.oldPassword, newPassword: formData.newPassword, token });
+    // If successful, logout the user
+    logout();
+  } catch (error) {
+    
+  }
+
+   
+  }
+
+
+
   return (
     <div className="min-h-screen flex">
       {/* Left Section */}
@@ -25,31 +81,43 @@ const Changepassword = () => {
             Kindly keep your password safe
           </p>
 
-          <form className="mt-2">
+          <form onSubmit={handleSubmit} className="mt-2">
             <div>
               <label className="block text-[#384554]">Current Password</label>
               <input
                 type="password"
+                name="old password"
+                value={formData.oldPassword}
+                onChange={handleInputChange}
                 placeholder="Current Password"
                 className="w-full p-3 mb-3 rounded-md focus:outline-none focus:border-gray-400 mt-1"
               />
             </div>
+            {formErrors.oldPassword &&<span className="text-red-500 text-sm">{formErrors.oldPassword[0]}</span> }
             <div>
               <label className="block text-[#384554]">New Password</label>
               <input
                 type="password"
+                name="new password"
+                value={formData.newPassword}
+                onChange={handleInputChange}
                 placeholder="New Password"
                 className="w-full p-3 mb-3 rounded-md focus:outline-none focus:border-gray-400 mt-1"
               />
             </div>
+            {formErrors.newPassword &&<span className="text-red-500 text-sm">{formErrors.newPassword[0]}</span> }
             <div>
               <label className="block text-[#384554]">Confirm Password</label>
               <input
                 type="password"
+                name="confirm password"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
                 placeholder="Confirm Password"
                 className="w-full p-3 mb-6 rounded-md focus:outline-none focus:border-gray-400 mt-1"
               />
             </div>
+            {formErrors.confirmPassword &&<span className="text-red-500 text-sm">{formErrors.confirmPassword[0]}</span> }
             <button className="w-full p-3 bg-[#A52A2A] text-white rounded-md mt-3">
               Change Password
             </button>

@@ -9,10 +9,10 @@ interface Props {
   const keywords = ['hate', 'joy','love', 'kiss']
 
 
-const ApprovalCard = ({id}: Props)  => {
+const Reporting = ({id}: Props)  => {
     const showButton = false
   return (
-    <section className={`flex flex-col justify-between bg-white ${showButton? "h-[128%]" :"h-[95%] "} w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8  `}>
+    <section className={`flex flex-col justify-between bg-white ${showButton? "h-[128%]" :"h-[95%] "} w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8 `}>
    
        <div className='flex flex-col gap-y-4'>
             <div className='flex justify-between border-b '>
@@ -105,4 +105,4 @@ const ApprovalCard = ({id}: Props)  => {
   )
 }
 
-export default ApprovalCard
+export default Reporting
