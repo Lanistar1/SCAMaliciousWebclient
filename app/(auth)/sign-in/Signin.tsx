@@ -67,7 +67,7 @@ const Signin = () => {
             </div>
           </div>
 
-          <Link href="/">
+          <Link href="/forgot-password">
             <div className="flex justify-end items-center mb-3 mt-1">
               <p className="text-sm font-medium text-[#384554]">
                 Forgot Password?
