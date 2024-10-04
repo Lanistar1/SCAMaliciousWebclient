@@ -76,7 +76,7 @@ interface CardProps {
             alt='image'
             width={26} height={2}
             />
-          <Link href={`/report/${activeTab}/${id}`}
+          <Link href={`/reports/${activeTab}/${id}`}
             
             className="text-[#A52A2A] text-xs  hover:text-red-700"
           >

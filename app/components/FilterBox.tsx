@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import { useState } from "react";
 
 
@@ -34,7 +35,7 @@ const FilterModal = ({ onClose, onFilter }: FilterModalProps) => {
     <div className="flex flex-col bg-white shadow-lg p-6 w-[340px] h-[437px] rounded-[10px] gap-4">
       
       <div className="flex flex-row justify-start items-center"> 
-        <img src="/assets/icons/Group 1000002417.png" alt="Filter Icon" className="w-[18px] h-[12.5px] mr-2" />
+        <Image src="/assets/icons/Group 1000002417.png" alt="Filter Icon" width={18} height={12.5} className="w-[18px] h-[12.5px] mr-2" />
         <h2 className="font-[20px] text-[#09192CCC]  ">Filter By</h2>
       </div>
      

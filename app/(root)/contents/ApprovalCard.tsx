@@ -10,13 +10,13 @@ interface Props {
 
 
 const ApprovalCard = ({id}: Props)  => {
-    const showButton = false
+    const showButton = !false
   return (
     <section className={`flex flex-col justify-between bg-white ${showButton? "h-[128%]" :"h-[95%] "} w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8  `}>
    
        <div className='flex flex-col gap-y-4'>
             <div className='flex justify-between border-b '>
-                <div>today's day</div>
+                <div>todays day</div>
                 <div className={`w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}>Approved</div>
             </div>
             <div className='flex gap-3'>
@@ -90,7 +90,7 @@ const ApprovalCard = ({id}: Props)  => {
                 </div>
                 <div className='flex flex-col items-end'>
                     <p>Declined</p>
-                    <p>Today's date is ...</p>
+                    <p>Todays date is ...</p>
                 </div>
             </div>}
        </div>

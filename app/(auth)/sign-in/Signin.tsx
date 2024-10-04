@@ -154,7 +154,7 @@ const Signin = () => {
           </button>
           <div className="flex justify-center items-center mb-3 mt-2">
             <p className="text-sm font-normal text-[#384554]">
-              Don't have an account?
+              Do not have an account?
             </p>
             <Link href="/sign-up">
               <p className="text-sm font-medium text-[#A52A2A] ml-1">Sign Up</p>
