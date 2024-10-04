@@ -6,6 +6,7 @@ const menuItems = [
   { name: "Dashboard", icon: "/assets/icons/Dashboard.png", link: "/" },
   { name: "Users", icon: "/assets/icons/user.png", link: "/users" },
   { name: "Contents", icon: "/assets/icons/contents.png", link: "/contents" },
+  { name: "Reports", icon: "/assets/icons/contents.png", link: "/reports" },
   { name: "Messages", icon: "/assets/icons/messages.png", link: "/messages" },
   { name: "Settings", icon: "/assets/icons/settings.png", link: "/settings" },
   { name: "Profile", icon: "/assets/icons/profileicon.png", link: "/profile" },

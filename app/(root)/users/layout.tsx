@@ -8,7 +8,7 @@ export default function RootLayout({
   }>) {
     return (
         <main className="relative flex flex-col h-screen w-screen">
-        <UserHeader/>
+        <UserHeader title={'User'}/>
         {children}
         <div className="absolute bottom-0 right-0 p-4">
           <Image src="/assets/images/logofaint.png" alt="image"  width={84} height={92} className=" -z-10" />
