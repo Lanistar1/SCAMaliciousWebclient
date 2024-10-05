@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { signIn, signUp,resetPassword, forgotPassword, changePassword, fetchReports } from "./api";
-import { changePass, createUser, loggedInUser, login, Query_Keys, reportQuery, resetPass } from "./type";
+import { useMutation, useQuery,useQueryClient } from "@tanstack/react-query";
+import { signIn, signUp,resetPassword, forgotPassword, changePassword, fetchReports, fetchReportsById, declineReport, removeReport, restoreReport } from "./api";
+import { changePass, createUser, Declinetype, loggedInUser, login, Query_Keys, reportQuery, resetPass } from "./type";
 import { toast } from "react-toastify";
 
 
@@ -113,6 +113,72 @@ export const useReports = (query: reportQuery) => {
     queryFn: () => fetchReports(query),
   });
 };
+
+
+export const useReportId = (id:string, token:string) =>{
+    return useQuery({
+        queryKey: [Query_Keys.REPORTS_ID, id],
+        queryFn: () => fetchReportsById(id,token),
+    })
+}
+
+
+export const useReportDecline = () =>{
+  const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ( data: Declinetype) => declineReport(data),
+        onSuccess: () => {
+          toast.success(`Report Declined`);
+          queryClient.invalidateQueries({
+            queryKey: [Query_Keys.REPORTS_ID],  
+          });
+        },
+        onError: (error) => {
+          // Show error toast notification
+         return toast.error(`Error occurred: ${error.message}`);
+    
+        },
+    })
+}
+
+
+
+export const useReportRemove = ()=>{
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, token }: { id: string; token: string }) => removeReport(id, token),
+    onSuccess: () => {
+      toast.success(`Report Removed`);
+      queryClient.invalidateQueries({
+        queryKey: [Query_Keys.REPORTS_ID],  
+      });
+    },
+    onError: (error) => {
+      // Show error toast notification
+     return toast.error(`Error occurred: ${error.message}`);
+  
+    },
+    })
+}
+
+
+export const useReportRestore = ()=>{
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: Declinetype ) => restoreReport(data),
+    onSuccess: () => {
+      toast.success(`Report Restored`);
+      queryClient.invalidateQueries({
+        queryKey: [Query_Keys.REPORTS_ID],  
+      });
+    },
+    onError: (error) => {
+      // Show error toast notification
+     return toast.error(`Error occurred: ${error.message}`);
+  
+    },
+    })
+}
 
 
 

@@ -1,11 +1,11 @@
-import PendingPage from "./PendingPage"
+import RemovePage from "./RemovePage"
 
 interface Props {
     params : {id:string}
   }
   const page = ({params:{id}}:Props) => {
     return (
-      <PendingPage id={id}/>
+      <RemovePage id={id}/>
     )
   }
   

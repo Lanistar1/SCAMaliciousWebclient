@@ -1,11 +1,11 @@
-import PendingPage from "./PendingPage"
+import ActivePage from "./ActivePage"
 
 interface Props {
     params : {id:string}
   }
   const page = ({params:{id}}:Props) => {
     return (
-      <PendingPage id={id}/>
+      <ActivePage id={id}/>
     )
   }
   
