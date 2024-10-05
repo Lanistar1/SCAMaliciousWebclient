@@ -62,11 +62,18 @@ export enum Query_Keys {
     REPORTS = 'reports',
     ACTIVE_REPORT = 'active-report',
     REMOVED_REPORTS = 'removed-reports',
+    REPORTS_ID = 'id'
 }
 
 
+interface ExperienceDetails {
+    _id: string;
+    message: string;
+    title: string;
+  }
 
-interface Report {
+
+export interface Report {
     _id: string;
     email: string;
     reasonReportedTitle: string;
@@ -83,11 +90,15 @@ interface Report {
     createdAt: string;
     updatedAt: string;
     __v: number;
-    keywordCount: number;
+    keywordCount?: number;
+    unwantedKeywords?: string[];
   }
   
-  interface ExperienceDetails {
-    _id: string;
-    message: string;
-    title: string;
+
+  export type Declinetype = {
+    id:string;
+    reason:string;
+    description:string;
+    token:string
   }
+ 

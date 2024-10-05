@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
@@ -25,16 +25,14 @@ const Signin = () => {
   const {login,isAuthenticated } = useAuthContext()
   const router = useRouter();
 
-  useEffect(() => {
-    // If the user is already authenticated, redirect them to the homepage
-    if (isAuthenticated) {
-      router.push("/"); // Redirect to the homepage or any other route
-    }
-  }, [isAuthenticated, router]);
 
-  if (isAuthenticated) {
-    return null;
-  }
+
+  
+ // If the user is already authenticated, redirect them to the homepage immediately
+ if (isAuthenticated) {
+  router.push("/");
+  return null;  // Prevent the Signin component from rendering
+}
 
 
 

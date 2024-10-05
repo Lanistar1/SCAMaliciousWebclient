@@ -1,48 +1,92 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useReportId } from '@/app/actions/reactQuery'
+import { Report } from '@/app/actions/type'
+import { useAuthContext } from '@/app/context/AuthContext'
 
 interface Props {
-    id:number
+    id:string
+    openModal: (action:string)=>void
   }
 
-  const keywords = ['hate', 'joy','love', 'kiss']
 
 
-const Reporting = ({id}: Props)  => {
-    const showButton = false
+const Reporting = ({id, openModal}: Props)  => {
+
+
+    const {token}=useAuthContext()
+    const { data: content, isLoading, isError } = useReportId(id,token); 
+    const [reportData, setReportData] = useState<Report | null>(null); 
+    let showButton = false;
+    let restore = false
+    let decline = false
+
+
+
+  useEffect(() => {
+    // When content is fetched successfully, update the local state
+    if (content && !isLoading && !isError) {
+        const {data} =content
+      setReportData(data as Report);
+   
+    }
+  }, [content, isLoading, isError]);
+
+
+
+  if(reportData && reportData.status === 'Pending'){
+            showButton = true
+    }
+    
+    if(reportData && reportData.status === 'Removed'){
+        restore = true
+    }
+
+    if(reportData && reportData.status === 'Declined'){
+        decline = true
+    }
+  // Show loading or error states
+  if (isLoading) {
+    return <div>Loading...</div>; // Add your custom loading indicator here
+  }
+
+  if (isError || !reportData) {
+    return <div>Error loading report data. Please try again later.</div>; // Handle error states
+  }
   return (
     <section className={`flex flex-col justify-between bg-white ${showButton? "h-[128%]" :"h-[95%] "} w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8 `}>
    
        <div className='flex flex-col gap-y-4'>
             <div className='flex justify-between border-b '>
                 <div>todays day</div>
-                <div className={`w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}>Approved</div>
+                <div className={`w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}>{reportData.status}</div>
             </div>
             <div className='flex gap-3'>
-                <div className='flex h-[50px] w-[50px] bg-[#A52A2A] rounded-full justify-center items-center font-bold'>CW</div>
+                <div className='flex h-[50px] w-[50px] bg-[#A52A2A] rounded-full justify-center items-center font-bold'>{reportData.firstname[0]}{reportData.lastname[0]}</div>
                 <div className='flex flex-col'>
-                    <h1>Cameron Williamson</h1>
-                    <p className='text-xs text-gray-500'>Content Creator</p>
+                    <h1>{reportData.firstname} {reportData.lastname}</h1>
+                    <p className='text-xs text-gray-500'>{reportData.email}</p>
                 </div>
             </div>
 
             <div className='text-2xl text-[#09192CCC]'>
-                I was scammed in Bahamas
+               {reportData.experienceDetails.title}
             </div>
 
             <div className='flex flex-col border-b gap-y-2 pb-4'>
-                <p>Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.
+                <p>{reportData.experienceDetails.message}
                 </p>
 
-               {showButton && <div className=" flex justify-start gap-4">
+              <div className=" flex justify-start gap-4">
                     <div className="flex items-center gap-2">
                         <Image
                         src= {'/assets/icons/Frame 15.png'}
                         alt='image'
                         width={26} height={2}
                         />
-                        <p className="text-gray-500 text-xs">Reports</p>
+                        <p className="text-[#A52A2A] text-xs  hover:text-red-700">View</p>
                     </div>
                     <div className="flex items-center gap-2">
                         <Image
@@ -54,10 +98,10 @@ const Reporting = ({id}: Props)  => {
                             
                             className="text-[#A52A2A] text-xs  hover:text-red-700"
                             >
-                            View Details
+                            Reports
                         </Link>
                     </div>
-                </div>}
+                </div>
             </div>
 
             <div className='flex flex-col border-b pb-4'>
@@ -65,15 +109,15 @@ const Reporting = ({id}: Props)  => {
                 Flagged Keywords
                 </div>
                 <div className='text-xl text-[#A52A2A]'>
-                8 Flagged Keywords
+                {reportData.keywordCount} Flagged Keywords
                 </div>
                 <div className='flex gap-3 mt-2'>
-                    {keywords.map((keyword, index)=>{
+                    {reportData.unwantedKeywords && reportData.unwantedKeywords.map((keyword, index)=>{
                         return <div key={index} className='bg-[#F3F4F4] text-[#09192C] px-6 py-1'>{keyword}</div>
                     })}
                 </div>
             </div>
-          { !showButton && <div className='flex flex-col  gap-y-4'>
+          { decline && <div className='flex flex-col  gap-y-4'>
                     <div className='flex gap-3'>
                         <div className='flex h-[50px] w-[50px] bg-[#A52A2A] rounded-full justify-center items-center font-bold'>CW</div>
                         <div className='flex flex-col'>
@@ -95,9 +139,12 @@ const Reporting = ({id}: Props)  => {
             </div>}
        </div>
         {showButton && <div className='flex justify-center gap-4'>
-            <button className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#F3F4F4] text-[09192C]'>Decline</button>
-            <button className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#A52A2A] text-white'>Approved</button>
+            <button onClick={()=>openModal('Decline')} className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#F3F4F4] text-[09192C]'>Decline</button>
+            <button onClick={()=>openModal('Remove')} className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#A52A2A] text-white'>Remove Post</button>
 
+        </div>}
+        {restore && <div className='flex justify-center gap-4'>
+            <button onClick={()=>openModal('Restore')} className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#A52A2A] text-white'>Restore</button>
         </div>}
 
   
