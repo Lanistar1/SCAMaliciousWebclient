@@ -1,6 +1,8 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuthContext } from "../context/AuthContext";
 
 const menuItems = [
   { name: "Dashboard", icon: "/assets/icons/Dashboard.png", link: "/" },
@@ -19,9 +21,11 @@ const alertItems = [
     link: "/notifications",
   },
   { name: "Contact Us", icon: "/assets/icons/contact.png", link: "/contact" },
+  // { name: "Logout", icon: "/assets/icons/logout.png", link: "/logout" },
 ];
 
 export default function SideNav() {
+  const { logout } = useAuthContext()
   return (
     <div className="h-screen flex flex-col justify-between bg-white shadow-none w-[13%]">
       <div className="flex flex-col pt-10">
@@ -63,6 +67,19 @@ export default function SideNav() {
             <span className="ml-4 text-[#89919A] text-sm font-normal">{name}</span>
           </Link>
         ))}
+
+        <div
+          onClick={logout}
+          className="flex items-center py-2 mt-4 cursor-pointer hover:bg-gray-100"
+        >
+          <Image
+            src="/assets/icons/contact.png" 
+            alt="Logout"
+            width={24}
+            height={24}
+          />
+          <span className="ml-4 text-[#89919A] text-sm font-normal">Logout</span>
+        </div>
       </div>
 
       {/* <div className="flex items-center justify-center mb-10">

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { createUser, loggedInUser, login,resetPass,changePass, reportQuery } from "./type"
+import { createUser, loggedInUser, login,resetPass,changePass, reportQuery, Declinetype } from "./type"
 
 // sign up
 
@@ -51,3 +51,50 @@ export const fetchReports = async (queryKey : reportQuery) => {
       
         return response.data;
 };
+
+
+export const fetchReportsById = async (id:string,token:string)=>{
+        const response = await axios.get(`${apiUrl}/experience/admin/report/${id}`,
+                {                
+                        headers: {
+                          Authorization:token, 
+                        },
+                      }
+        )
+        return response.data
+}
+
+export const declineReport = async (decline :Declinetype)=>{
+        const response = await axios.post(`${apiUrl}/experience/admin/report/decline/${decline.id}`,{adminReasonDeclineTitle:decline.reason,adminReasonDeclineDescription:decline.description},
+                {
+                        headers: {
+                          Authorization:decline.token, 
+                        },
+                      }
+        )
+        return response.data
+}
+
+
+export const removeReport = async (id:string,token:string)=>{
+        const response = await axios.post(`${apiUrl}/experience/admin/report/remove/${id}`,
+        {
+                headers: {
+                  Authorization:token, 
+                },
+              }
+        )
+        return response.data
+}
+
+
+export const restoreReport = async (decline :Declinetype)=>{
+        const response = await axios.post(`${apiUrl}/experience/admin/report/restore/${decline.id}`,{adminReasonDeclineTitle:decline.reason,adminReasonDeclineDescription:decline.description},
+                {
+                        headers: {
+                          Authorization:decline.token, 
+                        },
+                      }
+        )
+        return response.data
+}

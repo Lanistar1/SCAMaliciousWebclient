@@ -8,7 +8,7 @@ import ReportBox from "../../ReportBox";
 interface Props {
     id:string
   }
-  const PendingPage= ({id}:Props) => {
+  const ActivePage= ({id}:Props) => {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [action,setAction]= useState<string>('')
 
@@ -34,4 +34,4 @@ interface Props {
     )
   }
 
-export default PendingPage
+export default ActivePage

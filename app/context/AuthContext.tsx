@@ -1,35 +1,42 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import {jwtDecode} from 'jwt-decode';
 import { User } from '../actions/type';
 
-
-export const  INITIAL_USER = {
+// Define the initial user object
+export const INITIAL_USER = {
   memeberId: "",
-  username:"",
-  email:"",
-  isVerified:"",
-  role:"",
-  firstname:"",
-  lastname:"",    
-  profileImgeUrl:""
-}
+  username: "",
+  email: "",
+  isVerified: "",
+  role: "",
+  firstname: "",
+  lastname: "",
+  profileImgeUrl: ""
+};
 
-const INITIAL_STATE ={
-  user:INITIAL_USER,
-  token:"",
-  isAuthenticated:false,
-  login:()=>{},
-  logout:()=>{}
-}
+// Define the initial state for the context
+const INITIAL_STATE = {
+  user: INITIAL_USER,
+  token: "",
+  isAuthenticated: false,
+  login: () => {},
+  logout: () => {}
+};
 
 // Define the type for the context state
 interface AuthContextType {
-  user: User ;
-  token: string ;
+  user: User;
+  token: string;
   isAuthenticated: boolean;
-  login: (userData: any, token: string) => void;
+  login: (userData: User, token: string) => void;
   logout: () => void;
+}
+
+interface JWTPayload {
+  exp: number;  
+  [key: string]: any;  
 }
 
 // Create the AuthContext with a default value of null
@@ -42,18 +49,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
+  // Decode the JWT and check if it has expired
+  const isTokenExpired = (authToken: string) => {
+    try {
+      const decodedToken: JWTPayload = jwtDecode(authToken);
+      if (decodedToken.exp) {
+        const currentTime = Date.now() / 1000;  // Convert to seconds
+        return decodedToken.exp < currentTime;  // Compare expiration time
+      }
+      return false;
+    } catch (error) {
+      console.error("Invalid token format", error);
+      return true; // Consider the token expired in case of an error
+    }
+  };
+
   // Load token and user data from local storage (if present)
   useEffect(() => {
-    console.log('everytime you change route')
+    console.log('Checking token validity on route change or component mount...');
     const storedToken = localStorage.getItem('authToken');
     const storedUser = localStorage.getItem('user');
+    
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
-    else {
-      router.push('/sign-in'); // Automatically redirect to login page
+      if (isTokenExpired(storedToken)) {
+        // If token is expired, logout the user
+        logout();
+      } else {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser));
+        setIsAuthenticated(true);
+      }
+    } else {
+      router.push('/sign-in'); // Automatically redirect to login page if no token
     }
   }, [router]);
 
@@ -62,9 +89,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(userData);
     setToken(authToken);
     setIsAuthenticated(true);
+
+    // Store the user and token in local storage
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("authToken", authToken);
-    router.push('/'); 
+
+    router.push('/');
   };
 
   // Function to log out the user
@@ -90,5 +120,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 // Custom hook to use AuthContext
-export const useAuthContext = ()=> useContext(AuthContext);
-  
+export const useAuthContext = () => useContext(AuthContext);
