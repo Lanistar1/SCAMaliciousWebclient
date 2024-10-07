@@ -1,6 +1,6 @@
 import { useMutation, useQuery,useQueryClient } from "@tanstack/react-query";
-import { signIn, signUp,resetPassword, forgotPassword, changePassword, fetchReports, fetchReportsById, declineReport, removeReport, restoreReport } from "./api";
-import { changePass, createUser, Declinetype, loggedInUser, login, Query_Keys, reportQuery, resetPass } from "./type";
+import { signIn, signUp,resetPassword, forgotPassword, changePassword, fetchReports, fetchReportsById, declineReport, removeReport, restoreReport, fetchUser } from "./api";
+import { changePass, createUser, Declinetype, loggedInUser, login, Query_Keys, reportQuery, resetPass, userProfile } from "./type";
 import { toast } from "react-toastify";
 
 
@@ -180,5 +180,12 @@ export const useReportRestore = ()=>{
     })
 }
 
-
+// Fetch user details
+export const useUser = (token: string) => {
+  return useQuery<userProfile>({
+    queryKey: ['user'],
+    queryFn: () => fetchUser(token),
+    enabled: !!token,  // only run if token exists
+  });
+};
 
