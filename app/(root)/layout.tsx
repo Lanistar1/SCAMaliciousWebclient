@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex h-screen w-screen">
+    <main className="relative flex h-screen w-screen">
       <SideNav />
       {children}
     </main>

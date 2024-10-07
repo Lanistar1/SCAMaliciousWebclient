@@ -101,4 +101,19 @@ export interface Report {
     description:string;
     token:string
   }
+
+  export interface userProfile {
+    firstname: string;
+    lastname: string;
+    _id: string;
+    email: string;
+    username: string;
+    role: string;
+    firstName: string;
+    lastName: string;
+    isVerified: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }
  

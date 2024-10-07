@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Import usePathname for current path
 import { useAuthContext } from "../context/AuthContext";
 
 const menuItems = [
@@ -21,11 +22,12 @@ const alertItems = [
     link: "/notifications",
   },
   { name: "Contact Us", icon: "/assets/icons/contact.png", link: "/contact" },
-  // { name: "Logout", icon: "/assets/icons/logout.png", link: "/logout" },
 ];
 
 export default function SideNav() {
-  const { logout } = useAuthContext()
+  const { logout } = useAuthContext();
+  const pathname = usePathname(); // Get the current route
+  
   return (
     <div className="h-screen flex flex-col justify-between bg-white shadow-none w-[13%]">
       <div className="flex flex-col pt-10">
@@ -44,10 +46,14 @@ export default function SideNav() {
             <Link
               href={link}
               key={name}
-              className="flex items-center px-4 py-2 hover:bg-gray-100"
+              className={`flex items-center px-4 py-2 hover:bg-gray-100 
+              ${pathname === link ? 'border-l-4 border-[#A52A2A] bg-gray-100' : ''}`}
+              // Adds thick left border if current path matches link
             >
               <Image src={icon} alt={name} width={24} height={24} />
-              <span className="ml-4 text-[#89919A] text-sm font-normal">{name}</span>
+              <span className="ml-4 text-[#89919A] text-sm font-normal">
+                {name}
+              </span>
             </Link>
           ))}
         </div>
@@ -61,10 +67,14 @@ export default function SideNav() {
           <Link
             href={link}
             key={name}
-            className="flex items-center py-2 mt-2 hover:bg-gray-100"
+            className={`flex items-center py-2 mt-2 hover:bg-gray-100 
+            ${pathname === link ? 'border-l-4 border-blue-500 bg-gray-100' : ''}`}
+            // Adds thick left border if current path matches link
           >
             <Image src={icon} alt={name} width={24} height={24} />
-            <span className="ml-4 text-[#89919A] text-sm font-normal">{name}</span>
+            <span className="ml-4 text-[#89919A] text-sm font-normal">
+              {name}
+            </span>
           </Link>
         ))}
 
@@ -73,26 +83,14 @@ export default function SideNav() {
           className="flex items-center py-2 mt-4 cursor-pointer hover:bg-gray-100"
         >
           <Image
-            src="/assets/icons/contact.png" 
+            src="/assets/icons/logout.png" 
             alt="Logout"
-            width={24}
-            height={24}
+            width={21}
+            height={21}
           />
           <span className="ml-4 text-[#89919A] text-sm font-normal">Logout</span>
         </div>
       </div>
-
-      {/* <div className="flex items-center justify-center mb-10">
-        <div className="flex items-center space-x-2">
-          <Image
-            src="/assets/icons/notificaionicon.png" // Replace with your icon path
-            width={24}
-            height={24}
-            alt="Notification"
-          />
-          <span className="text-gray-700">9</span>
-        </div>
-      </div> */}
     </div>
   );
 }

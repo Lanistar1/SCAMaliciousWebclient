@@ -1,6 +1,37 @@
+'use client';
+import React, { useEffect, useState } from 'react';
 import Image from "next/image";
+import { useUser } from '@/app/actions/reactQuery';
+import { useAuthContext } from '@/app/context/AuthContext';
+
 
 export default function ProfilePage() {
+  const { token } = useAuthContext();
+  const [query, setQuery] = useState({
+    status: 'Pending',
+    token: '',
+  });
+  useEffect(() => {
+    if (token) {
+      setQuery((prevQuery) => ({
+        ...prevQuery,
+        token: token,
+      }));
+    }
+  }, [token]);
+
+  const { data: user, isLoading, isError } = useUser(token);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading user data.</div>;
+
+  // format dateTime to date string
+  const formattedDate = new Date(user?.createdAt || '').toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 pl-64">
       {/* Profile Card */}
@@ -44,8 +75,8 @@ export default function ProfilePage() {
           </div>
 
           {/* User Name and Joined Date */}
-          <h2 className="text-2xl font-semibold mt-6">Drake Regal</h2>
-          <p className="text-sm text-gray-500">Joined: 12th Dec, 2021</p>
+          <h2 className="text-2xl font-semibold mt-6">{user?.firstname} {user?.lastname}</h2>
+          <p className="text-sm text-gray-500">Joined: {formattedDate}</p>
 
           {/* Change Password */}
           <div className="mt-6">
@@ -76,7 +107,7 @@ export default function ProfilePage() {
             </label>
             <input
               type="text"
-              value="Timothy"
+              value={user?.firstname}
               disabled
               className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-lg"
             />
@@ -89,7 +120,7 @@ export default function ProfilePage() {
             </label>
             <input
               type="text"
-              value="Folalu"
+              value={user?.lastname}
               disabled
               className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-lg"
             />
@@ -102,7 +133,7 @@ export default function ProfilePage() {
             </label>
             <input
               type="email"
-              value="tomiczilla@gmail.com"
+              value={user?.email}
               disabled
               className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-lg"
             />
