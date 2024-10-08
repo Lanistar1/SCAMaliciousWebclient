@@ -27,8 +27,8 @@ const ContentPage = () => {
           ))}
         </div>
         <div>
-        <button className="flex items-center h-[50px] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
-        <Image src={"/assets/icons/Group 1000002417.png"} alt="Filter Icon" width={18} height={12.5} className="w-[18px] h-[12.5px] mr-2" />
+        <button className="flex items-center h-[40] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
+        <Image src={"/assets/icons/Group 1000002417.png"} alt="Filter Icon" width={15} height={10.5} className="w-[18px] h-[10.5px] mr-2" />
         <span>Filter By</span>
         </button>
           </div>

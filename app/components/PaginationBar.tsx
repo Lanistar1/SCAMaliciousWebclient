@@ -53,9 +53,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="flex justify-center items-center rounded-[5px] bg-white w-[49px] h-[46px]"
+          className="flex justify-center items-center rounded-[5px] bg-white w-[40px] h-[36px]"
         >
-          <Image src={'/assets/icons/icon-arrow-left.png'} alt='arrow-left' width={24} height={24} />
+          <Image src={'/assets/icons/icon-arrow-left.png'} alt='arrow-left' width={18} height={18} />
         </button>
 
         {pageNumbers.map((number, index) => (
@@ -63,7 +63,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
             <button
               key={index}
               onClick={() => onPageChange(number)}
-              className={`px-3 py-1 rounded-md ${
+              className={`px-3 py-1 rounded-md text-[15px] ${
                 currentPage === number
                   ? 'bg-[#A52A2A] text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -79,9 +79,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="flex justify-center items-center rounded-[5px] bg-[#A52A2A] w-[49px] h-[46px] disabled:opacity-50"
+          className="flex justify-center items-center rounded-[5px] bg-[#A52A2A] w-[40px] h-[36px] disabled:opacity-50"
         >
-          <Image src={'/assets/icons/icon-plus.png'} alt='arrow-right' width={24} height={24} />
+          <Image src={'/assets/icons/icon-plus.png'} alt='arrow-right' width={18} height={18} />
         </button>
       </div>
     </section>

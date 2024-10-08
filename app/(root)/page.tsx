@@ -1,7 +1,10 @@
 import React from "react";
+import DashboardPage from "./dashboard/DashboardPage";
 
 const Homepage = () => {
-  return <div className="p-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe distinctio minus similique molestias nisi ut eius voluptas harum sit vel omnis, obcaecati, molestiae nemo, sunt ullam excepturi dignissimos officia eum! hfhhfjhfjkhfgjjksd ifuhifguyufgiydgfudygudgfdsugt</div>;
+  return (
+    <DashboardPage />
+  )
 };
 
 export default Homepage;

@@ -45,12 +45,12 @@ export default function ProfilePage() {
 
           {/* Profile Image */}
           <div className="relative mb-6">
-            <div className="w-40 h-40 mx-auto rounded-full border-4 border-gray-200 overflow-hidden">
+            <div className=" mx-auto  overflow-hidden">
               <Image
                 src="/assets/images/profile2.png"
                 alt="SCAMalicious Logo"
-                width={200}
-                height={200}
+                width={150}
+                height={150}
               />
             </div>
           </div>
@@ -102,40 +102,40 @@ export default function ProfilePage() {
         <div className="w-2/3 pl-12">
           {/* First Name */}
           <div className="mb-6">
-            <label className="block text-base font-medium text-gray-700">
+            <label className="block text-[12px] font-medium text-gray-700">
               First Name
             </label>
             <input
               type="text"
               value={user?.firstname}
               disabled
-              className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-lg"
+              className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-md"
             />
           </div>
 
           {/* Last Name */}
           <div className="mb-6">
-            <label className="block text-base font-medium text-gray-700">
+            <label className="block text-[12px] font-medium text-gray-700">
               Last Name
             </label>
             <input
               type="text"
               value={user?.lastname}
               disabled
-              className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-lg"
+              className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-md"
             />
           </div>
 
           {/* Email */}
           <div className="mb-6">
-            <label className="block text-base font-medium text-gray-700">
+            <label className="block text-[12px] font-medium text-gray-700">
               Email
             </label>
             <input
               type="email"
               value={user?.email}
               disabled
-              className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-lg"
+              className="mt-2 block w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-md"
             />
           </div>
         </div>

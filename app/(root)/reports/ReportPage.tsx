@@ -73,7 +73,7 @@ const ReportPage = () => {
           ))}
         </div>
         <div>
-          <button className="flex items-center h-[50px] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
+          <button className="flex items-center h-[40] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
             <Image
               src="/assets/icons/Group 1000002417.png"
               alt="Filter Icon"
