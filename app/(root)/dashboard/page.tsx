@@ -1,10 +1,9 @@
 import React from 'react'
+import DashboardPage from './DashboardPage'
 
 const page = () => {
   return (
-    <div>
-      <h2 className='text-red-500'>Dashboard</h2>
-    </div>
+    <DashboardPage />
   )
 }
 
