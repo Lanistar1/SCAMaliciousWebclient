@@ -14,7 +14,7 @@ interface UserCardProps {
 
 const UserCard = ({ ...user } : UserCardProps) => {
   return (
-    <div className=" grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[70px] items-center shadow-md rounded-[10px]">
+    <div className=" grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[55px] items-center shadow-md rounded-[10px]">
       {/* User Name */}
       <div className="font-sm text-[#09192CCC] ml-6">{user.name}</div>
       {/* Email */}
@@ -25,8 +25,10 @@ const UserCard = ({ ...user } : UserCardProps) => {
       <div className="text-sm text-[#09192CCC]">{user.lastSeen}</div>
       {/* Status */}
       <div
-        className={`inline-block items-center text-center  rounded-[33px] w-[95px] h-[28px] text-white ${
-          user.status === 'Active' ? 'bg-[#9CC031]' : 'bg-[#FF8F6B]'
+        className={`inline-block items-center pt-1 text-center text-[14px]  rounded-[33px] w-[95px] h-[28px]  ${
+          user.status === 'Active' ? 'text-[#9CC031]' : 'text-[#FF8F6B]'
+        } ${
+          user.status === 'Active' ? 'bg-[#f9ffe6]' : 'bg-[#f8e9e4]'
         }`}
       >
         {user.status}

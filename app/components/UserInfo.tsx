@@ -54,7 +54,7 @@ const UserCardGrid = () => {
   return (
     <div className=" space-y-4 w-full" >
       {/* Headings Row - Keep 6 columns on all screens */}
-      <div className="grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[70px] items-center rounded-[10px]">
+      <div className="grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[55px] items-center rounded-[10px]">
         <div className='flex-1 text-left ml-6'>Name</div>
         <div className='flex-1 text-left '>Email</div>
         <div className='flex-1  text-left'>Date Registered</div>
@@ -64,7 +64,7 @@ const UserCardGrid = () => {
       </div>
 
       {/* Render user cards */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3">
         {users.map((user) => (
           <UserCard key={user.id} {...user} />
         ))}

@@ -4,7 +4,7 @@ import DetailsSide from './DetailsSide'
 
 const SettingsPage = () => {
   return (
-    <section className='bg-[#FFFFFF] h-full flex rounded-[10px]  mx-12 my-8 px-12 py-20'>
+    <section className='bg-[#FFFFFF] h-full flex rounded-[10px]  mx-12 my-8 px-12 py-10'>
         <SidePage/>
         <DetailsSide/>
     </section>
