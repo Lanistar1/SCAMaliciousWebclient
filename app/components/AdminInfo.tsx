@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard'; // Adjust path if necessary
+import AdminCard from './AdminCard';
+
 
 
 const users = [
@@ -47,7 +49,7 @@ const users = [
     }
   ]
 
-const UserCardGrid = () => {
+const AdminCardGrid = () => {
 
   return (
     <div className=" space-y-4 w-full" >
@@ -64,11 +66,11 @@ const UserCardGrid = () => {
       {/* Render user cards */}
       <div className="flex flex-col gap-3">
         {users.map((user) => (
-          <UserCard key={user.id} {...user} />
+          <AdminCard key={user.id} {...user} />
         ))}
       </div>
     </div>
   );
 };
 
-export default UserCardGrid;
+export default AdminCardGrid;
