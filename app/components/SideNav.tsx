@@ -11,7 +11,7 @@ const menuItems = [
   { name: "Contents", icon: "/assets/icons/content.png", link: "/contents" },
   { name: "Reports", icon: "/assets/icons/report.png", link: "/reports" },
   { name: "Inquiry", icon: "/assets/icons/inquiry.png", link: "/messages" },
-  { name: "Settings", icon: "/assets/icons/settings.png", link: "/settings" },
+  { name: "Admins", icon: "/assets/icons/admin.png", link: "/admins" },
   { name: "Profile", icon: "/assets/icons/profile.png", link: "/profile" },
 ];
 
@@ -51,7 +51,7 @@ export default function SideNav() {
               // Adds thick left border if current path matches link
             >
               <Image src={icon} alt={name} width={24} height={24} />
-              <span className="ml-4 text-[#89919A] text-sm font-normal">
+              <span className="ml-4 text-[#89919A] text-[14px] space-y-4 font-normal">
                 {name}
               </span>
             </Link>
@@ -59,10 +59,7 @@ export default function SideNav() {
         </div>
       </div>
 
-      <div className="pr-4 mb-10 mt-6">
-        <h2 className="text-red-700 font-medium text-sm uppercase mt-6 mb-5">
-          Alerts
-        </h2>
+      <div className="pr-4 px-4 mb-10 mt-2">
         {alertItems.map(({ name, icon, link }) => (
           <Link
             href={link}
@@ -82,7 +79,7 @@ export default function SideNav() {
 
         <div
           onClick={logout}
-          className="flex items-center py-2 mt-4 cursor-pointer hover:bg-gray-100"
+          className="flex items-center px-1 py-2 mt-2 cursor-pointer hover:bg-gray-100"
         >
           <Image
             src="/assets/icons/logout.png"

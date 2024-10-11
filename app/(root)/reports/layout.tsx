@@ -10,9 +10,9 @@ export default function RootLayout({
         <main className="relative flex flex-col h-screen w-screen">
         <UserHeader title={'Report'}/>
         {children}
-        <div className="absolute bottom-0 right-0 p-4">
+        {/* <div className="absolute bottom-0 right-0 p-4">
           <Image src="/assets/images/logofaint.png" alt="image"  width={84} height={92} className=" -z-10" />
-        </div>
+        </div> */}
       </main>
     );
   }

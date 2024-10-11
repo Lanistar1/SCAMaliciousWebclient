@@ -5,9 +5,11 @@ import ModalWrapper from "@/app/components/ModalWrapper";
 import PaginationBar from "@/app/components/PaginationBar";
 import SearchBar from "@/app/components/SearchBar";
 import UserInfo from "@/app/components/UserInfo";
+import AdminCardGrid from "@/app/components/AdminInfo";
+import AdminInfo from "@/app/components/AdminInfo"
 import React, { useState } from "react";
 
-const Userpage = () => {
+const Adminpage = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
@@ -44,7 +46,9 @@ const Userpage = () => {
         <SearchBar onFilter={() => setIsFilterModalOpen(true)} />
       </div>
 
-      <UserInfo />
+      {/* <UserInfo /> */}
+
+      <AdminInfo />
 
       {/* filter modal */}
       <ModalWrapper
@@ -78,4 +82,5 @@ const Userpage = () => {
   );
 };
 
-export default Userpage;
+export default Adminpage;
+
