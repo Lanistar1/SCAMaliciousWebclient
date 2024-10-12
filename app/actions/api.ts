@@ -8,6 +8,9 @@ import {
   reportQuery,
   Declinetype,
   userProfile,
+  postQuery,
+  DeclinePostType,
+  ApprovePostType,
 } from "./type";
 
 // sign up
@@ -108,7 +111,7 @@ export const restoreReport = async (decline: Declinetype) => {
   return response.data;
 };
 
-// fetching user details
+//=====fetching user details ========
 export const fetchUser = async (token: string): Promise<userProfile> => {
   const response = await axios.get(`${apiUrl}/auth/user`, {
     headers: {
@@ -117,4 +120,57 @@ export const fetchUser = async (token: string): Promise<userProfile> => {
   });
 
   return response.data.data; // access the 'data' field inside response
+};
+
+//======== fetching user post/experience =======
+export const fetchPost = async (queryKey: postQuery) => {
+  const { status, page, limit, token } = queryKey;
+  console.log(queryKey);
+
+  const response = await axios.get(`${apiUrl}/experience/admin/all`, {
+    params: { status, page, limit },
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+
+  return response.data;
+};
+
+export const fetchPostById = async (id: string, token: string) => {
+  const response = await axios.get(`${apiUrl}/experience/admin/all/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return response.data;
+};
+
+export const declinePost = async (decline: DeclinePostType) => {
+  const response = await axios.post(
+    `${apiUrl}/experience/admin/decline/${decline.id}`,
+    {
+      reasonDeclineTitle: decline.reason,
+      reasonDeclineDescription: decline.description,
+    },
+    {
+      headers: {
+        Authorization: decline.token,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const approvePost = async (id: string, token: string) => {
+  const response = await axios.post(
+    `${apiUrl}/experience/admin/approve/${id}`,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  return response.data;
 };

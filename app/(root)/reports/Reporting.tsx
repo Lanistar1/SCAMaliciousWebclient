@@ -56,11 +56,11 @@ const Reporting = ({id, openModal}: Props)  => {
     return <div>Error loading report data. Please try again later.</div>; // Handle error states
   }
   return (
-    <section className={`flex flex-col justify-between bg-white ${showButton? "h-[128%]" :"h-[95%] "} w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8 `}>
+    <section className={`flex flex-col justify-between bg-white w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8 `}>
    
        <div className='flex flex-col gap-y-4'>
             <div className='flex justify-between border-b '>
-                <div>todays day</div>
+                <div className='text-[12px] mt-3'>{reportData.createdAt}</div>
                 <div className={`w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}>{reportData.status}</div>
             </div>
             <div className='flex gap-3'>
@@ -80,27 +80,27 @@ const Reporting = ({id, openModal}: Props)  => {
                 </p>
 
               <div className=" flex justify-start gap-4">
-                    <div className="flex items-center gap-2">
+                    {/* <div className="flex items-center gap-2">
                         <Image
                         src= {'/assets/icons/Frame 15.png'}
                         alt='image'
                         width={26} height={2}
                         />
                         <p className="text-[#A52A2A] text-xs  hover:text-red-700">View</p>
-                    </div>
-                    <div className="flex items-center gap-2">
+                    </div> */}
+                    {/* <div className="flex items-center gap-2">
                         <Image
                             src= {'/assets/icons/Frame 15.png'}
                             alt='image'
                             width={26} height={2}
                             />
-                        <Link href={`/contents//${id}`}
+                        <Link href={`/contents/${id}`}
                             
                             className="text-[#A52A2A] text-xs  hover:text-red-700"
                             >
                             Reports
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -138,12 +138,12 @@ const Reporting = ({id, openModal}: Props)  => {
                 </div>
             </div>}
        </div>
-        {showButton && <div className='flex justify-center gap-4'>
+        {showButton && <div className='flex justify-center gap-4 mt-8'>
             <button onClick={()=>openModal('Decline')} className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#F3F4F4] text-[09192C]'>Decline</button>
             <button onClick={()=>openModal('Remove')} className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#A52A2A] text-white'>Remove Post</button>
 
         </div>}
-        {restore && <div className='flex justify-center gap-4'>
+        {restore && <div className='flex justify-center gap-4 mt-8'>
             <button onClick={()=>openModal('Restore')} className='flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#A52A2A] text-white'>Restore</button>
         </div>}
 

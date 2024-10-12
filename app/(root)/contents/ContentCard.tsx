@@ -2,17 +2,26 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface CardProps {
-  id: number;
+  id: string;
   name: string;
-  role: string;
   date: string;
   title: string;
-  keywords: string;
+  keywords: number;
+  reportCount: number
   activeTab: string;
   onViewDetails: () => void;
 }
 
-const ContentCard: React.FC<CardProps> = ({ id, name, role, date, title, keywords, activeTab, onViewDetails }) => {
+const ContentCard: React.FC<CardProps> = ({
+  id,
+  name,
+  date,
+  title,
+  keywords,
+  reportCount,
+  activeTab,
+  onViewDetails,
+}) => {
   let goto;
   const getBackgroundColor = (tab: string) => {
     switch (tab) {
@@ -49,7 +58,7 @@ const ContentCard: React.FC<CardProps> = ({ id, name, role, date, title, keyword
           />
           <div className="ml-3">
             <h4 className="text-[#09192CCC] text-sm font-semibold">{name}</h4>
-            <p className="text-gray-500 text-xs">{role}</p>
+            <p className="text-gray-500 text-xs">Member</p>
             <p className="text-gray-400 text-xs">{date}</p>
           </div>
         </div>
@@ -70,12 +79,25 @@ const ContentCard: React.FC<CardProps> = ({ id, name, role, date, title, keyword
       {/* Bottom Section */}
       <div className="flex justify-between items-center pr-5 md:pr-10">
         <div className="flex items-center gap-2">
-          <Image src={"/assets/icons/Frame 13.png"} alt="image" width={26} height={2} />
+          <Image
+            src={"/assets/icons/Frame 13.png"}
+            alt="image"
+            width={26}
+            height={2}
+          />
           <p className="text-gray-500 text-xs">{keywords} Keywords</p>
         </div>
         <div className="flex items-center gap-2">
-          <Image src={"/assets/icons/Frame 14.png"} alt="image" width={26} height={2} />
-          <Link href={`/contents/${goto}/${id}`} className="text-[#A52A2A] text-xs hover:text-red-700">
+          <Image
+            src={"/assets/icons/Frame 14.png"}
+            alt="image"
+            width={26}
+            height={2}
+          />
+          <Link
+            href={`/contents/${activeTab}/${id}`}
+            className="text-[#A52A2A] text-xs hover:text-red-700"
+          >
             View Details
           </Link>
         </div>
@@ -85,15 +107,28 @@ const ContentCard: React.FC<CardProps> = ({ id, name, role, date, title, keyword
       {activeTab === "Approved" && (
         <div className="flex justify-between items-center pr-5 md:pr-10">
           <div className="flex items-center gap-2">
-            <Image src={"/assets/icons/Frame 15.png"} alt="image" width={26} height={2} />
-            <p className="text-gray-500 text-xs">{keywords} Reports</p>
+            <Image
+              src={"/assets/icons/Frame 15.png"}
+              alt="image"
+              width={26}
+              height={2}
+            />
+            <p className="text-gray-500 text-xs">{reportCount} Reports</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Image src={"/assets/icons/Frame 15.png"} alt="image" width={26} height={2} />
-            <Link href={`/contents/${goto}/${id}`} className="text-[#A52A2A] text-xs hover:text-red-700">
+          {/* <div className="flex items-center gap-2">
+            <Image
+              src={"/assets/icons/Frame 15.png"}
+              alt="image"
+              width={26}
+              height={2}
+            />
+            <Link
+              href={`/contents/${goto}/${id}`}
+              className="text-[#A52A2A] text-xs hover:text-red-700"
+            >
               View Details
             </Link>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

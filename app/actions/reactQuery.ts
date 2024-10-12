@@ -1,6 +1,6 @@
 import { useMutation, useQuery,useQueryClient } from "@tanstack/react-query";
-import { signIn, signUp,resetPassword, forgotPassword, changePassword, fetchReports, fetchReportsById, declineReport, removeReport, restoreReport, fetchUser } from "./api";
-import { changePass, createUser, Declinetype, loggedInUser, login, Query_Keys, reportQuery, resetPass, userProfile } from "./type";
+import { signIn, signUp,resetPassword, forgotPassword, changePassword, fetchReports, fetchReportsById, declineReport, removeReport, restoreReport, fetchUser, fetchPost, fetchPostById, declinePost, approvePost } from "./api";
+import { ApprovePostType, changePass, createUser, DeclinePostType, Declinetype, Experience_Query_Keys, loggedInUser, login, postQuery, Query_Keys, reportQuery, resetPass, userProfile } from "./type";
 import { toast } from "react-toastify";
 
 
@@ -142,7 +142,6 @@ export const useReportDecline = () =>{
 }
 
 
-
 export const useReportRemove = ()=>{
   const queryClient = useQueryClient();
   return useMutation({
@@ -180,7 +179,7 @@ export const useReportRestore = ()=>{
     })
 }
 
-// Fetch user details
+//========= Fetch user details =========
 export const useUser = (token: string) => {
   return useQuery<userProfile>({
     queryKey: ['user'],
@@ -189,3 +188,54 @@ export const useUser = (token: string) => {
   });
 };
 
+//===========get user posts (experience) =====
+export const useExperience = (query: postQuery) => {
+  return useQuery({
+    queryKey: [Experience_Query_Keys.POST, query],
+    queryFn: () => fetchPost(query),
+  });
+};
+
+export const useExperienceId = (id:string, token:string) =>{
+  return useQuery({
+      queryKey: [Experience_Query_Keys.POST_ID, id],
+      queryFn: () => fetchPostById(id,token),
+  })
+}
+
+export const usePostDecline = () =>{
+  const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ( data: DeclinePostType) => declinePost(data),
+        onSuccess: () => {
+          toast.success(`Post Declined`);
+          queryClient.invalidateQueries({
+            queryKey: [Experience_Query_Keys.POST_ID],  
+          });
+        },
+        onError: (error) => {
+          // Show error toast notification
+         return toast.error(`Error occurred: ${error.message}`);
+    
+        },
+    })
+}
+
+export const usePostApprove = () =>{
+  const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: async ({ id, token }: { id: string; token: string }) => approvePost(id, token),
+        // mutationFn: async ( data: ApprovePostType) => approvePost(data),
+        onSuccess: () => {
+          toast.success(`Post Approved`);
+          queryClient.invalidateQueries({
+            queryKey: [Experience_Query_Keys.POST_ID],  
+          });
+        },
+        onError: (error) => {
+          // Show error toast notification
+         return toast.error(`Error occurred: ${error.message}`);
+    
+        },
+    })
+}
