@@ -1,3 +1,22 @@
+// import React from 'react'
+// import ApprovalCard from '../../ApprovalCard'
+
+// interface Props {
+//     id:number
+//   }
+//   const AwaitingApproval = ({id}:Props) => {
+//     return (
+//         <div className='flex justify-center'>
+//             <ApprovalCard id={id}/>
+//         </div>
+      
+//     )
+//   }
+
+// export default AwaitingApproval
+
+
+
 "use client";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import ContentDetailPage from "../../ContentDetailPage";
@@ -7,7 +26,7 @@ import ContentBox from "../../ContentBox";
 interface Props {
   id: string;
 }
-const Declined = ({ id }: Props) => {
+const AwaitingApproval = ({ id }: Props) => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [action, setAction] = useState<string>("");
 
@@ -34,4 +53,5 @@ const Declined = ({ id }: Props) => {
   );
 };
 
-export default Declined;
+export default AwaitingApproval;
+

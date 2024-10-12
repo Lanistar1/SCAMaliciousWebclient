@@ -3,7 +3,7 @@ import Declined from './Declined'
 
 
 interface Props {
-  params : {id:number}
+  params : {id:string}
 }
 const page = ({params:{id}}:Props) => {
   return (

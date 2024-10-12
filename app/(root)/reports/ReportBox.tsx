@@ -85,7 +85,7 @@ const ReportBox = ({ onClose,action,id }: ReportProps ) => {
         </div>
     
       </div>
-      <div className="mt-3 flex justify-center  items-center gap-3 ">
+      <div className="mt-3 flex justify-center  items-center gap-3">
         {/* <Button variant="outline" onClick={onClose}>
           Cancel
         </Button> */}
