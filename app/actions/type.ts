@@ -91,6 +91,13 @@ export type Declinetype = {
   token: string;
 };
 
+export type Restoretype = {
+  id: string;
+  reason: string;
+  description: string;
+  token: string;
+};
+
 export interface userProfile {
   firstname: string;
   lastname: string;
@@ -177,5 +184,38 @@ export type DeclinePostType = {
 
 export type ApprovePostType = {
   id: string;
+  token: string;
+};
+
+
+export interface userList {
+  firstname: string;
+  lastname: string;
+  _id: string;
+  email: string;
+  username: string;
+  role: string;
+  firstName: string;
+  lastName: string;
+  isVerified: boolean;
+  isEnabled: boolean;
+  createdAt: string;
+  profileImgeUrl: string;
+  updatedAt: string;
+  ageBracket: string;
+  __v: number;
+}
+
+export type userQuery = {
+  status: string;
+  page: number;
+  limit: number;
+  token: string;
+  dateRegisteredfrom: number;
+  dateRegisteredto: number;
+};
+
+export type BlockUserType = {
+  userId: string;
   token: string;
 };

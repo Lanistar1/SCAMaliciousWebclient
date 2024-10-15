@@ -11,6 +11,8 @@ import {
   postQuery,
   DeclinePostType,
   ApprovePostType,
+  userQuery,
+  BlockUserType,
 } from "./type";
 
 // sign up
@@ -86,6 +88,7 @@ export const declineReport = async (decline: Declinetype) => {
 export const removeReport = async (id: string, token: string) => {
   const response = await axios.post(
     `${apiUrl}/experience/admin/report/remove/${id}`,
+    {},
     {
       headers: {
         Authorization: token,
@@ -99,8 +102,8 @@ export const restoreReport = async (decline: Declinetype) => {
   const response = await axios.post(
     `${apiUrl}/experience/admin/report/restore/${decline.id}`,
     {
-      adminReasonDeclineTitle: decline.reason,
-      adminReasonDeclineDescription: decline.description,
+      adminRestoreDecisionTitle: decline.reason,
+      adminRestoreDecisionDescription: decline.description,
     },
     {
       headers: {
@@ -165,10 +168,108 @@ export const declinePost = async (decline: DeclinePostType) => {
 
 export const approvePost = async (id: string, token: string) => {
   const response = await axios.post(
-    `${apiUrl}/experience/admin/approve/${id}`,
+    `${apiUrl}/experience/admin/approve/${id}`, // First argument: URL
+    {}, // Second argument: Payload (empty object because there's no payload)
     {
       headers: {
-        Authorization: token,
+        Authorization: token, 
+      },
+    }
+  );
+  return response.data;
+};
+
+//===========fetching user list ==============
+export const fetchMember = async (queryKey: userQuery) => {
+  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
+  console.log(queryKey);
+
+  const response = await axios.get(`${apiUrl}/auth/admin/users`, {
+    params: { status, page, limit, dateRegisteredfrom, dateRegisteredto },
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+
+  return response.data;
+};
+
+
+//===========fetching admin list ==============
+export const fetchAdmin = async (queryKey: userQuery) => {
+  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
+  console.log(queryKey);
+
+  const response = await axios.get(`${apiUrl}/auth/admins`, {
+    params: { status, page, limit, dateRegisteredfrom, dateRegisteredto },
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+
+  return response.data;
+};
+
+//======== blocking user =========
+export const blockUser = async (user: BlockUserType) => {
+  const response = await axios.post(
+    `${apiUrl}/auth/admin/block-user`,
+    {
+      userId: user.userId,
+    },
+    {
+      headers: {
+        Authorization: user.token,
+      },
+    }
+  );
+  return response.data;
+};
+
+//======== unblocking user =========
+export const unblockUser = async (user: BlockUserType) => {
+  const response = await axios.post(
+    `${apiUrl}/auth/admin/unblock-user`,
+    {
+      userId: user.userId,
+    },
+    {
+      headers: {
+        Authorization: user.token,
+      },
+    }
+  );
+  return response.data;
+};
+
+//======== blocking admin =========
+export const blockAdmin = async (user: BlockUserType) => {
+  const response = await axios.post(
+    `${apiUrl}/auth/admin/block-admin`,
+    {
+      userId: user.userId,
+    },
+    {
+      headers: {
+        Authorization: user.token,
+      },
+    }
+  );
+  return response.data;
+};
+
+//======== unblocking admin =========
+export const unblockAdmin = async (user: BlockUserType) => {
+  const response = await axios.post(
+    `${apiUrl}/auth/admin/unblock-admin`,
+    {
+      userId: user.userId,
+    },
+    {
+      headers: {
+        Authorization: user.token,
       },
     }
   );
