@@ -68,7 +68,6 @@ const ContentPage = () => {
   // const tabs = ["Reported Post", "Active", "Removed"];
 
   return (
-    
     <section className="bg-white rounded-[10px] mx-12 my-8 px-12 py-8">
       <div className="flex justify-between items-end border-b">
         <div className="flex space-x-4">
@@ -77,8 +76,8 @@ const ContentPage = () => {
               key={tab}
               className={`pb-2 ${
                 activeTab === tab
-                  ? 'text-red-600 border-b-2 border-red-600 font-medium'
-                  : 'text-gray-500'
+                  ? "text-red-600 border-b-2 border-red-600 font-medium"
+                  : "text-gray-500"
               }`}
               onClick={() => setActiveTab(tab)}
             >
@@ -101,15 +100,17 @@ const ContentPage = () => {
       </div>
 
       {/* Loading and Error Handling */}
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading data</p>}
-      {data.length === 0 && <p>No data</p>}
-
-      {data && data.length > 0 ? (
-        <ContentInfo activeTab={query.status} data={data} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : isError ? (
+        <p>Error loading data</p>
+      ) : data.length === 0 ? (
+        <p>No contents found for this status</p>
       ) : (
-        <p>No contents found for this status.</p>
+        <ContentInfo activeTab={query.status} data={data} />
       )}
+
+
     </section>
   );
 };

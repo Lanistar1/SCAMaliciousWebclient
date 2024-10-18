@@ -1,19 +1,19 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import ReportInfo from './ReportInfo';
-import Image from 'next/image';
-import { useReports } from '@/app/actions/reactQuery';
-import { useAuthContext } from '@/app/context/AuthContext';
-import useDebounce from '@/app/actions/debounce';
+"use client";
+import React, { useEffect, useState } from "react";
+import ReportInfo from "./ReportInfo";
+import Image from "next/image";
+import { useReports } from "@/app/actions/reactQuery";
+import { useAuthContext } from "@/app/context/AuthContext";
+import useDebounce from "@/app/actions/debounce";
 
 const ReportPage = () => {
-  const [activeTab, setActiveTab] = useState('Reported Post');
+  const [activeTab, setActiveTab] = useState("Reported Post");
   const { token } = useAuthContext();
   const [query, setQuery] = useState({
-    status: 'Pending',
+    status: "Pending",
     page: 1,
     limit: 9,
-    token: '',
+    token: "",
   });
 
   // Debounced value for query status
@@ -29,19 +29,19 @@ const ReportPage = () => {
   }, [token]);
 
   useEffect(() => {
-    let status = 'Pending';
+    let status = "Pending";
     switch (debouncedStatus) {
-      case 'Reported Post':
-        status = 'Pending';
+      case "Reported Post":
+        status = "Pending";
         break;
-      case 'Active':
-        status = 'Active';
+      case "Active":
+        status = "Active";
         break;
-      case 'Removed':
-        status = 'Removed';
+      case "Removed":
+        status = "Removed";
         break;
       default:
-        status = 'Pending';
+        status = "Pending";
     }
     setQuery((prevQuery) => ({
       ...prevQuery,
@@ -49,10 +49,18 @@ const ReportPage = () => {
     }));
   }, [debouncedStatus]);
 
-  const { data: content, isLoading, isError } = useReports(query.token && query.status ? query : { status: '', page: 1, limit: 9, token: '' });
+  const {
+    data: content,
+    isLoading,
+    isError,
+  } = useReports(
+    query.token && query.status
+      ? query
+      : { status: "", page: 1, limit: 9, token: "" }
+  );
 
   const data = content?.data || [];
-  const tabs = ['Reported Post', 'Active', 'Removed'];
+  const tabs = ["Reported Post", "Active", "Removed"];
 
   return (
     <section className="bg-white rounded-[10px] mx-12 my-8 px-12 py-8">
@@ -63,8 +71,8 @@ const ReportPage = () => {
               key={tab}
               className={`pb-2 ${
                 activeTab === tab
-                  ? 'text-red-600 border-b-2 border-red-600 font-medium'
-                  : 'text-gray-500'
+                  ? "text-red-600 border-b-2 border-red-600 font-medium"
+                  : "text-gray-500"
               }`}
               onClick={() => setActiveTab(tab)}
             >
@@ -87,15 +95,16 @@ const ReportPage = () => {
       </div>
 
       {/* Loading and Error Handling */}
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading data</p>}
-      {data.length === 0 && <p>No data</p>}
-
-      {data && data.length > 0 ? (
-        <ReportInfo activeTab={query.status} data={data} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : isError ? (
+        <p>Error loading data</p>
+      ) : data.length === 0 ? (
+        <p>No reports found for this status</p>
       ) : (
-        <p>No reports found for this status.</p>
+        <ReportInfo activeTab={query.status} data={data} />
       )}
+
     </section>
   );
 };

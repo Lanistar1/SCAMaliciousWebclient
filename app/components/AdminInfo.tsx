@@ -1,9 +1,28 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import UserCard from './UserCard'; // Adjust path if necessary
 import AdminCard from './AdminCard';
 
+interface User {
+  _id: string;
+  email: string;
+  username: string;
+  role: string;
+  firstname: string;
+  lastname: string;
+  isVerified: boolean;
+  isEnabled: boolean;
+  createdAt: string;
+  profileImgeUrl: string;
+  updatedAt: string;
+  ageBracket: string;
+  __v: number;
+}
+
+interface ContentInfoProps {
+  data: User[],
+
+}
 
 
 const users = [
@@ -49,7 +68,11 @@ const users = [
     }
   ]
 
-const AdminCardGrid = () => {
+const AdminCardGrid = ({ data }: ContentInfoProps) => {
+
+  const handleViewDetails = (id: string) => {
+    alert(`View Details Clicked for card ID: ${id}`);
+  };
 
   return (
     <div className=" space-y-4 w-full" >
@@ -58,15 +81,31 @@ const AdminCardGrid = () => {
         <div className='flex-1 text-left ml-6'>Name</div>
         <div className='flex-1 text-left '>Email</div>
         <div className='flex-1  text-left'>Date Registered</div>
-        <div className='flex-1  text-left'>Last Seen</div>
+        <div className='flex-1  text-left'>Role</div>
         <div className='flex-1  text-left'>Status</div>
         <div className='flex-1  text-left w-10'>Action</div>
       </div>
 
       {/* Render user cards */}
-      <div className="flex flex-col gap-3">
+      {/* <div className="flex flex-col gap-3">
         {users.map((user) => (
           <AdminCard key={user.id} {...user} />
+        ))}
+      </div> */}
+
+      <div className="flex flex-col gap-3">
+        {data.map((user) => (
+          <AdminCard
+            key={user._id}
+            id={user._id}
+            firstName={user.firstname}
+            lastName={user.lastname}
+            email={user.email}
+            role={user.role}
+            dateRegistered={user.createdAt}
+            status="active"
+            onViewDetails={() => handleViewDetails(user._id)}
+          />
         ))}
       </div>
     </div>

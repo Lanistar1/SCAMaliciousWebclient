@@ -189,14 +189,12 @@ export type ApprovePostType = {
 
 
 export interface userList {
-  firstname: string;
-  lastname: string;
   _id: string;
   email: string;
   username: string;
   role: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   isVerified: boolean;
   isEnabled: boolean;
   createdAt: string;
@@ -211,8 +209,6 @@ export type userQuery = {
   page: number;
   limit: number;
   token: string;
-  dateRegisteredfrom: number;
-  dateRegisteredto: number;
 };
 
 export type BlockUserType = {
