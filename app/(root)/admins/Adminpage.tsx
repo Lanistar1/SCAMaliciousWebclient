@@ -4,12 +4,32 @@ import ExportFile, { Export } from "@/app/components/ExportFile";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import PaginationBar from "@/app/components/PaginationBar";
 import SearchBar from "@/app/components/SearchBar";
-import UserInfo from "@/app/components/UserInfo";
-import AdminCardGrid from "@/app/components/AdminInfo";
-import AdminInfo from "@/app/components/AdminInfo"
-import React, { useState } from "react";
+import AdminInfo from "@/app/components/AdminInfo";
+import React, { useEffect, useState } from "react";
+import { useAdmin } from "@/app/actions/reactQuery";
+import { useAuthContext } from "@/app/context/AuthContext";
 
 const Adminpage = () => {
+  const { token } = useAuthContext();
+
+  const [query, setQuery] = useState({
+    status: "active",
+    page: 1,
+    limit: 6,
+    token: "",
+    dateRegisteredfrom: 0,
+    dateRegisteredto: 0,
+  });
+
+  useEffect(() => {
+    if (token) {
+      setQuery((prevQuery) => ({
+        ...prevQuery,
+        token: token,
+      }));
+    }
+  }, [token]);
+
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
@@ -40,15 +60,41 @@ const Adminpage = () => {
     setCurrentPage(page);
   };
 
+  const {
+    data: content,
+    isLoading,
+    isError,
+  } = useAdmin(
+    query.token && query.status
+      ? query
+      : {
+          status: "active",
+          page: 1,
+          limit: 6,
+          token: "",
+        }
+  );
+
+  const data = content?.data || [];
+
   return (
     <section className="flex flex-col px-12 gap-4 pt-6">
       <div className="flex justify-end ">
         <SearchBar onFilter={() => setIsFilterModalOpen(true)} />
       </div>
 
-      {/* <UserInfo /> */}
+      {/* Loading and Error Handling */}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : isError ? (
+        <p>Error loading data</p>
+      ) : data.length === 0 ? (
+        <p>No data</p>
+      ) : (
+        <AdminInfo data={data} />
+      )}
 
-      <AdminInfo />
+      {/* <AdminInfo /> */}
 
       {/* filter modal */}
       <ModalWrapper
@@ -83,4 +129,3 @@ const Adminpage = () => {
 };
 
 export default Adminpage;
-

@@ -181,11 +181,11 @@ export const approvePost = async (id: string, token: string) => {
 
 //===========fetching user list ==============
 export const fetchMember = async (queryKey: userQuery) => {
-  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
+  const { status, page, limit, token } = queryKey;
   console.log(queryKey);
 
   const response = await axios.get(`${apiUrl}/auth/admin/users`, {
-    params: { status, page, limit, dateRegisteredfrom, dateRegisteredto },
+    params: { status, page, limit },
     headers: {
       Authorization: token,
     },
@@ -198,11 +198,11 @@ export const fetchMember = async (queryKey: userQuery) => {
 
 //===========fetching admin list ==============
 export const fetchAdmin = async (queryKey: userQuery) => {
-  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
+  const { status, page, limit, token } = queryKey;
   console.log(queryKey);
 
   const response = await axios.get(`${apiUrl}/auth/admins`, {
-    params: { status, page, limit, dateRegisteredfrom, dateRegisteredto },
+    params: { status, page, limit },
     headers: {
       Authorization: token,
     },
