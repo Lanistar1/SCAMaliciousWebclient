@@ -89,7 +89,7 @@ const Userpage = () => {
       ) : isError ? (
         <p>Error loading data</p>
       ) : data.length === 0 ? (
-        <p>No data</p>
+        <p>No data found for user</p>
       ) : (
         <UserInfo data={data} />
       )}
