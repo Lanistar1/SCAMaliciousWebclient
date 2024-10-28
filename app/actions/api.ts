@@ -13,6 +13,8 @@ import {
   ApprovePostType,
   userQuery,
   BlockUserType,
+  addAdmin,
+  addKeywords,
 } from "./type";
 
 // sign up
@@ -172,7 +174,7 @@ export const approvePost = async (id: string, token: string) => {
     {}, // Second argument: Payload (empty object because there's no payload)
     {
       headers: {
-        Authorization: token, 
+        Authorization: token,
       },
     }
   );
@@ -194,7 +196,6 @@ export const fetchMember = async (queryKey: userQuery) => {
 
   return response.data;
 };
-
 
 //===========fetching admin list ==============
 export const fetchAdmin = async (queryKey: userQuery) => {
@@ -274,4 +275,49 @@ export const unblockAdmin = async (user: BlockUserType) => {
     }
   );
   return response.data;
+};
+
+// =========== create admin =======
+export const createAdmin = async (adminRequest: addAdmin, token: string) => {
+  const res = await axios.post(
+    `${apiUrl}/auth/add-admin`,
+    adminRequest,
+    {
+      headers: {
+        Authorization: token,
+      },
+    },
+  );
+  return res.data;
+};
+
+
+//===========fetching unwanted keyword  ==============
+export const fetchUnwantedKeyword = async (queryKey: userQuery) => {
+  const { status, page, limit, token } = queryKey;
+  console.log(queryKey);
+
+  const response = await axios.get(`${apiUrl}/feedback/admin/unwanted/keywords`, {
+    params: { status, page, limit },
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+
+  return response.data;
+};
+
+// =========== create unwanted keywords =======
+export const createKeywords = async (keywordRequest: addKeywords, token: string) => {
+  const res = await axios.post(
+    `${apiUrl}/feedback/admin/unwanted/keywords`,
+    keywordRequest,
+    {
+      headers: {
+        Authorization: token,
+      },
+    },
+  );
+  return res.data;
 };

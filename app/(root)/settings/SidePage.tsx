@@ -1,6 +1,9 @@
 import React from "react";
+import Image from "next/image";
+
 
 const SidePage = () => {
+  
   return (
     <section className="flex flex-col gap-y-6 w-[30%] border-r text-[#3A4756]">
       <div className="flex flex-col gap-y-3 items-start">

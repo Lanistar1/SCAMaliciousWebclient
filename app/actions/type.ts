@@ -215,3 +215,22 @@ export type BlockUserType = {
   userId: string;
   token: string;
 };
+
+export type addAdmin = {
+  username: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+};
+
+export type KeywordResponse = {
+  status: number;
+  message: string;
+  data: {
+    keyword: string[];
+  };
+}
+
+export type addKeywords = {
+  keyword: string[];
+}
