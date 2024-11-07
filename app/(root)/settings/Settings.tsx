@@ -109,7 +109,7 @@ const Settings = () => {
 
     try {
       const response = await createKeywords(keywordPayload);
-
+      
       if (response.status !== 201) {
         return toast.error("Failed to create keywords, try again");
       }
@@ -158,14 +158,14 @@ const Settings = () => {
   // ============= end ========================
 
   return (
-    <div className="flex flex-row p-12 h-screen">
+    <div className="flex flex-col md:flex-row p-12 h-screen">
       {/* Left hand side */}
-      <section className="flex flex-col gap-y-6 w-[30%] border-r text-[#3A4756]">
+      <section className="flex flex-col md:flex-col gap-y-6 w-[30%] border-r text-[#3A4756]">
         <div className="flex flex-col gap-y-3 items-start">
-          <h1 className="text-[16px]">Flagged Keywords</h1>
+          <h1 className="text-[10px] md:text-[16px]">Flagged Keywords</h1>
           <div>
-            <p className="text-[14px]">Configure keywords to be flagged</p>
-            <p className="text-[14px]">by the system automatically</p>
+            <p className="text-[10px] md:text-[14px]">Configure keywords to be flagged</p>
+            <p className="text-[10px] md:text-[14px]">by the system automatically</p>
           </div>
           <button
             onClick={() => handleToggle("configure")}
@@ -176,12 +176,12 @@ const Settings = () => {
         </div>
 
         <div className="flex flex-col gap-y-3 items-start">
-          <h1 className="text-[16px]">Add new Admin</h1>
+          <h1 className="text-[10px] md:text-[16px]">Add new Admin</h1>
           <div>
-            <p className="text-[14px]">
+            <p className="text-[10px] md:text-[14px]">
               Click on the button below to add new admin
             </p>
-            <p className="text-[14px]">to the system</p>
+            <p className="text-[10px] md:text-[14px]">to the system</p>
           </div>
           <button
             onClick={() => handleToggle("admin")}

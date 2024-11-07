@@ -80,14 +80,14 @@ const Signup = () => {
   return (
     <div className="flex h-screen">
       {/* Left Section */}
-      <div className="w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF] flex justify-center items-center">
+      <div className="hidden md:flex w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF]  justify-center items-center">
         <div className="text-center">
           <Image src="/assets/images/logo.png" alt="SCAMalicious Logo" width={200} height={200} />
         </div>
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 flex flex-col justify-center items-center bg-gray-100 relative">
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-gray-100 relative">
         <div className="w-2/3">
           <h1 className="text-3xl text-[#A52A2A] font-normal mb-1">Admin Registration</h1>
           <p className="text-lg text-[#384554] mb-6">Create new admin user</p>

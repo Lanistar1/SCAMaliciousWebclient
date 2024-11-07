@@ -61,7 +61,7 @@ const Changepassword = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Section */}
-      <div className="w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF] flex justify-center items-center">
+      <div className="hidden md:flex w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF] justify-center items-center">
         <Image
           src="/assets/images/logo.png" // Replace with your logo path
           width={300}
@@ -72,7 +72,7 @@ const Changepassword = () => {
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 flex flex-col justify-center items-center relative">
+      <div className="w-full  md:w-1/2 flex flex-col justify-center items-center relative">
         <div className="w-2/3">
           <h1 className="text-3xl text-[#A52A2A] font-normal mb-1">
             Change Password

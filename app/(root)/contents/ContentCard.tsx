@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import DateFormatter from "@/app/components/DateFormatter";
 
 interface CardProps {
   id: string;
@@ -59,7 +60,7 @@ const ContentCard: React.FC<CardProps> = ({
           <div className="ml-3">
             <h4 className="text-[#09192CCC] text-sm font-semibold">{name}</h4>
             <p className="text-gray-500 text-xs">Member</p>
-            <p className="text-gray-400 text-xs">{date}</p>
+            <p className="text-gray-400 text-xs"><DateFormatter date={date} /></p>
           </div>
         </div>
         <div
@@ -77,7 +78,7 @@ const ContentCard: React.FC<CardProps> = ({
       </div>
 
       {/* Bottom Section */}
-      <div className="flex justify-between items-center pr-5 md:pr-10">
+      <div className="flex justify-between items-center md:pr-10">
         <div className="flex items-center gap-2">
           <Image
             src={"/assets/icons/Frame 13.png"}
@@ -85,7 +86,7 @@ const ContentCard: React.FC<CardProps> = ({
             width={26}
             height={2}
           />
-          <p className="text-gray-500 text-xs">{keywords} Keywords</p>
+          <p className="text-[10px] text-gray-500 md:text-xs">{keywords} Keywords</p>
         </div>
         <div className="flex items-center gap-2">
           <Image
@@ -96,7 +97,7 @@ const ContentCard: React.FC<CardProps> = ({
           />
           <Link
             href={`/contents/${activeTab}/${id}`}
-            className="text-[#A52A2A] text-xs hover:text-red-700"
+            className="text-[10px] text-[#A52A2A] md:text-xs hover:text-red-700"
           >
             View Details
           </Link>

@@ -127,7 +127,7 @@ const ReportInfo = ({ data, activeTab }: ContentInfoProps) => {
       };
     
       return (
-        <div className="grid grid-cols-3 gap-6 py-4">
+        <div className="flex flex-col md:grid grid-cols-3 gap-6 py-4">
           {data.map((card) => (
             <ReportCard
               key={card._id}

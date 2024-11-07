@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import {
   signIn,
   signUp,
@@ -290,7 +290,8 @@ export const usePostApprove = () => {
 export const useMember = (query: userQuery) => {
   return useQuery({
     queryKey: [],
-    queryFn: () => fetchMember(query),
+    queryFn: () => fetchMember(query), 
+    placeholderData: keepPreviousData,
   });
 };
 
