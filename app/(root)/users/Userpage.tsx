@@ -5,30 +5,63 @@ import ModalWrapper from "@/app/components/ModalWrapper";
 import PaginationBar from "@/app/components/PaginationBar";
 import SearchBar from "@/app/components/SearchBar";
 import UserInfo from "@/app/components/UserInfo";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useMember } from "@/app/actions/reactQuery";
 import { useAuthContext } from "@/app/context/AuthContext";
 
 const Userpage = () => {
   const { token } = useAuthContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  const totalPages = 200;
 
-  const [query, setQuery] = useState({
+  // Query state for data fetching
+  const [query, setQuery] = useState(() => ({
     status: "active",
-    page: 1,
-    limit: 6,
-    token: "",
+    page: currentPage,
+    limit: 3,
+    token: token || "",
     dateRegisteredfrom: 0,
     dateRegisteredto: 0,
-  });
+    search: searchQuery,
+  }));
 
+  // Update token in query if it changes
   useEffect(() => {
     if (token) {
       setQuery((prevQuery) => ({
         ...prevQuery,
-        token: token,
+        token,
       }));
     }
   }, [token]);
+
+  // Update `query` when `currentPage` changes, ensuring a new reference
+  useEffect(() => {
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      page: currentPage,
+      search: searchQuery,
+    }));
+  }, [currentPage, searchQuery]);
+
+  // Trigger data fetching whenever `query` changes
+  const { data: content, isLoading, isError, isPlaceholderData } = useMember(query);
+
+  // Update `currentPage` when pagination changes
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    console.log(page);
+  }, []);
+
+  // Handle search submission
+  const handleSearch = useCallback((searchTerm: string) => {
+    setSearchQuery(searchTerm);
+    setCurrentPage(1); // Reset to first page on new search
+    console.log(searchTerm);
+  }, []);
+
 
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -45,42 +78,15 @@ const Userpage = () => {
     toDate: "",
   });
 
-  const handleFilter = (newFilters: Filters) => {
-    setFilters(newFilters);
-  };
-
-  const handleExport = (newExports: Export) => {
-    setExports(newExports);
-  };
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 200;
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const {
-    data: content,
-    isLoading,
-    isError,
-  } = useMember(
-    query.token && query.status
-      ? query
-      : {
-          status: "active",
-          page: 1,
-          limit: 6,
-          token: "",
-        }
-  );
+  const handleFilter = (newFilters: Filters) => setFilters(newFilters);
+  const handleExport = (newExports: Export) => setExports(newExports);
 
   const data = content?.data || [];
 
   return (
     <section className="flex flex-col px-12 gap-4 pt-6">
       <div className="flex justify-end ">
-        <SearchBar onFilter={() => setIsFilterModalOpen(true)} />
+      <SearchBar onSearch={handleSearch} onFilter={() => setIsFilterModalOpen(true)} />
       </div>
 
       {/* Loading and Error Handling */}
@@ -91,13 +97,14 @@ const Userpage = () => {
       ) : data.length === 0 ? (
         <p>No data found for user</p>
       ) : (
-        <UserInfo data={data} />
+        <div>
+          {isPlaceholderData && <p>Loading new page...</p>}
+          <UserInfo data={data} />
+
+        </div>
       )}
 
-
-      {/* <UserInfo /> */}
-
-      {/* filter modal */}
+      {/* Filter modal */}
       <ModalWrapper
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
@@ -108,7 +115,7 @@ const Userpage = () => {
         />
       </ModalWrapper>
 
-      {/* export modal */}
+      {/* Export modal */}
       <ModalWrapper
         isOpen={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}

@@ -66,7 +66,7 @@ const Resetpassword = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Section */}
-      <div className="w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF] flex justify-center items-center">
+      <div className="hidden md:flex w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF] justify-center items-center">
         <Image
           src="/assets/images/logo.png" // Replace with your logo path
           width={300}

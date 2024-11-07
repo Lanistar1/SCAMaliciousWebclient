@@ -1,9 +1,10 @@
 import React from 'react'
 import SettingsPage from './SettingsPage'
+import Settings from './Settings'
 
 const page = () => {
   return (
-    <SettingsPage/>
+    <Settings/>
   )
 }
 

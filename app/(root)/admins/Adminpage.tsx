@@ -5,7 +5,7 @@ import ModalWrapper from "@/app/components/ModalWrapper";
 import PaginationBar from "@/app/components/PaginationBar";
 import SearchBar from "@/app/components/SearchBar";
 import AdminInfo from "@/app/components/AdminInfo";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useAdmin } from "@/app/actions/reactQuery";
 import { useAuthContext } from "@/app/context/AuthContext";
 
@@ -60,6 +60,11 @@ const Adminpage = () => {
     setCurrentPage(page);
   };
 
+  const handleSearch = useCallback(() => {
+    
+    console.log("coming soon");
+  }, []);
+
   const {
     data: content,
     isLoading,
@@ -80,7 +85,7 @@ const Adminpage = () => {
   return (
     <section className="flex flex-col px-12 gap-4 pt-6">
       <div className="flex justify-end ">
-        <SearchBar onFilter={() => setIsFilterModalOpen(true)} />
+        <SearchBar onSearch={handleSearch} onFilter={() => setIsFilterModalOpen(true)} />
       </div>
 
       {/* Loading and Error Handling */}

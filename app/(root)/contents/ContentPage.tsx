@@ -76,8 +76,8 @@ const ContentPage = () => {
               key={tab}
               className={`pb-2 ${
                 activeTab === tab
-                  ? "text-red-600 border-b-2 border-red-600 font-medium"
-                  : "text-gray-500"
+                  ? "text-red-600 border-b-2 border-red-600 text-[10px] md:text-[14px] md:font-medium"
+                  : "text-gray-500 font-medium text-[10px] md:text-[14px]"
               }`}
               onClick={() => setActiveTab(tab)}
             >
@@ -86,7 +86,7 @@ const ContentPage = () => {
           ))}
         </div>
         <div>
-          <button className="flex items-center h-[40] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
+          <button className="hidden md:flex items-center h-[40] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
             <Image
               src="/assets/icons/Group 1000002417.png"
               alt="Filter Icon"
@@ -109,8 +109,6 @@ const ContentPage = () => {
       ) : (
         <ContentInfo activeTab={query.status} data={data} />
       )}
-
-
     </section>
   );
 };

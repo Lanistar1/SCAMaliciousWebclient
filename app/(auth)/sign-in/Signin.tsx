@@ -68,7 +68,7 @@ const Signin = () => {
   return (
     <div className="flex h-screen">
       {/* Left Section */}
-      <div className="w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF] flex justify-center items-center">
+      <div className="hidden md:flex w-1/2 bg-gradient-to-b from-[#023A5F] via-[#606CB6] to-[#9493DF]  justify-center items-center">
         <div className="text-center">
           <Image
             src="/assets/images/logo.png"
@@ -80,7 +80,7 @@ const Signin = () => {
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 flex flex-col justify-center items-center bg-gray-100 relative">
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-gray-100 p-6 sm:p-8">
         <Image
           src="/assets/images/logo.png"
           alt="SCAMalicious Logo"
@@ -91,7 +91,7 @@ const Signin = () => {
           Welcome Admin!
         </h2>
 
-        <form className="mt-8 w-1/2 space-y-4" onSubmit= {handleSubmit}>
+        <form className="mt-8 w-full md:w-1/2 space-y-4" onSubmit= {handleSubmit}>
           <div>
             <label className="block text-[#384554]">Email</label>
             <div className="relative mt-1">
@@ -150,14 +150,14 @@ const Signin = () => {
                  " Sign in...."
                 : "Sign in"}
           </button>
-          <div className="flex justify-center items-center mb-3 mt-2">
+          {/* <div className="flex justify-center items-center mb-3 mt-2">
             <p className="text-sm font-normal text-[#384554]">
               Do not have an account?
             </p>
             <Link href="/sign-up">
               <p className="text-sm font-medium text-[#A52A2A] ml-1">Sign Up</p>
             </Link>
-          </div>
+          </div> */}
         </form>
 
         {/* Bottom Right Image */}

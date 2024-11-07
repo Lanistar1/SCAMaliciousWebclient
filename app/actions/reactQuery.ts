@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import {
   signIn,
   signUp,
@@ -21,8 +21,13 @@ import {
   unblockUser,
   blockAdmin,
   unblockAdmin,
+  createAdmin,
+  fetchUnwantedKeyword,
+  createKeywords,
 } from "./api";
 import {
+  addAdmin,
+  addKeywords,
   ApprovePostType,
   BlockUserType,
   changePass,
@@ -285,7 +290,8 @@ export const usePostApprove = () => {
 export const useMember = (query: userQuery) => {
   return useQuery({
     queryKey: [],
-    queryFn: () => fetchMember(query),
+    queryFn: () => fetchMember(query), 
+    placeholderData: keepPreviousData,
   });
 };
 
@@ -365,6 +371,65 @@ export const useUnblockAdmin = () => {
     onError: (error) => {
       // Show error toast notification
       return toast.error(`Error occurred: ${error.message}`);
+    },
+  });
+};
+
+// ======= create new admin =========
+export const useCreateAdmin = (token: string) => {
+  return useMutation({
+    mutationFn: async (data: addAdmin) => createAdmin(data, token),
+    onSuccess: () => {
+      // Show success toast notification
+      toast.success(`Admin added successfully.`);
+    },
+    onError: (error: any) => {
+      // Show error toast notification
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If the server returned a specific message, display it
+        toast.error(`Error: ${error.response.data.message}`);
+      } else {
+        // If the error does not have a response message, display the generic error message
+        toast.error(`Error occurred: ${error.message}`);
+      }
+    },
+  });
+};
+
+
+// ======= fetch admin unwanted keyword =========
+export const useUnwantedKeyword = (query: userQuery) => {
+  return useQuery({
+    queryKey: [],
+    queryFn: () => fetchUnwantedKeyword(query),
+  });
+};
+
+// ======= create unwanted keywords =========
+export const useCreateKeywords = (token: string) => {
+  return useMutation({
+    mutationFn: async (data: addKeywords) => createKeywords(data, token),
+    onSuccess: () => {
+      // Show success toast notification
+      toast.success(`Unwanted keywords added successfully.`);
+    },
+    onError: (error: any) => {
+      // Show error toast notification
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If the server returned a specific message, display it
+        toast.error(`Error: ${error.response.data.message}`);
+      } else {
+        // If the error does not have a response message, display the generic error message
+        toast.error(`Error occurred: ${error.message}`);
+      }
     },
   });
 };
