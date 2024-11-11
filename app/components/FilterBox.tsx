@@ -77,29 +77,6 @@ const FilterModal = ({ onClose, onFilter }: FilterModalProps) => {
             />
           </div>
         </div>
-        <div>
-          <label htmlFor="from-date" className="block text-[#09192CCC]  font-[14px]">
-            Date Registered
-          </label>
-          <div className="mt-1 flex gap-[20px]">
-            <input
-              type="date"
-              id="from-date"
-              placeholder="from-date"
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-              className="block  w-[130px] h-[50px] rounded-[5px] px-2 border-[#A52A2A1A] border-[1px] shadow-sm sm:text-sm"
-            />
-          
-            <input
-              type="date"
-              id="to-date"
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-              className="block  w-[130px] h-[50px] rounded-[5px] px-2 border-[#A52A2A1A] border-[1px] shadow-sm sm:text-sm"
-            />
-          </div>
-        </div>
       </div>
       <div className="mt-3 flex justify-center  items-center ">
         {/* <Button variant="outline" onClick={onClose}>

@@ -127,7 +127,9 @@ const Settings = () => {
     status: "active",
     page: 1,
     limit: 6,
-    token: "",
+    token: token || "",
+    dateRegisteredfrom: 0,
+    dateRegisteredto: 0,
   });
 
   useEffect(() => {
@@ -143,16 +145,7 @@ const Settings = () => {
     data: content,
     isLoading,
     isError,
-  } = useUnwantedKeyword(
-    query.token && query.status
-      ? query
-      : {
-          status: "active",
-          page: 1,
-          limit: 6,
-          token: "",
-        }
-  );
+  } = useUnwantedKeyword(query);
 
   const keywords = content?.data?.keyword || [];
   // ============= end ========================

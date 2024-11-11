@@ -209,6 +209,8 @@ export type userQuery = {
   page: number;
   limit: number;
   token: string;
+  dateRegisteredfrom: number;
+  dateRegisteredto: number;
 };
 
 export type BlockUserType = {
