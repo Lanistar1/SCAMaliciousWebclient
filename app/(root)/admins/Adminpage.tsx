@@ -11,12 +11,18 @@ import { useAuthContext } from "@/app/context/AuthContext";
 
 const Adminpage = () => {
   const { token } = useAuthContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+
+  const totalPages = 200;
 
   const [query, setQuery] = useState({
     status: "active",
-    page: 1,
-    limit: 6,
-    token: "",
+    page: currentPage,
+    limit: 3,
+    token: token || "",
     dateRegisteredfrom: 0,
     dateRegisteredto: 0,
   });
@@ -30,8 +36,15 @@ const Adminpage = () => {
     }
   }, [token]);
 
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  // Update `query` when `currentPage` changes, ensuring a new reference
+  useEffect(() => {
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      page: currentPage,
+      search: searchQuery,
+    }));
+    console.log("This is page no:", currentPage);
+  }, [currentPage, searchQuery]);
 
   const [filters, setFilters] = useState<Filters>({
     status: "Active",
@@ -53,39 +66,39 @@ const Adminpage = () => {
     setExports(newExports);
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 200;
-
+  //Update `currentPage` when pagination changes
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const handleSearch = useCallback(() => {
-    
-    console.log("coming soon");
+  //========Handle search submission=========
+  const handleSearch = useCallback((searchTerm: string) => {
+    setSearchQuery(searchTerm);
+    setCurrentPage(1); // Reset to first page on new search
+    console.log(searchTerm);
   }, []);
 
   const {
     data: content,
     isLoading,
     isError,
-  } = useAdmin(
-    query.token && query.status
-      ? query
-      : {
-          status: "active",
-          page: 1,
-          limit: 6,
-          token: "",
-        }
-  );
+    refetch,
+  } = useAdmin(query);
+
+  // Refetch data whenever `query` updates
+  useEffect(() => {
+    refetch();
+  }, [query, refetch]);
 
   const data = content?.data || [];
 
   return (
     <section className="flex flex-col px-12 gap-4 pt-6">
       <div className="flex justify-end ">
-        <SearchBar onSearch={handleSearch} onFilter={() => setIsFilterModalOpen(true)} />
+        <SearchBar
+          onSearch={handleSearch}
+          onFilter={() => setIsFilterModalOpen(true)}
+        />
       </div>
 
       {/* Loading and Error Handling */}

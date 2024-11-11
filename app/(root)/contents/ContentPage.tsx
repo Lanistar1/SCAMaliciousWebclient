@@ -1,34 +1,51 @@
 "use client ";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ContentInfo from "./ContentInfo";
 import Image from "next/image";
 import { useExperience } from "@/app/actions/reactQuery";
 import { useAuthContext } from "@/app/context/AuthContext";
 import useDebounce from "@/app/actions/debounce";
+import PaginationBar from "@/app/components/PaginationBar";
 
 const ContentPage = () => {
   const [activeTab, setActiveTab] = useState("Awaiting Approval");
   const tabs = ["Pending", "Approved", "Declined", "Revoked"];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  const totalPages = 200;
 
   const { token } = useAuthContext();
+
   const [query, setQuery] = useState({
     status: "Pending",
-    page: 1,
-    limit: 9,
-    token: "",
+    page: currentPage,
+    limit: 3,
+    token: token || "",
   });
 
-  // Debounced value for query status
-  const debouncedStatus = useDebounce(activeTab, 300);
-
+  // Update token in query if it changes
   useEffect(() => {
     if (token) {
       setQuery((prevQuery) => ({
         ...prevQuery,
-        token: token,
+        token,
       }));
     }
   }, [token]);
+
+  // Update `query` when `currentPage` changes, ensuring a new reference
+  useEffect(() => {
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      page: currentPage,
+      search: searchQuery,
+    }));
+    console.log("This is page no:", currentPage)
+  }, [currentPage, searchQuery]);
+
+  // Debounced value for query status
+  const debouncedStatus = useDebounce(activeTab, 300);
 
   useEffect(() => {
     let status = "Pending";
@@ -54,15 +71,19 @@ const ContentPage = () => {
     }));
   }, [debouncedStatus]);
 
+  //=======Trigger data fetching whenever `query` changes===========
   const {
     data: content,
     isLoading,
     isError,
-  } = useExperience(
-    query.token && query.status
-      ? query
-      : { status: "", page: 1, limit: 9, token: "" }
-  );
+  } = useExperience(query);
+
+  //===========Update `currentPage` when pagination changes==========
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    console.log(page);
+  }, []);
+
 
   const data = content?.data || [];
   // const tabs = ["Reported Post", "Active", "Removed"];
@@ -109,6 +130,13 @@ const ContentPage = () => {
       ) : (
         <ContentInfo activeTab={query.status} data={data} />
       )}
+
+      {/* Page Pagination */}
+      <PaginationBar
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 };

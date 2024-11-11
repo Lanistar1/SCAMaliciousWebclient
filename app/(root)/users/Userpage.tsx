@@ -27,6 +27,9 @@ const Userpage = () => {
     search: searchQuery,
   }));
 
+  // Trigger data fetching whenever `query` changes
+  const { data: content, isLoading, isError, isPlaceholderData, refetch } = useMember(query);
+
   // Update token in query if it changes
   useEffect(() => {
     if (token) {
@@ -44,16 +47,22 @@ const Userpage = () => {
       page: currentPage,
       search: searchQuery,
     }));
+    console.log("This is page no:", currentPage)
   }, [currentPage, searchQuery]);
 
-  // Trigger data fetching whenever `query` changes
-  const { data: content, isLoading, isError, isPlaceholderData } = useMember(query);
+  // Refetch data whenever `query` updates
+  useEffect(() => {
+    refetch();
+  }, [query, refetch]);
 
-  // Update `currentPage` when pagination changes
+  
+
+  //Update `currentPage` when pagination changes
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     console.log(page);
   }, []);
+
 
   // Handle search submission
   const handleSearch = useCallback((searchTerm: string) => {

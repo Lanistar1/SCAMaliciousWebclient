@@ -1,19 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ReportInfo from "./ReportInfo";
 import Image from "next/image";
 import { useReports } from "@/app/actions/reactQuery";
 import { useAuthContext } from "@/app/context/AuthContext";
 import useDebounce from "@/app/actions/debounce";
+import PaginationBar from "@/app/components/PaginationBar";
 
 const ReportPage = () => {
   const [activeTab, setActiveTab] = useState("Reported Post");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const totalPages = 200;
   const { token } = useAuthContext();
   const [query, setQuery] = useState({
     status: "Pending",
-    page: 1,
-    limit: 9,
-    token: "",
+    page: currentPage,
+    limit: 3,
+    token: token || "",
   });
 
   // Debounced value for query status
@@ -27,6 +32,16 @@ const ReportPage = () => {
       }));
     }
   }, [token]);
+
+  //========Update `query` when `currentPage` changes, ensuring a new reference==========
+  useEffect(() => {
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      page: currentPage,
+      search: searchQuery,
+    }));
+    console.log("This is page no:", currentPage);
+  }, [currentPage, searchQuery]);
 
   useEffect(() => {
     let status = "Pending";
@@ -49,15 +64,18 @@ const ReportPage = () => {
     }));
   }, [debouncedStatus]);
 
-  const {
-    data: content,
-    isLoading,
-    isError,
-  } = useReports(
-    query.token && query.status
-      ? query
-      : { status: "", page: 1, limit: 9, token: "" }
-  );
+  const { data: content, isLoading, isError, refetch } = useReports(query);
+
+  //===========Update `currentPage` when pagination changes==========
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    console.log(page);
+  }, []);
+
+  // Refetch data whenever `query` updates
+  useEffect(() => {
+    refetch();
+  }, [query, refetch]);
 
   const data = content?.data || [];
   const tabs = ["Reported Post", "Active", "Removed"];
@@ -105,6 +123,12 @@ const ReportPage = () => {
         <ReportInfo activeTab={query.status} data={data} />
       )}
 
+      {/* Page Pagination */}
+      <PaginationBar
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 };
