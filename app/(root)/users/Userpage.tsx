@@ -15,8 +15,6 @@ const Userpage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   
   const totalPages = 200;
-  let page = 1;
-
 
   // Query state for data fetching
   const [query, setQuery] = useState(() => ({
@@ -28,6 +26,9 @@ const Userpage = () => {
     dateRegisteredto: 0,
     search: searchQuery,
   }));
+
+  // Trigger data fetching whenever `query` changes
+  const { data: content, isLoading, isError, isPlaceholderData, refetch } = useMember(query);
 
   // Update token in query if it changes
   useEffect(() => {
@@ -49,23 +50,19 @@ const Userpage = () => {
     console.log("This is page no:", currentPage)
   }, [currentPage, searchQuery]);
 
-  // Trigger data fetching whenever `query` changes
-  const { data: content, isLoading, isError, isPlaceholderData } = useMember(query);
+  // Refetch data whenever `query` updates
+  useEffect(() => {
+    refetch();
+  }, [query, refetch]);
 
-  // Update `currentPage` when pagination changes
-  // const handlePageChange = useCallback((page: number) => {
-  //   setCurrentPage(page);
-  //   console.log(page);
-  // }, []);
+  
 
-  const handlePageChange = useCallback(
-    (newPage: number) => {
-      //page = newPage; // Assign the new page value to the declared page
-      setCurrentPage(newPage); // Update the state
-      console.log('Page changed to:', newPage); // Log the page
-    },
-    [] // No dependencies, so this will not change unless explicitly updated
-  );
+  //Update `currentPage` when pagination changes
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    console.log(page);
+  }, []);
+
 
   // Handle search submission
   const handleSearch = useCallback((searchTerm: string) => {
