@@ -48,7 +48,7 @@ const ReportBox = ({ onClose,action,id }: ReportProps ) => {
       };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg p-6 w-[523px] h-[437px] rounded-[10px] gap-4">
+    <div className="flex flex-col bg-white shadow-lg p-6 w-[350px] md:w-[523px] h-[437px] rounded-[10px] gap-4">
       
       <div className="flex flex-row justify-start items-center"> 
         <h2 className="font-[20px] text-[#09192CCC]  ">{action}</h2>

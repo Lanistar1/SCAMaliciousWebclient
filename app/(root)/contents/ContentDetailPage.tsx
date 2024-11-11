@@ -6,6 +6,7 @@ import { useExperienceId } from "@/app/actions/reactQuery";
 import { ExperiencePostDetail } from "@/app/actions/type";
 import { useAuthContext } from "@/app/context/AuthContext";
 
+
 interface Props {
   id: string;
   openModal: (action: string) => void;
@@ -51,15 +52,23 @@ const ContentDetailPage = ({ id, openModal }: Props) => {
   if (isError || !reportData) {
     return <div>Error loading content data. Please try again later.</div>; // Handle error states
   }
+
+  // Format dateTime to date string
+  const formattedDate = new Date(reportData?.createdAt || '').toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <section
       className={`flex flex-col justify-between bg-white w-[800px] rounded-[10px] mx-12 my-8 px-12 py-8 `}
     >
       <div className="flex flex-col gap-y-4">
         <div className="flex justify-between border-b ">
-          <div className="text-[12px] mt-3">{reportData.createdAt}</div>
+          <div className="text-[12px] mt-3">{formattedDate}</div>
           <div
-            className={`w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}
+            className={`w-[100px] md:w-[150px] h-[30px] rounded-[33px] flex justify-center items-center bg-gray-100 text-xs  px-4 mb-3 `}
           >
             {reportData.status}
           </div>
@@ -161,7 +170,7 @@ const ContentDetailPage = ({ id, openModal }: Props) => {
         )} */}
       </div>
       {showButton && (
-        <div className="flex justify-center gap-4 mt-8">
+        <div className="flex flex-col md:flex-row justify-center gap-4 mt-8">
           <button
             onClick={() => openModal("Decline")}
             className="flex justify-center items-center w-[250px] h-[50px] rounded-[5px] bg-[#F3F4F4] text-[09192C]"
