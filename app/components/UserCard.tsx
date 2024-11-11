@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from "next/link";
 import Image from 'next/image';
+import DateFormatter from "@/app/components/DateFormatter";
+
 
 interface UserCardProps {
     id: string;
@@ -32,7 +34,7 @@ const UserCard: React.FC<UserCardProps> = ({
       {/* Email */}
       <div className="text-sm text-[#09192CCC]">{email}</div>
       {/* Date Registered */}
-      <div className="text-sm text-[#09192CCC]">{dateRegistered}</div>
+      <div className="text-sm text-[#09192CCC]"><DateFormatter date={dateRegistered} /></div>
       {/* Last Seen */}
       <div className="text-sm text-[#09192CCC]">{role}</div>
       {/* Status */}

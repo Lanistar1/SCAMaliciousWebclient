@@ -160,7 +160,7 @@ const Settings = () => {
   return (
     <div className="flex flex-col md:flex-row p-12 h-screen">
       {/* Left hand side */}
-      <section className="flex flex-col md:flex-col gap-y-6 w-[30%] border-r text-[#3A4756]">
+      <section className="flex flex-col mx-auto md:flex-col gap-y-6 w-[30%] border-r text-[#3A4756]">
         <div className="flex flex-col gap-y-3 items-start">
           <h1 className="text-[10px] md:text-[16px]">Flagged Keywords</h1>
           <div>
@@ -193,18 +193,18 @@ const Settings = () => {
       </section>
 
       {/* Right hand side */}
-      <section className="pl-24 text-[#3A4756] flex-grow">
+      <section className="pl-24 mt-10 md:mt-0 text-[#3A4756] flex-grow">
         {/* Configure Keywords */}
         {show && (
           <div className="flex flex-col justify-between h-full">
             <div className="flex flex-col gap-4">
               <h1 className="text-xl">Flagged Keywords</h1>
               <div>
-                <p>Add new keyword</p>
+                <p className="text-md">Add new keyword</p>
                 <textarea
                   id="description"
                   placeholder="E.g nigga, hate, love, joy"
-                  className="h-[148px] w-[500px] rounded-[5px] bg-[#FBFBFB] border-[2px] p-5 resize-none"
+                  className="h-[148px] w-[300px] md:w-[500px] rounded-[5px] bg-[#FBFBFB] border-[2px] p-5 resize-none"
                   value={keywordText}
                   onChange={(e) => setKeywordText(e.target.value)}
                 />
@@ -220,7 +220,7 @@ const Settings = () => {
                   keywords.map((keyword: string, index: number) => (
                     <div
                       key={index}
-                      className="flex items-center bg-[#ffffff] text-[#09192C] px-4 py-1 rounded-[10px] border border-[#F3E9E9]"
+                      className="flex items-center bg-[#ffffff] text-[#09192C] px-4 py-1 rounded-[10px] border border-[#F3E9E9] mb-5"
                     >
                       <span className="mr-2 text-center">{keyword}</span>
                       <Image
