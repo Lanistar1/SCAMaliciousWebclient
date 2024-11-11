@@ -8,6 +8,7 @@ import AdminInfo from "@/app/components/AdminInfo";
 import React, { useEffect, useState, useCallback } from "react";
 import { useAdmin } from "@/app/actions/reactQuery";
 import { useAuthContext } from "@/app/context/AuthContext";
+import { saveAs } from "file-saver";
 
 const Adminpage = () => {
   const { token } = useAuthContext();
@@ -15,6 +16,13 @@ const Adminpage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+
+  interface ExportItem {
+    firstname: string;
+    email: string;
+    role: string;
+    createdAt: string; // Adjust this type if `createdAt` is a Date or something else
+  }
 
   const totalPages = 200;
 
@@ -62,9 +70,9 @@ const Adminpage = () => {
     setFilters(newFilters);
   };
 
-  const handleExport = (newExports: Export) => {
-    setExports(newExports);
-  };
+  // const handleExport = (newExports: Export) => {
+  //   setExports(newExports);
+  // };
 
   //Update `currentPage` when pagination changes
   const handlePageChange = (page: number) => {
@@ -78,12 +86,7 @@ const Adminpage = () => {
     console.log(searchTerm);
   }, []);
 
-  const {
-    data: content,
-    isLoading,
-    isError,
-    refetch,
-  } = useAdmin(query);
+  const { data: content, isLoading, isError, refetch } = useAdmin(query);
 
   // Refetch data whenever `query` updates
   useEffect(() => {
@@ -92,12 +95,39 @@ const Adminpage = () => {
 
   const data = content?.data || [];
 
+  //===========Export CSV=================
+  const handleExport = useCallback(() => {
+    // Assuming `content.data` is the array of data to be exported
+    const dataToExport: ExportItem[] = content?.data || [];
+
+    // Convert data to CSV format
+    const csvHeaders = ["Name", "Email", "Role", "Date Created"]; // Adjust as per the data fields you want
+    const csvRows = dataToExport.map((item) => [
+      item.firstname,
+      item.email,
+      item.role,
+      item.createdAt, // Replace these with the actual keys in your data
+    ]);
+
+    // Add header row
+    const csvContent = [csvHeaders, ...csvRows]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    // Create a Blob from the CSV string
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+
+    // Use FileSaver.js to trigger download
+    saveAs(blob, "export.csv");
+  }, [content]);
+
   return (
     <section className="flex flex-col px-12 gap-4 pt-6">
       <div className="flex justify-end ">
         <SearchBar
           onSearch={handleSearch}
           onFilter={() => setIsFilterModalOpen(true)}
+          onExport={handleExport}
         />
       </div>
 
@@ -122,17 +152,6 @@ const Adminpage = () => {
         <FilterModal
           onClose={() => setIsFilterModalOpen(false)}
           onFilter={handleFilter}
-        />
-      </ModalWrapper>
-
-      {/* export modal */}
-      <ModalWrapper
-        isOpen={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-      >
-        <ExportFile
-          onClose={() => setIsExportModalOpen(false)}
-          onFilter={handleExport}
         />
       </ModalWrapper>
 

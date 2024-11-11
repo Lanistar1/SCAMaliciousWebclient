@@ -5,9 +5,10 @@ import Image from "next/image";
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
   onFilter: () => void;
+  onExport: (data: any[]) => void; // Accept data to be exported as a prop
 }
 
-const SearchBar = ({ onSearch, onFilter }: SearchBarProps) => {
+const SearchBar = ({ onSearch, onFilter, onExport }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Trigger search when the button is clicked
@@ -49,7 +50,7 @@ const SearchBar = ({ onSearch, onFilter }: SearchBarProps) => {
 
       <button
         className="flex items-center h-[50px] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px]"
-        onClick={onFilter}
+        onClick={() => onExport([])} // Trigger the export with the page data
       >
         <Image
           src="/assets/icons/exportIcon.png"
