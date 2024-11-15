@@ -1,45 +1,55 @@
-"use client"
+
+
+"use client";
 import { useState } from "react";
-import Image from 'next/image'
-
-
+import Image from "next/image";
+import { useAuthContext } from "@/app/context/AuthContext";
+import { useBlockUser } from "@/app/actions/reactQuery";
 
 interface BlockProps {
   onClose: () => void;
-  onSetReason: ( reason:Reason) => void;
+  userId: string;
+  onSetReason: (reason: Reason) => void;
 }
 
 export interface Reason {
   reason: "Active" | "Blocked";
   description: string;
-  
 }
 
-const BlockUser = ({ onClose, onSetReason }: BlockProps ) => {
-      const [reason, setReason] = useState<Reason['reason']>('Active')
-      const [description,setDescription]=useState<Reason['description']>('')
+const BlockUser = ({ userId, onClose, onSetReason }: BlockProps) => {
+  const { token } = useAuthContext();
+  const [reason, setReason] = useState<Reason["reason"]>("Active");
+  const [description, setDescription] = useState<Reason["description"]>("");
+  const { mutateAsync: blockUser, isPending: isload } = useBlockUser();
 
-      const isAllFilled = reason && description.trim() !== "";
+  const isAllFilled = reason && description.trim() !== "";
 
- 
-    const handleReason = () => {
-        if (isAllFilled) {
-          onSetReason({ reason, description });
-          onClose();
-        }
-      };
+  const handleBlock = () => {
+    blockUser({ userId, token });
+
+    onClose();
+  };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg p-6 w-[340px] h-[437px] rounded-[10px] gap-4">
-      
-      <div className="flex flex-row justify-start items-center"> 
-        <Image src="/assets/icons/Group 1000002417.png" alt="Filter Icon" width={18} height={12.5} className="w-[18px] h-[12.5px] mr-2" />
+    <div className="flex flex-col justify-between bg-white shadow-lg p-6 px-6  rounded-[10px] gap-4">
+      <div className="flex flex-row justify-start items-center">
+        <Image
+          src="/assets/icons/Group 1000002417.png"
+          alt="Filter Icon"
+          width={18}
+          height={12.5}
+          className="w-[18px] h-[12.5px] mr-2"
+        />
         <h2 className="font-[20px] text-[#09192CCC]  ">Block User</h2>
       </div>
-     
+
       <div className="space-y-4">
-        <div>
-          <label htmlFor="reason" className="block text-[#09192CCC] font-[14px]">
+        {/* <div>
+          <label
+            htmlFor="reason"
+            className="block text-[#09192CCC] font-[14px]"
+          >
             Reason
           </label>
           <select
@@ -52,8 +62,11 @@ const BlockUser = ({ onClose, onSetReason }: BlockProps ) => {
             <option value="Blocked">Blocked</option>
           </select>
         </div>
-         <div>
-          <label htmlFor="description" className="block text-[#09192CCC] font-[14px]">
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-[#09192CCC] font-[14px]"
+          >
             Description
           </label>
           <div className="mt-1 flex gap-[20px]">
@@ -65,17 +78,31 @@ const BlockUser = ({ onClose, onSetReason }: BlockProps ) => {
               className="block w-[280px] h-[148px] rounded-[5px] px-2 border-[#A52A2A1A] border-[1px] shadow-sm sm:text-sm resize-none"
             />
           </div>
-        </div>
-    
+        </div> */}
+        <p className="text-[14px] text-center">
+          Are you sure you want to block this user?
+        </p>
       </div>
-      <div className="mt-3 flex justify-center  items-center ">
-        {/* <Button variant="outline" onClick={onClose}>
+      <div className="mt-3 flex justify-center gap-3  items-center ">
+        {/* <button className=""  onClick={onClose}>
           Cancel
-        </Button> */}
-        <button onClick={handleReason} className={`w-[280px] h-[60px] ${isAllFilled? "bg-[#A52A2A]" :"bg-[#09192C33]"} rounded-[5px]`}>Block User</button>
+        </button> */}
+
+        <button
+          onClick={onClose}
+          className="bg-[#cccccc] px-5 py-3 rounded-[5px] text-black"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleBlock}
+          className="bg-[#A52A2A] px-7 py-3 rounded-[5px] text-white"
+        >
+          Block
+        </button>
       </div>
     </div>
   );
-}
+};
 
-export default  BlockUser
+export default BlockUser;

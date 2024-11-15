@@ -125,7 +125,7 @@ const ContentInfo = ({ data, activeTab }: ContentInfoProps) => {
   };
 
   return (
-    <div className="flex flex-col md:grid grid-cols-3 gap-10 py-4">
+    <div className="flex flex-col md:grid grid-cols-3 gap-5 py-4">
       {data.map((card) => (
         <ContentCard
           key={card._id}

@@ -9,13 +9,13 @@ interface FilterModalProps {
 }
 
 export interface Filters {
-  status: "Active" | "Blocked";
+  status: "active" | "blocked";
   fromDate: string;
   toDate: string;
 }
 
 const FilterModal = ({ onClose, onFilter }: FilterModalProps) => {
-  const [status, setStatus] = useState<Filters["status"]>("Active");
+  const [status, setStatus] = useState<Filters["status"]>("active");
   const [fromDate, setFromDate] = useState<Filters["fromDate"]>("");
   const [toDate, setToDate] = useState<Filters["toDate"]>("");
 

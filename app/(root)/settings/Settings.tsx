@@ -128,8 +128,8 @@ const Settings = () => {
     page: 1,
     limit: 6,
     token: token || "",
-    dateRegisteredfrom: 0,
-    dateRegisteredto: 0,
+    dateRegisteredfrom: "",
+    dateRegisteredto: "",
   });
 
   useEffect(() => {

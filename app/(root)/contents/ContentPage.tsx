@@ -89,7 +89,7 @@ const ContentPage = () => {
   // const tabs = ["Reported Post", "Active", "Removed"];
 
   return (
-    <section className="bg-white rounded-[10px] mx-12 my-8 px-12 py-8">
+    <section className="bg-white rounded-[10px] mx-12 my-8 px-6 md:px-12 py-8">
       <div className="flex justify-between items-end border-b">
         <div className="flex space-x-4">
           {tabs.map((tab) => (

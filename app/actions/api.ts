@@ -183,11 +183,11 @@ export const approvePost = async (id: string, token: string) => {
 
 //===========fetching user list ==============
 export const fetchMember = async (queryKey: userQuery) => {
-  const { status, page, limit, token } = queryKey;
+  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
   console.log(queryKey);
 
   const response = await axios.get(`${apiUrl}/auth/admin/users`, {
-    params: { status, page, limit },
+    params: { status, page, limit, dateRegisteredfrom, dateRegisteredto },
     headers: {
       Authorization: token,
     },
@@ -199,11 +199,11 @@ export const fetchMember = async (queryKey: userQuery) => {
 
 //===========fetching admin list ==============
 export const fetchAdmin = async (queryKey: userQuery) => {
-  const { status, page, limit, token } = queryKey;
+  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
   console.log(queryKey);
 
   const response = await axios.get(`${apiUrl}/auth/admins`, {
-    params: { status, page, limit },
+    params: { status, page, limit, dateRegisteredfrom, dateRegisteredto },
     headers: {
       Authorization: token,
     },
@@ -320,4 +320,25 @@ export const createKeywords = async (keywordRequest: addKeywords, token: string)
     },
   );
   return res.data;
+};
+
+
+// ====== fetch user by ID =========
+export const fetchUserById = async (id: string, token: string) => {
+  const response = await axios.get(`${apiUrl}/auth/admin/users/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return response.data;
+};
+
+// ====== fetch admin by ID =========
+export const fetchAdminById = async (id: string, token: string) => {
+  const response = await axios.get(`${apiUrl}/auth/admins/one/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return response.data;
 };
