@@ -1,6 +1,5 @@
 "use client";
 import FilterModal, { Filters } from "@/app/components/FilterBox";
-import ExportFile, { Export } from "@/app/components/ExportFile";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import PaginationBar from "@/app/components/PaginationBar";
 import SearchBar from "@/app/components/SearchBar";
@@ -14,6 +13,7 @@ const Userpage = () => {
   const { token } = useAuthContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [appliedFilters, setAppliedFilters] = useState<Filters | null>(null);
 
   const totalPages = 200;
 
@@ -25,17 +25,30 @@ const Userpage = () => {
   }
 
   // Query state for data fetching
-  const [query, setQuery] = useState(() => ({
-    status: "active",
-    page: currentPage,
-    limit: 3,
-    token: token || "",
-    dateRegisteredfrom: 0,
-    dateRegisteredto: 0,
-    search: searchQuery,
-  }));
+  // const [query, setQuery] = useState(() => ({
+  //   status: "active",
+  //   page: currentPage,
+  //   limit: 6,
+  //   token: token || "",
+  //   dateRegisteredfrom: "",
+  //   dateRegisteredto: "",
+  //   search: searchQuery,
+  // }));
 
-  // Trigger data fetching whenever `query` changes
+  const initialQuery = {
+    status: "active",
+    page: 1,
+    limit: 6,
+    token: token || "",
+    dateRegisteredfrom: "",
+    dateRegisteredto: "",
+    search: "",
+  };
+
+  // Query state for data fetching
+  const [query, setQuery] = useState(initialQuery);
+
+  //==============Trigger data fetching whenever `query` changes ==============
   const {
     data: content,
     isLoading,
@@ -44,7 +57,7 @@ const Userpage = () => {
     refetch,
   } = useMember(query);
 
-  // Update token in query if it changes
+  //========== Update token in query if it changes ===========
   useEffect(() => {
     if (token) {
       setQuery((prevQuery) => ({
@@ -54,7 +67,7 @@ const Userpage = () => {
     }
   }, [token]);
 
-  // Update `query` when `currentPage` changes, ensuring a new reference
+  //========== Update `query` when `currentPage` changes, ensuring a new reference ===========
   useEffect(() => {
     setQuery((prevQuery) => ({
       ...prevQuery,
@@ -64,18 +77,18 @@ const Userpage = () => {
     console.log("This is page no:", currentPage);
   }, [currentPage, searchQuery]);
 
-  // Refetch data whenever `query` updates
+  //========== Refetch data whenever `query` updates ===============
   useEffect(() => {
     refetch();
   }, [query, refetch]);
 
-  //Update `currentPage` when pagination changes
+  //===========Update `currentPage` when pagination changes ================
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     console.log(page);
   }, []);
 
-  // Handle search submission
+  //========= Handle search submission ==================
   const handleSearch = useCallback((searchTerm: string) => {
     setSearchQuery(searchTerm);
     setCurrentPage(1); // Reset to first page on new search
@@ -83,38 +96,35 @@ const Userpage = () => {
   }, []);
 
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
-  const [filters, setFilters] = useState<Filters>({
-    status: "Active",
-    fromDate: "",
-    toDate: "",
-  });
-
-  const [exports, setExports] = useState<Export>({
-    status: "Active",
-    fromDate: "",
-    toDate: "",
-  });
-
-  //const handleFilter = (newFilters: Filters) => setFilters(newFilters);
-
+  // ===========Handle filter =====================
   const handleFilter = (filters: Filters) => {
     setQuery((prevQuery) => ({
       ...prevQuery,
       status: filters.status,
-      // Store date as timestamp in state (initial state uses `0`)
+      // Extract only the date portion (YYYY-MM-DD) or set to an empty string if not provided
       dateRegisteredfrom: filters.fromDate
-        ? new Date(filters.fromDate).getTime()
-        : 0,
-      dateRegisteredto: filters.toDate ? new Date(filters.toDate).getTime() : 0,
+        ? new Date(filters.fromDate).toISOString().slice(0, 10)
+        : "",
+      dateRegisteredto: filters.toDate
+        ? new Date(filters.toDate).toISOString().slice(0, 10)
+        : "",
     }));
 
+    setAppliedFilters(filters);
     setIsFilterModalOpen(false);
   };
 
   const data = content?.data || [];
 
+  // Reset filter and query
+  const handleReset = () => {
+    setQuery(initialQuery);
+    setAppliedFilters(null);
+    setCurrentPage(1);
+  };
+
+  // ============ export files as CSV =====================
   const handleExport = useCallback(() => {
     // Assuming `content.data` is the array of data to be exported
     const dataToExport: ExportItem[] = content?.data || [];
@@ -149,6 +159,24 @@ const Userpage = () => {
           onExport={handleExport}
         />
       </div>
+
+      {/* Applied Filters Display */}
+      {appliedFilters && (
+        <div className="flex justify-between items-center my-4 p-2 bg-gray-200 rounded">
+          <p>
+            <strong>Applied Filters:</strong>
+            Status: {appliedFilters.status || "Any"}, Date From:{" "}
+            {appliedFilters.fromDate || "Any"}, Date To:{" "}
+            {appliedFilters.toDate || "Any"}
+          </p>
+          <button
+            onClick={handleReset}
+            className="px-4 py-2 bg-red-500 text-white rounded"
+          >
+            Reset
+          </button>
+        </div>
+      )}
 
       {/* Loading and Error Handling */}
       {isLoading ? (

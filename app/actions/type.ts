@@ -209,8 +209,8 @@ export type userQuery = {
   page: number;
   limit: number;
   token: string;
-  dateRegisteredfrom: number;
-  dateRegisteredto: number;
+  dateRegisteredfrom: string;
+  dateRegisteredto: string;
 };
 
 export type BlockUserType = {
@@ -235,4 +235,9 @@ export type KeywordResponse = {
 
 export type addKeywords = {
   keyword: string[];
+}
+
+// ========== query key for get user and admin by ID =======
+export enum User_Query_Keys {
+  USER_ID = "id",
 }

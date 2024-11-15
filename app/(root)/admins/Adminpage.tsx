@@ -1,6 +1,5 @@
 "use client";
 import FilterModal, { Filters } from "@/app/components/FilterBox";
-import ExportFile, { Export } from "@/app/components/ExportFile";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import PaginationBar from "@/app/components/PaginationBar";
 import SearchBar from "@/app/components/SearchBar";
@@ -15,7 +14,7 @@ const Adminpage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState<Filters | null>(null);
 
   interface ExportItem {
     firstname: string;
@@ -26,14 +25,27 @@ const Adminpage = () => {
 
   const totalPages = 200;
 
-  const [query, setQuery] = useState({
+  // const [query, setQuery] = useState({
+  //   status: "active",
+  //   page: currentPage,
+  //   limit: 3,
+  //   token: token || "",
+  //   dateRegisteredfrom: "",
+  //   dateRegisteredto: "",
+  // });
+
+  const initialQuery = {
     status: "active",
-    page: currentPage,
-    limit: 3,
+    page: 1,
+    limit: 6,
     token: token || "",
-    dateRegisteredfrom: 0,
-    dateRegisteredto: 0,
-  });
+    dateRegisteredfrom: "",
+    dateRegisteredto: "",
+    search: "",
+  };
+
+  // Query state for data fetching
+  const [query, setQuery] = useState(initialQuery);
 
   useEffect(() => {
     if (token) {
@@ -54,25 +66,23 @@ const Adminpage = () => {
     console.log("This is page no:", currentPage);
   }, [currentPage, searchQuery]);
 
-  const [filters, setFilters] = useState<Filters>({
-    status: "Active",
-    fromDate: "",
-    toDate: "",
-  });
+  // ===========Handle filter =====================
+  const handleFilter = (filters: Filters) => {
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      status: filters.status,
+      // Extract only the date portion (YYYY-MM-DD) or set to an empty string if not provided
+      dateRegisteredfrom: filters.fromDate
+        ? new Date(filters.fromDate).toISOString().slice(0, 10)
+        : "",
+      dateRegisteredto: filters.toDate
+        ? new Date(filters.toDate).toISOString().slice(0, 10)
+        : "",
+    }));
 
-  const [exports, setExports] = useState<Export>({
-    status: "Active",
-    fromDate: "",
-    toDate: "",
-  });
-
-  const handleFilter = (newFilters: Filters) => {
-    setFilters(newFilters);
+    setAppliedFilters(filters);
+    setIsFilterModalOpen(false);
   };
-
-  // const handleExport = (newExports: Export) => {
-  //   setExports(newExports);
-  // };
 
   //Update `currentPage` when pagination changes
   const handlePageChange = (page: number) => {
@@ -94,6 +104,13 @@ const Adminpage = () => {
   }, [query, refetch]);
 
   const data = content?.data || [];
+
+  // Reset filter and query
+  const handleReset = () => {
+    setQuery(initialQuery);
+    setAppliedFilters(null);
+    setCurrentPage(1);
+  };
 
   //===========Export CSV=================
   const handleExport = useCallback(() => {
@@ -130,6 +147,24 @@ const Adminpage = () => {
           onExport={handleExport}
         />
       </div>
+
+      {/* Applied Filters Display */}
+      {appliedFilters && (
+        <div className="flex justify-between items-center my-4 p-2 bg-gray-200 rounded">
+          <p>
+            <strong>Applied Filters:</strong>
+            Status: {appliedFilters.status || "Any"}, Date From:{" "}
+            {appliedFilters.fromDate || "Any"}, Date To:{" "}
+            {appliedFilters.toDate || "Any"}
+          </p>
+          <button
+            onClick={handleReset}
+            className="px-4 py-2 bg-red-500 text-white rounded"
+          >
+            Reset
+          </button>
+        </div>
+      )}
 
       {/* Loading and Error Handling */}
       {isLoading ? (

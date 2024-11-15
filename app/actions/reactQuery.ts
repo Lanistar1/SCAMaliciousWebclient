@@ -24,6 +24,8 @@ import {
   createAdmin,
   fetchUnwantedKeyword,
   createKeywords,
+  fetchUserById,
+  fetchAdminById,
 } from "./api";
 import {
   addAdmin,
@@ -41,6 +43,7 @@ import {
   Query_Keys,
   reportQuery,
   resetPass,
+  User_Query_Keys,
   userProfile,
   userQuery,
 } from "./type";
@@ -431,5 +434,22 @@ export const useCreateKeywords = (token: string) => {
         toast.error(`Error occurred: ${error.message}`);
       }
     },
+  });
+};
+
+
+// =========== get user by ID ===============
+export const useUserId = (id: string, token: string) => {
+  return useQuery({
+    queryKey: [User_Query_Keys.USER_ID, id],
+    queryFn: () => fetchUserById(id, token),
+  });
+};
+
+// =========== get admin by ID ===============
+export const useAdminId = (id: string, token: string) => {
+  return useQuery({
+    queryKey: [User_Query_Keys.USER_ID, id],
+    queryFn: () => fetchAdminById(id, token),
   });
 };
