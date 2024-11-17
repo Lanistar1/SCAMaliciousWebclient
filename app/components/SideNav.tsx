@@ -29,7 +29,7 @@ export default function SideNav() {
   const handleLinkClick = () => setIsSidebarOpen(false);
 
   return (
-    <div className="relative md:flex md:w-[16%] h-screen">
+    <div className="relative md:flex md:w-[19%] h-screen">
       {/* Hamburger Icon for Small Screens */}
       <button
         className="absolute top-4 left-4 z-20 p-2 md:hidden"
@@ -61,7 +61,7 @@ export default function SideNav() {
             <Link
               href={link}
               key={name}
-              className={`flex items-center px-4 py-2 hover:bg-gray-100 ${
+              className={`flex items-center px-4 mr-4 py-2 hover:bg-gray-100 ${
                 pathname === link
                   ? "border-l-4 border-[#A52A2A] bg-gray-100"
                   : ""

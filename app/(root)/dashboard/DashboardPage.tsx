@@ -2,6 +2,7 @@
 "use client";
 import React from "react";
 import LineChart from "@/app/components/linechart";
+import UserEngagement from "@/app/components/UserEngagement";
 
 const DashboardPage = () => {
   return (
@@ -34,8 +35,11 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      <div className="w-full md:w-[900px] h-[300px] ">
-        <LineChart />
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-[700px] h-[300px] ">
+          <LineChart />
+        </div>
+        <UserEngagement />
       </div>
     </div>
   );

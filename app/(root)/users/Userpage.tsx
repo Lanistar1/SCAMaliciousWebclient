@@ -15,7 +15,7 @@ const Userpage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [appliedFilters, setAppliedFilters] = useState<Filters | null>(null);
 
-  const totalPages = 200;
+  // const totalPages = 200;
 
   interface ExportItem {
     firstname: string;
@@ -36,9 +36,9 @@ const Userpage = () => {
   // }));
 
   const initialQuery = {
-    status: "active",
+    status: "",
     page: 1,
-    limit: 6,
+    limit: 5,
     token: token || "",
     dateRegisteredfrom: "",
     dateRegisteredto: "",
@@ -116,6 +116,10 @@ const Userpage = () => {
   };
 
   const data = content?.data || [];
+  const count = content?.totalCount;
+
+  const totalPages = count/5;
+
 
   // Reset filter and query
   const handleReset = () => {
