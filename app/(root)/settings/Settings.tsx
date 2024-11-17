@@ -34,8 +34,6 @@ const Settings = () => {
     email: "",
   });
 
-  
-
   const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
   const { mutateAsync: createAdminAccount, isPending: isCreatingAccount } =
     useCreateAdmin(token);
@@ -105,11 +103,16 @@ const Settings = () => {
       .map((word) => word.trim())
       .filter(Boolean);
 
-    const keywordPayload = { keyword: keywordsArray };
+    // Merge existing keywords with the new keywords
+    const allKeywords = Array.from(new Set([...keywords, ...keywordsArray])); // Removes duplicates
+
+    const keywordPayload = { keyword: allKeywords };
+
+    //const keywordPayload = { keyword: keywordsArray };
 
     try {
       const response = await createKeywords(keywordPayload);
-      
+
       if (response.status !== 201) {
         return toast.error("Failed to create keywords, try again");
       }
@@ -117,8 +120,40 @@ const Settings = () => {
       toast.success("Keywords created successfully.");
 
       setKeywordText(""); // Clear the textarea input field
+
+      // Trigger refetch
+      await refetch();
     } catch (error) {
       console.error("Error creating admin:", error);
+    }
+  };
+
+  // ======== remove keywords endpoint call ==========
+  const handleRemoveKeyword = async (keywordToRemove: string) => {
+    // Remove the selected keyword from the list
+    const updatedKeywords = keywords.filter(
+      (keyword: any) => keyword !== keywordToRemove
+    );
+
+    const keywordPayload = { keyword: updatedKeywords };
+
+    try {
+      const response = await createKeywords(keywordPayload); // Assuming same endpoint as add
+
+      if (response.status !== 201) {
+        toast.error("Failed to remove keyword, try again");
+        return;
+      }
+
+      toast.success("Keyword removed successfully.");
+
+      // Update the local state
+      //setKeywords(updatedKeywords);
+
+      // Optionally refetch the keywords from the server
+      await refetch(); // If you're using React Query or similar library
+    } catch (error) {
+      console.error("Error removing keyword:", error);
     }
   };
 
@@ -145,6 +180,7 @@ const Settings = () => {
     data: content,
     isLoading,
     isError,
+    refetch,
   } = useUnwantedKeyword(query);
 
   const keywords = content?.data?.keyword || [];
@@ -157,8 +193,12 @@ const Settings = () => {
         <div className="flex flex-col gap-y-3 items-start">
           <h1 className="text-[10px] md:text-[16px]">Flagged Keywords</h1>
           <div>
-            <p className="text-[10px] md:text-[14px]">Configure keywords to be flagged</p>
-            <p className="text-[10px] md:text-[14px]">by the system automatically</p>
+            <p className="text-[10px] md:text-[14px]">
+              Configure keywords to be flagged
+            </p>
+            <p className="text-[10px] md:text-[14px]">
+              by the system automatically
+            </p>
           </div>
           <button
             onClick={() => handleToggle("configure")}
@@ -222,6 +262,7 @@ const Settings = () => {
                         height={10}
                         alt="cancel"
                         className="cursor-pointer mt-1"
+                        onClick={() => handleRemoveKeyword(keyword)} // Pass the keyword to be removed
                       />
                     </div>
                   ))

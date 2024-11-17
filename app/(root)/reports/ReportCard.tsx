@@ -5,7 +5,8 @@ import DateFormatter from "@/app/components/DateFormatter";
 
 interface CardProps {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   role: string;
   date: string;
   title: string;
@@ -16,7 +17,8 @@ interface CardProps {
 
 const ReportCard: React.FC<CardProps> = ({
   id,
-  name,
+  firstName,
+  lastName,
   role,
   date,
   title,
@@ -51,17 +53,24 @@ const ReportCard: React.FC<CardProps> = ({
       {/* Top Section */}
       <div className="flex justify-between">
         <div className="flex items-center">
-          <Image
+          {/* <Image
             src="/assets/images/Ellipse 11.png"
             alt={name}
             width={48}
             height={48}
             className="rounded-full "
-          />
+          /> */}
+
+          <div className="flex h-[40px] w-[40px] bg-[#A52A2A] rounded-full justify-center items-center font-bold">
+            {firstName[0]}
+            {lastName[0]}
+          </div>
           <div className="ml-3">
-            <h4 className="text-[#09192CCC] text-sm font-semibold">{name}</h4>
+            <h4 className="text-[#09192CCC] text-sm font-semibold">{firstName} {lastName}</h4>
             <p className="text-gray-500 text-xs">{role}</p>
-            <p className="text-gray-400 text-xs"><DateFormatter date={date} /></p>
+            <p className="text-gray-400 text-xs">
+              <DateFormatter date={date} />
+            </p>
           </div>
         </div>
       </div>
@@ -80,7 +89,9 @@ const ReportCard: React.FC<CardProps> = ({
             width={26}
             height={2}
           />
-          <p className="text-[10px] text-gray-500 md:text-xs">{keywords} Keywords</p>
+          <p className="text-[10px] text-gray-500 md:text-xs">
+            {keywords} Keywords
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <Image

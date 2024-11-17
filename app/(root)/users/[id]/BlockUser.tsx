@@ -1,15 +1,14 @@
-
-
 "use client";
 import { useState } from "react";
 import Image from "next/image";
 import { useAuthContext } from "@/app/context/AuthContext";
-import { useBlockUser } from "@/app/actions/reactQuery";
+import { useBlockUser, useUnblockUser } from "@/app/actions/reactQuery";
 
 interface BlockProps {
   onClose: () => void;
   userId: string;
   onSetReason: (reason: Reason) => void;
+  status: boolean | undefined;
 }
 
 export interface Reason {
@@ -17,17 +16,23 @@ export interface Reason {
   description: string;
 }
 
-const BlockUser = ({ userId, onClose, onSetReason }: BlockProps) => {
+const BlockUser = ({ userId, onClose, onSetReason, status }: BlockProps) => {
   const { token } = useAuthContext();
   const [reason, setReason] = useState<Reason["reason"]>("Active");
   const [description, setDescription] = useState<Reason["description"]>("");
   const { mutateAsync: blockUser, isPending: isload } = useBlockUser();
+  const { mutateAsync: unBlockAdmin, isPending: loading } = useUnblockUser();
 
   const isAllFilled = reason && description.trim() !== "";
 
   const handleBlock = () => {
     blockUser({ userId, token });
 
+    onClose();
+  };
+
+  const handleUnblock = () => {
+    unBlockAdmin({ userId, token });
     onClose();
   };
 
@@ -41,7 +46,7 @@ const BlockUser = ({ userId, onClose, onSetReason }: BlockProps) => {
           height={12.5}
           className="w-[18px] h-[12.5px] mr-2"
         />
-        <h2 className="font-[20px] text-[#09192CCC]  ">Block User</h2>
+        <h2 className="font-[20px] text-[#09192CCC]  ">{status ? "Block User" : "Unblock User"}</h2>
       </div>
 
       <div className="space-y-4">
@@ -80,7 +85,8 @@ const BlockUser = ({ userId, onClose, onSetReason }: BlockProps) => {
           </div>
         </div> */}
         <p className="text-[14px] text-center">
-          Are you sure you want to block this user?
+          Are you sure you want to <span>{status ? "block" : "unblock"}</span>{" "}
+          this user?
         </p>
       </div>
       <div className="mt-3 flex justify-center gap-3  items-center ">
@@ -95,10 +101,12 @@ const BlockUser = ({ userId, onClose, onSetReason }: BlockProps) => {
           Cancel
         </button>
         <button
-          onClick={handleBlock}
-          className="bg-[#A52A2A] px-7 py-3 rounded-[5px] text-white"
+          onClick={status ? handleBlock : handleUnblock}
+          className={`px-7 py-3 rounded-[5px] text-white ${
+            status ? "bg-[#A52A2A]" : "bg-[#228B22]"
+          }`}
         >
-          Block
+          {status ? "Block" : "Unblock"}
         </button>
       </div>
     </div>

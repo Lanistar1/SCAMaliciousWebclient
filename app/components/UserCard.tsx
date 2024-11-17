@@ -43,8 +43,8 @@ const UserCard: React.FC<UserCardProps> = ({
       {/* Status */}
       <div
         className={`inline-block items-center pt-1 text-center text-[14px]  rounded-[33px] w-[95px] h-[28px]  ${
-          status === "Active" ? "text-[#9CC031]" : "text-[#FF8F6B]"
-        } ${status === "Active" ? "bg-[#f9ffe6]" : "bg-[#f8e9e4]"}`}
+          status === "active" ? "text-[#9CC031]" : "text-[#FF8F6B]"
+        } ${status === "active" ? "bg-[#f9ffe6]" : "bg-[#f8e9e4]"}`}
       >
         {status}
       </div>

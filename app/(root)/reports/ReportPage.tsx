@@ -12,12 +12,12 @@ const ReportPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const totalPages = 200;
+  //const totalPages = 200;
   const { token } = useAuthContext();
   const [query, setQuery] = useState({
     status: "Pending",
     page: currentPage,
-    limit: 3,
+    limit: 6,
     token: token || "",
   });
 
@@ -80,6 +80,10 @@ const ReportPage = () => {
   const data = content?.data || [];
   const tabs = ["Reported Post", "Active", "Removed"];
 
+   //=========total page count =========
+   const count = content?.totalCount;
+   const totalPages = count / 6;
+
   return (
     <section className="bg-white rounded-[10px] mx-12 my-8 px-6 md:px-12 py-8">
       <div className="flex justify-between items-end border-b">
@@ -98,7 +102,7 @@ const ReportPage = () => {
             </button>
           ))}
         </div>
-        <div>
+        {/* <div>
           <button className="hidden md:flex items-center h-[40] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
             <Image
               src="/assets/icons/Group 1000002417.png"
@@ -109,7 +113,7 @@ const ReportPage = () => {
             />
             <span>Filter By</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Loading and Error Handling */}

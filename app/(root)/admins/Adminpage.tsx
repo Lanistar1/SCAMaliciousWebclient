@@ -23,7 +23,7 @@ const Adminpage = () => {
     createdAt: string; // Adjust this type if `createdAt` is a Date or something else
   }
 
-  const totalPages = 200;
+  //const totalPages = 200;
 
   // const [query, setQuery] = useState({
   //   status: "active",
@@ -35,9 +35,9 @@ const Adminpage = () => {
   // });
 
   const initialQuery = {
-    status: "active",
+    status: "",
     page: 1,
-    limit: 6,
+    limit: 5,
     token: token || "",
     dateRegisteredfrom: "",
     dateRegisteredto: "",
@@ -104,6 +104,10 @@ const Adminpage = () => {
   }, [query, refetch]);
 
   const data = content?.data || [];
+
+   //=========total page count =========
+   const count = content?.totalCount;
+   const totalPages = count / 5;
 
   // Reset filter and query
   const handleReset = () => {

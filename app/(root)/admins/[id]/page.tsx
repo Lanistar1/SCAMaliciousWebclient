@@ -3,6 +3,7 @@ import Postpage from './Postpage'
 
 interface Props {
   params : {id:string}
+  
 }
 const page = ({params:{id}}:Props) => {
   return (

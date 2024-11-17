@@ -130,7 +130,8 @@ const ContentInfo = ({ data, activeTab }: ContentInfoProps) => {
         <ContentCard
           key={card._id}
           id={card._id}
-          name={card.userDetails.firstname}
+          firstName={card.userDetails.firstname}
+          lastName={card.userDetails.lastname}
           date={card.createdAt}
           title={card.title}
           activeTab={activeTab}

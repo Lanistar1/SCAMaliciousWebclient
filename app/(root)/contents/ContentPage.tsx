@@ -12,15 +12,15 @@ const ContentPage = () => {
   const tabs = ["Pending", "Approved", "Declined", "Revoked"];
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  
-  const totalPages = 200;
+
+  //const totalPages = 200;
 
   const { token } = useAuthContext();
 
   const [query, setQuery] = useState({
     status: "Pending",
     page: currentPage,
-    limit: 3,
+    limit: 6,
     token: token || "",
   });
 
@@ -41,7 +41,7 @@ const ContentPage = () => {
       page: currentPage,
       search: searchQuery,
     }));
-    console.log("This is page no:", currentPage)
+    console.log("This is page no:", currentPage);
   }, [currentPage, searchQuery]);
 
   // Debounced value for query status
@@ -72,11 +72,7 @@ const ContentPage = () => {
   }, [debouncedStatus]);
 
   //=======Trigger data fetching whenever `query` changes===========
-  const {
-    data: content,
-    isLoading,
-    isError,
-  } = useExperience(query);
+  const { data: content, isLoading, isError } = useExperience(query);
 
   //===========Update `currentPage` when pagination changes==========
   const handlePageChange = useCallback((page: number) => {
@@ -84,9 +80,12 @@ const ContentPage = () => {
     console.log(page);
   }, []);
 
-
   const data = content?.data || [];
-  // const tabs = ["Reported Post", "Active", "Removed"];
+
+  //=========total page count =========
+  const count = content?.totalCount;
+  const totalPages = count / 6;
+
 
   return (
     <section className="bg-white rounded-[10px] mx-12 my-8 px-6 md:px-12 py-8">
@@ -106,7 +105,7 @@ const ContentPage = () => {
             </button>
           ))}
         </div>
-        <div>
+        {/* <div>
           <button className="hidden md:flex items-center h-[40] font-[Montserrat] px-4 py-2 border border-[#09192CCC] rounded-[5px] mb-4">
             <Image
               src="/assets/icons/Group 1000002417.png"
@@ -117,7 +116,7 @@ const ContentPage = () => {
             />
             <span>Filter By</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Loading and Error Handling */}

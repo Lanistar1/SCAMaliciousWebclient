@@ -91,11 +91,14 @@ const Page = ({ id }: Props) => {
   const handleFilter = () => {};
 
   // Format dateTime to date string
-  const formattedDate = new Date(userData?.createdAt || '').toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const formattedDate = new Date(userData?.createdAt || "").toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  );
 
   return (
     <div className="bg-gray-100 px-12 py-8">
@@ -103,8 +106,13 @@ const Page = ({ id }: Props) => {
         <div className="flex">
           {/* Left Column - User Profile */}
           <div className="w-1/3 p-8 border-r">
-            <div className="relative flex flex-col space-y-8">
-              {userProfile.status === "Blocked" ? (
+            <div
+              className={`relative flex flex-col space-y-8 ${
+                userData?.isEnabled ? " text-[#9CC031]" : "text-[#FF8F6B]"
+              } `}
+            >
+              {userData?.isEnabled ? "active" : "blocked"}
+              {/* {userProfile.status === "Blocked" ? (
                 <span className="absolute top-0 left-0 bg-[#FF8F6B] text-white text-xs px-2 py-1 rounded-full">
                   Blocked
                 </span>
@@ -112,14 +120,18 @@ const Page = ({ id }: Props) => {
                 <span className="absolute top-0 left-0 bg-[#9CC031] text-white text-xs px-2 py-1 rounded-full">
                   Active
                 </span>
-              )}
-              <Image
+              )} */}
+              {/* <Image
                 src={userProfile.profilePicture}
                 alt={userProfile.name}
                 width={200}
                 height={200}
                 className="rounded-full mx-auto"
-              />
+              /> */}
+            </div>
+            <div className="flex h-[80px] text-white w-[80px] bg-[#A52A2A] rounded-full justify-center items-center font-bold mx-auto">
+              {userData?.firstname[0]}
+              {userData?.lastname[0]}
             </div>
             <h2 className="text-2xl font-bold text-center mt-4">
               {userData?.firstname} {userData?.lastname}
@@ -131,24 +143,13 @@ const Page = ({ id }: Props) => {
             <p className="text-sm text-gray-500 text-center">
               Last Seen: {userProfile.lastSeen}
             </p>
-            {/* <p className="text-lg font-semibold text-center mt-4">
-              {userProfile.contentsCreated}
-              <span className="text-sm text-[#A52A2A] block">
-                Contents Created
-              </span>
-            </p> */}
             <div className="flex flex-col  items-center">
               <button
                 className="w-[250px] h-[60px] bg-[#A52A2A] text-white py-2 rounded-[5px] mt-6"
                 onClick={() => setIsBlockModalOpen(true)}
               >
-                {userProfile.status === "Blocked"
-                  ? "Unblock User"
-                  : "Block User"}
+                {userData?.isEnabled ? "Block User" : "Unblock User"}
               </button>
-              {/* <button className="w-[250px] h-[60px] bg-gray-800 text-white py-2 rounded-[5px] mt-4 flex items-center justify-center">
-                Send Message
-              </button> */}
             </div>
           </div>
 
@@ -165,6 +166,7 @@ const Page = ({ id }: Props) => {
               onClose={() => setIsBlockModalOpen(false)}
               onSetReason={handleFilter}
               userId={id}
+              status={userData?.isEnabled}
             />
           </ModalWrapper>
         </div>

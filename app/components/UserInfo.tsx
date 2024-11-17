@@ -92,7 +92,7 @@ const UserCardGrid = ({ data }: ContentInfoProps) => {
             email={user.email}
             role={user.role}
             dateRegistered={user.createdAt}
-            status="active"
+            status={user.isEnabled ? "active" : "blocked"}
             onViewDetails={() => handleViewDetails(user._id)}
           />
         ))}
