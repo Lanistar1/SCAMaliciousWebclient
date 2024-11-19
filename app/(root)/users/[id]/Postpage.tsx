@@ -4,8 +4,8 @@ import Image from "next/image";
 import PostSideView from "./PostSideView";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import BlockUser from "./BlockUser";
-import { useUserId } from "@/app/actions/reactQuery";
-import { userList } from "@/app/actions/type";
+import { useUserId, useUserPostId } from "@/app/actions/reactQuery";
+import { userList, postList } from "@/app/actions/type";
 import { useAuthContext } from "@/app/context/AuthContext";
 
 // interface Props {
@@ -77,7 +77,10 @@ interface Props {
 const Page = ({ id }: Props) => {
   const { token } = useAuthContext();
   const { data: content, isLoading, isError } = useUserId(id, token);
+  const { data: postContent  } = useUserPostId(id, token);
   const [userData, setUserData] = useState<userList | null>(null);
+  const [postData, setPostData] = useState<postList | null>(null);
+
   const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
 
   useEffect(() => {
@@ -87,6 +90,16 @@ const Page = ({ id }: Props) => {
       setUserData(data as userList);
     }
   }, [content, isLoading, isError]);
+
+  useEffect(() => {
+    // When post is fetched successfully, update the local state
+    if (postContent) {
+      const { data } = postContent;
+      setPostData(data as postList);
+
+      console.log(postData);
+    }
+  }, [postContent]);
 
   const handleFilter = () => {};
 

@@ -342,3 +342,16 @@ export const fetchAdminById = async (id: string, token: string) => {
   });
   return response.data;
 };
+
+
+//======= get user post by ID =========
+export const fetchUserPostById = async (id: string, token: string) => {
+  console.log("show me love");
+  const response = await axios.get(`${apiUrl}/experience/admin/user/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
