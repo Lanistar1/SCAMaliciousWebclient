@@ -26,6 +26,7 @@ import {
   createKeywords,
   fetchUserById,
   fetchAdminById,
+  fetchUserPostById,
 } from "./api";
 import {
   addAdmin,
@@ -451,5 +452,14 @@ export const useAdminId = (id: string, token: string) => {
   return useQuery({
     queryKey: [User_Query_Keys.USER_ID, id],
     queryFn: () => fetchAdminById(id, token),
+  });
+};
+
+
+//======= get user post by ID =========
+export const useUserPostId = (id: string, token: string) => {
+  return useQuery({
+    queryKey: [User_Query_Keys.USER_ID, id],
+    queryFn: () => fetchUserPostById(id, token),
   });
 };

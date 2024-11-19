@@ -241,3 +241,7 @@ export type addKeywords = {
 export enum User_Query_Keys {
   USER_ID = "id",
 }
+
+export interface postList {
+  data: []
+}
