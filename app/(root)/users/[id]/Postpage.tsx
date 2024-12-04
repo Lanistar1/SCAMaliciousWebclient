@@ -67,7 +67,7 @@ const userProfile: UserProfile = {
   lastSeen: "12th Dec, 2021 10:00am",
   contentsCreated: 500,
   status: "Active",
-  profilePicture: "/assets/images/Ellipse 11.png", // Replace with actual path
+  profilePicture: "/assets/icons/scamAvatar.png", // Replace with actual path
 };
 
 interface Props {
@@ -134,18 +134,18 @@ const Page = ({ id }: Props) => {
                   Active
                 </span>
               )} */}
-              {/* <Image
+              <Image
                 src={userProfile.profilePicture}
-                alt={userProfile.name}
-                width={200}
-                height={200}
+                alt=""
+                width={100}
+                height={100}
                 className="rounded-full mx-auto"
-              /> */}
+              />
             </div>
-            <div className="flex h-[80px] text-white w-[80px] bg-[#A52A2A] rounded-full justify-center items-center font-bold mx-auto">
-              {userData?.firstname[0]}
-              {userData?.lastname[0]}
-            </div>
+            {/* <div className="flex h-[80px] text-white w-[80px] bg-[#A52A2A] rounded-full justify-center items-center font-bold mx-auto">
+            {userData?.firstname?.[0] || ""}
+            {userData?.lastname?.[0] || ""}
+            </div> */}
             <h2 className="text-2xl font-bold text-center mt-4">
               {userData?.firstname} {userData?.lastname}
             </h2>

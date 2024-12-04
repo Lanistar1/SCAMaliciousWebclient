@@ -40,6 +40,7 @@ import {
   Experience_Query_Keys,
   loggedInUser,
   login,
+  Post_Query_Keys,
   postQuery,
   Query_Keys,
   reportQuery,
@@ -458,8 +459,10 @@ export const useAdminId = (id: string, token: string) => {
 
 //======= get user post by ID =========
 export const useUserPostId = (id: string, token: string) => {
+  console.log("show me hate");
+  console.log("id:", id, "token:", token);
   return useQuery({
-    queryKey: [User_Query_Keys.USER_ID, id],
+    queryKey: [Post_Query_Keys.Id, id],
     queryFn: () => fetchUserPostById(id, token),
   });
 };

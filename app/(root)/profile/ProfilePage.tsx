@@ -47,7 +47,7 @@ export default function ProfilePage() {
           <div className="relative mb-6">
             <div className="mx-auto ml-6 overflow-hidden">
               <Image
-                src="/assets/images/profile2.png"
+                src="/assets/icons/scamAvatar.png"
                 alt="SCAMalicious Logo"
                 width={150}
                 height={150}

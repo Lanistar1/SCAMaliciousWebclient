@@ -29,11 +29,11 @@ const UserCard: React.FC<UserCardProps> = ({
   return (
     <div className=" grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[55px] items-center shadow-md rounded-[10px]">
       {/* User Name */}
-      <div className="font-sm text-[#09192CCC] ml-6">
+      <div className="font-sm text-[#09192CCC] ml-6 truncate" style={{ maxWidth: "170px" }}>
         {lastName} {firstName}
       </div>
       {/* Email */}
-      <div className="text-sm text-[#09192CCC]">{email}</div>
+      <div className="text-sm text-[#09192CCC] truncate" style={{ maxWidth: "150px" }}>{email}</div>
       {/* Date Registered */}
       <div className="text-sm text-[#09192CCC]">
         <DateFormatter date={dateRegistered} />
