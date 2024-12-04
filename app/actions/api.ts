@@ -33,7 +33,7 @@ export const signIn = async (data: login): Promise<loggedInUser> => {
 };
 
 export const forgotPassword = async (data: string) => {
-  const res = await axios.post("", data);
+  const res = await axios.post(`${apiUrl}/auth/forgot-password`, data);
   return res.data;
 };
 
@@ -183,7 +183,8 @@ export const approvePost = async (id: string, token: string) => {
 
 //===========fetching user list ==============
 export const fetchMember = async (queryKey: userQuery) => {
-  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
+  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } =
+    queryKey;
   console.log(queryKey);
 
   const response = await axios.get(`${apiUrl}/auth/admin/users`, {
@@ -199,7 +200,8 @@ export const fetchMember = async (queryKey: userQuery) => {
 
 //===========fetching admin list ==============
 export const fetchAdmin = async (queryKey: userQuery) => {
-  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } = queryKey;
+  const { status, page, limit, token, dateRegisteredfrom, dateRegisteredto } =
+    queryKey;
   console.log(queryKey);
 
   const response = await axios.get(`${apiUrl}/auth/admins`, {
@@ -279,37 +281,38 @@ export const unblockAdmin = async (user: BlockUserType) => {
 
 // =========== create admin =======
 export const createAdmin = async (adminRequest: addAdmin, token: string) => {
-  const res = await axios.post(
-    `${apiUrl}/auth/add-admin`,
-    adminRequest,
-    {
-      headers: {
-        Authorization: token,
-      },
+  const res = await axios.post(`${apiUrl}/auth/add-admin`, adminRequest, {
+    headers: {
+      Authorization: token,
     },
-  );
+  });
   return res.data;
 };
-
 
 //===========fetching unwanted keyword  ==============
 export const fetchUnwantedKeyword = async (queryKey: userQuery) => {
   const { status, page, limit, token } = queryKey;
   console.log(queryKey);
 
-  const response = await axios.get(`${apiUrl}/feedback/admin/unwanted/keywords`, {
-    params: { status, page, limit },
-    headers: {
-      Authorization: token,
-    },
-  });
+  const response = await axios.get(
+    `${apiUrl}/feedback/admin/unwanted/keywords`,
+    {
+      params: { status, page, limit },
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
   console.log(response);
 
   return response.data;
 };
 
 // =========== create unwanted keywords =======
-export const createKeywords = async (keywordRequest: addKeywords, token: string) => {
+export const createKeywords = async (
+  keywordRequest: addKeywords,
+  token: string
+) => {
   const res = await axios.post(
     `${apiUrl}/feedback/admin/unwanted/keywords`,
     keywordRequest,
@@ -317,11 +320,10 @@ export const createKeywords = async (keywordRequest: addKeywords, token: string)
       headers: {
         Authorization: token,
       },
-    },
+    }
   );
   return res.data;
 };
-
 
 // ====== fetch user by ID =========
 export const fetchUserById = async (id: string, token: string) => {
@@ -342,7 +344,6 @@ export const fetchAdminById = async (id: string, token: string) => {
   });
   return response.data;
 };
-
 
 //======= get user post by ID =========
 export const fetchUserPostById = async (id: string, token: string) => {

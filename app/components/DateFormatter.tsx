@@ -11,9 +11,6 @@ const DateFormatter: React.FC<DateFormatterProps> = ({ date }) => {
       year: "numeric",
       month: "long",
       day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
     };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };

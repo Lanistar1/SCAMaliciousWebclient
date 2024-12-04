@@ -245,3 +245,7 @@ export enum User_Query_Keys {
 export interface postList {
   data: []
 }
+
+export enum Post_Query_Keys {
+  Id = "id",
+}
