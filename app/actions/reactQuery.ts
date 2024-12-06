@@ -38,6 +38,7 @@ import {
   DeclinePostType,
   Declinetype,
   Experience_Query_Keys,
+  forgotPass,
   loggedInUser,
   login,
   Post_Query_Keys,
@@ -128,7 +129,7 @@ export const useResetPassword = () => {
 
 export const useForgotPassword = () => {
   return useMutation({
-    mutationFn: async (data: string) => forgotPassword(data),
+    mutationFn: async (data: forgotPass) => forgotPassword(data),
     onSuccess: () => {
       // Show success toast notification
       toast.success(`Password reset link sent to your email`);

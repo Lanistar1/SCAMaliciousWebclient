@@ -18,7 +18,7 @@ const Forgotpassword = () => {
 
 
 
-  const [email, setEmail] = useState<string>('joomhndoe@gmail.com')
+  const [email, setEmail] = useState<string>('')
   const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
   const {mutateAsync:forgotPassword, isPending:isForgotPassword }= useForgotPassword()
 
@@ -33,7 +33,14 @@ const Forgotpassword = () => {
 
     setFormErrors({})
 
-     await forgotPassword(email)
+     //await forgotPassword(email)
+
+     const user = await forgotPassword({
+      email: email,
+    });
+
+    const { profile, token } = user.data;
+
 
   }
 
@@ -70,7 +77,7 @@ const Forgotpassword = () => {
                   name='email'
                   value={email}
                   onChange={(e)=>setEmail(e.target.value)}
-                  placeholder="joomhndoe@gmail.com"
+                  placeholder="johndoe@gmail.com"
                   className="w-full px-4 py-3 rounded-md focus:outline-none focus:border-gray-400"
                 />
                 {formErrors.email &&<span className="text-red-500 text-sm">{formErrors.email[0]}</span> }
