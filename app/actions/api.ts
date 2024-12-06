@@ -15,6 +15,7 @@ import {
   BlockUserType,
   addAdmin,
   addKeywords,
+  forgotPass,
 } from "./type";
 
 // sign up
@@ -32,7 +33,7 @@ export const signIn = async (data: login): Promise<loggedInUser> => {
   return res.data;
 };
 
-export const forgotPassword = async (data: string) => {
+export const forgotPassword = async (data: forgotPass) => {
   const res = await axios.post(`${apiUrl}/auth/forgot-password`, data);
   return res.data;
 };

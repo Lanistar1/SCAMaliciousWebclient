@@ -32,6 +32,10 @@ export type loggedInUser = {
   status: number;
 };
 
+export type forgotPass = {
+  email: string;
+};
+
 export type resetPass = {
   code: string;
   newPassword: string;
