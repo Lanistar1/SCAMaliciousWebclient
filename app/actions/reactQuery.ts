@@ -27,10 +27,16 @@ import {
   fetchUserById,
   fetchAdminById,
   fetchUserPostById,
+  fetchFetchDashboard,
+  fetchFetchDashboardGraph,
+  fetchEnquiry,
+  fetchEnquiryReply,
+  addChatReply,
 } from "./api";
 import {
   addAdmin,
   addKeywords,
+  addReply,
   ApprovePostType,
   BlockUserType,
   changePass,
@@ -465,5 +471,64 @@ export const useUserPostId = (id: string, token: string) => {
   return useQuery({
     queryKey: [Post_Query_Keys.Id, id],
     queryFn: () => fetchUserPostById(id, token),
+  });
+};
+
+// ======= fetch admin dashboard =========
+export const useFetchDashboard = (token: string) => {
+  return useQuery({
+    queryKey: [],
+    queryFn: () => fetchFetchDashboard(token),
+  });
+};
+
+// ======= fetch admin dashboard graph =========
+export const useFetchDashboardGraph = (token: string) => {
+  return useQuery({
+    queryKey: [],
+    queryFn: () => fetchFetchDashboardGraph(token),
+  });
+};
+
+// ======= fetch enquiry =========
+export const useFetchEnquiry = (token: string) => {
+  return useQuery({
+    queryKey: [],
+    queryFn: () => fetchEnquiry(token),
+  });
+};
+
+// ======= fetch enquiry reply =========
+export const useFetchEnquiryReply = (token: string, id: string) => {
+  return useQuery({
+    queryKey: ['enquiryReply', id], // Dynamic queryKey based on id
+    queryFn: () => fetchEnquiryReply(token, id), // Fetch function
+    enabled: !!id, // Only run the query if id is truthy
+    retry: false, // Disable retries for failed requests
+  });
+};
+
+// ======= Add chat reply =========
+export const useAddReply = (token: string) => {
+  return useMutation({
+    mutationFn: async (data: addReply) => addChatReply(data, token),
+    onSuccess: () => {
+      // Show success toast notification
+      toast.success(`Admin added successfully.`);
+    },
+    onError: (error: any) => {
+      // Show error toast notification
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If the server returned a specific message, display it
+        toast.error(`Error: ${error.response.data.message}`);
+      } else {
+        // If the error does not have a response message, display the generic error message
+        toast.error(`Error occurred: ${error.message}`);
+      }
+    },
   });
 };

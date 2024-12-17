@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 
 interface ReportProps {
   onClose: () => void;
-  // onSetReason: ( reason:Reason) => void;
   action: string;
   id: string;
 }
@@ -33,8 +32,8 @@ const ContentBox = ({ onClose, action, id }: ReportProps) => {
   let approvePost = false;
 
   const handleAction = () => {
-    if (!isAllFilled) {
-      toast.error("fill the inpt box");
+    if (!isAllFilled && action !== "Approve") {
+      toast.error("Fill in the input box");
       return;
     }
 
@@ -54,9 +53,32 @@ const ContentBox = ({ onClose, action, id }: ReportProps) => {
   return (
     <div className="flex flex-col bg-white shadow-lg p-6 w-[350px] md:w-[523px] h-[437px] rounded-[10px] gap-4">
       <div className="flex flex-row justify-start items-center">
-        <h2 className="font-[20px] text-[#09192CCC]  ">{action}</h2>
+        <h2 className="font-[20px] text-[#09192CCC]">{action}</h2>
       </div>
-      {!approvePost && (
+
+      {/* Conditionally show content for approve action */}
+      {action === "Approve" ? (
+        <div className="space-y-4">
+          <p className="text-[#09192CCC] font-[14px]">
+            Are you sure you want to approve this content?
+          </p>
+          <div className="mt-3 flex justify-center items-center gap-3">
+            <button
+              onClick={onClose}
+              className="w-[280px] h-[60px] bg-[#09192C33] rounded-[5px]"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleAction}
+              className={`w-[280px] h-[60px] ${"bg-[#A52A2A]"} rounded-[5px]`}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      ) : (
+        // Original content for Decline and Restore actions
         <>
           <div className="space-y-4">
             <div>
@@ -70,10 +92,24 @@ const ContentBox = ({ onClose, action, id }: ReportProps) => {
                 id="reason"
                 value={reason}
                 onChange={(e) => setReason(e.target.value as Reason["reason"])}
-                className="mt-1 block w-full h-[50px] rounded-[5px] border-[#A52A2A1A] px-2 border-[1px] shadow-sm  sm:text-sm"
+                className="mt-1 block w-full h-[50px] rounded-[5px] border-[#A52A2A1A] px-2 border-[1px] shadow-sm sm:text-sm"
               >
-                <option value="Active">Active</option>
-                <option value="Blocked">Blocked</option>
+                <option value="Violates platform&apos;s community guidelines">
+                  Violates platform&apos;s community guidelines
+                </option>
+                <option value="Contains misleading or false information">
+                  Contains misleading or false information
+                </option>
+                <option value="Hate speech or discrimination">
+                  Hate speech or discrimination
+                </option>
+                <option value="Harassment or bullying">Harassment or bullying</option>
+                <option value="Personal attacks or defamation">
+                  Personal attacks or defamation
+                </option>
+                <option value="Duplicate content or reposting">
+                  Duplicate content or reposting
+                </option>
               </select>
             </div>
             <div>
@@ -94,13 +130,10 @@ const ContentBox = ({ onClose, action, id }: ReportProps) => {
               </div>
             </div>
           </div>
-          <div className="mt-3 flex justify-center  items-center gap-3">
-            {/* <Button variant="outline" onClick={onClose}>
-          Cancel
-        </Button> */}
+          <div className="mt-3 flex justify-center items-center gap-3">
             <button
               onClick={onClose}
-              className={`w-[280px] h-[60px] bg-[#09192C33] rounded-[5px]`}
+              className="w-[280px] h-[60px] bg-[#09192C33] rounded-[5px]"
             >
               Cancel
             </button>

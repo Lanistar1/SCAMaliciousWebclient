@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import DateFormatter from "@/app/components/DateFormatter";
@@ -61,7 +62,7 @@ const ContentCard: React.FC<CardProps> = ({
           /> */}
 
           <div className="flex h-[40px] w-[40px] bg-[#A52A2A] rounded-full justify-center items-center font-bold">
-            {firstName[0]}{lastName[0]}
+          {(firstName?.[0] || '')}{(lastName?.[0] || '')}
           </div>
           <div className="ml-3">
             <h4 className="text-[#09192CCC] text-sm font-semibold">{firstName} {lastName}</h4>

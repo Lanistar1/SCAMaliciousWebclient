@@ -9,7 +9,6 @@ interface UserCardProps {
   lastName: string;
   email: string;
   dateRegistered: string;
-  role: string;
   status: string;
   onViewDetails: () => void;
 
@@ -22,7 +21,6 @@ const UserCard: React.FC<UserCardProps> = ({
   lastName,
   email,
   dateRegistered,
-  role,
   status,
   onViewDetails,
 }) => {
@@ -39,7 +37,7 @@ const UserCard: React.FC<UserCardProps> = ({
         <DateFormatter date={dateRegistered} />
       </div>
       {/* Last Seen */}
-      <div className="text-sm text-[#09192CCC]">{role}</div>
+      {/* <div className="text-sm text-[#09192CCC]">{role}</div> */}
       {/* Status */}
       <div
         className={`inline-block items-center pt-1 text-center text-[14px]  rounded-[33px] w-[95px] h-[28px]  ${

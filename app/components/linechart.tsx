@@ -1,4 +1,4 @@
-// components/LineChart.js
+// components/linechart.tsx
 import React, { useMemo } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -12,62 +12,72 @@ import {
   Legend,
 } from "chart.js";
 
+// Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const LineChart = () => {
-  const data = useMemo(() => ({
-    labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    datasets: [
-      {
-        label: "Applied",
-        data: [86, 114, 106, 106, 107, 111, 133],
-        borderColor: "#3e95cd",
-        backgroundColor: "#7bb6dd",
-        fill: false,
-      },
-      {
-        label: "Accepted",
-        data: [70, 90, 44, 60, 83, 90, 100],
-        borderColor: "#3cba9f",
-        backgroundColor: "#71d1bd",
-        fill: false,
-      },
-      {
-        label: "Pending",
-        data: [10, 21, 60, 44, 17, 21, 17],
-        borderColor: "#ffa500",
-        backgroundColor: "#ffc04d",
-        fill: false,
-      },
-      {
-        label: "Rejected",
-        data: [6, 3, 2, 2, 7, 0, 16],
-        borderColor: "#c45850",
-        backgroundColor: "#d78f89",
-        fill: false,
-      },
-    ],
-  }), []);
+// Type for the graph data
+interface GraphDataItem {
+  x: string; // Month or label for the x-axis
+  experienceCount: number;
+  reportedExperienceCount: number;
+  usersCount: number;
+}
+
+interface LineChartProps {
+  graphData: GraphDataItem[];
+}
+
+const LineChart: React.FC<LineChartProps> = ({ graphData }) => {
+  // Prepare chart data
+  const chartData = useMemo(() => {
+    const labels = graphData.map((item) => item.x); // x-axis labels (months)
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: "Experience Count",
+          data: graphData.map((item) => item.experienceCount),
+          borderColor: "#3e95cd",
+          backgroundColor: "rgba(62, 149, 205, 0.2)",
+          fill: false,
+        },
+        {
+          label: "Reported Experience Count",
+          data: graphData.map((item) => item.reportedExperienceCount),
+          borderColor: "#ffa500",
+          backgroundColor: "rgba(255, 165, 0, 0.2)",
+          fill: false,
+        },
+        {
+          label: "Users Count",
+          data: graphData.map((item) => item.usersCount),
+          borderColor: "#3cba9f",
+          backgroundColor: "rgba(60, 186, 159, 0.2)",
+          fill: false,
+        },
+      ],
+    };
+  }, [graphData]);
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Weekly Report",
-      },
+      legend: { position: "top" },
+      title: { display: true, text: "Monthly Trends" },
+    },
+    scales: {
+      x: { title: { display: true, text: "Month" } },
+      y: { title: { display: true, text: "Count" } },
     },
   };
 
   return (
-    <div className="h-[300px] md:h-[400px] p-4">
-      <Line data={data} />
+    <div className="items-start h-[300px] md:h-[400px] mt-5 mb-10 bg-white rounded-lg shadow">
+      <Line data={chartData} />
     </div>
   );
 };
-
+ 
 export default LineChart;

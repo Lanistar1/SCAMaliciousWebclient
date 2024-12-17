@@ -1,8 +1,18 @@
 import React from "react";
 
-const UserEngagement = () => {
-  const ageRanges = ["18-20", "21-25", "26-30", "30-40", "40-50", "50-70"];
+interface UserDemographics {
+  count: number;
+  ageBracket: string;
+}
 
+interface ContentProps {
+  data: UserDemographics[];
+}
+
+const UserEngagement = ({ data }: ContentProps) => {
+
+  const demographics = Array.isArray(data) ? data : [];
+  console.log("demography", demographics)
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-md max-w-sm">
       <h2 className="text-lg font-medium text-gray-700 mb-4">
@@ -13,16 +23,24 @@ const UserEngagement = () => {
         <span className="text-gray-400">Demographics</span>
       </div>
       <ul>
-        {ageRanges.map((range, index) => (
+        {demographics.map((item, index) => (
           <li
             key={index}
             className="flex items-center justify-between mb-4 text-gray-700"
           >
-            <span>{range}</span>
+            <span>{item.ageBracket}</span>
             <div className="flex items-center w-28">
-              <div className="h-[2px] bg-gray-400 flex-1 mr-1"></div>
-              <div className="h-[2px] bg-gray-300 flex-1"></div>
+              {/* Visual bar showing demographic count */}
+              <div
+                className="h-[2px] bg-gray-400 mr-1"
+                style={{ flex: item.count }}
+              ></div>
+              <div
+                className="h-[2px] bg-gray-300"
+                style={{ flex: Math.max(1, 10 - item.count) }}
+              ></div>
             </div>
+            <span className="text-gray-500 text-sm">{item.count}</span>
           </li>
         ))}
       </ul>
