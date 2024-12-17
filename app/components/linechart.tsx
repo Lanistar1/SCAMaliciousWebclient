@@ -13,7 +13,15 @@ import {
 } from "chart.js";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 // Type for the graph data
 interface GraphDataItem {
@@ -74,10 +82,11 @@ const LineChart: React.FC<LineChartProps> = ({ graphData }) => {
   };
 
   return (
-    <div className="items-start h-[300px] md:h-[400px] mt-5 mb-10 bg-white rounded-lg shadow">
+    <div className="items-start h-[300px] md:h-[450px] pl-20 mb-10 py-10 bg-white rounded-lg shadow">
+      <h2>Chart</h2>
       <Line data={chartData} />
     </div>
   );
 };
- 
+
 export default LineChart;
