@@ -75,14 +75,14 @@ const ContentDetailPage = ({ id, openModal }: Props) => {
         </div>
         <div className="flex gap-3">
           <div className="flex h-[50px] w-[50px] bg-[#A52A2A] rounded-full justify-center items-center font-bold">
-            {reportData.userDetails.firstname[0]}
-            {reportData.userDetails.lastname[0]}
+            {reportData.userDetails?.firstname[0]}
+            {reportData.userDetails?.lastname[0]}
           </div>
           <div className="flex flex-col">
             <h1>
-              {reportData.userDetails.firstname} {reportData.userDetails.lastname}
+              {reportData.userDetails?.firstname} {reportData.userDetails?.lastname}
             </h1>
-            <p className="text-xs text-gray-500">{reportData.email}</p>
+            <p className="text-xs text-gray-500">{reportData?.email}</p>
           </div>
         </div>
 

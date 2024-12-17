@@ -253,3 +253,68 @@ export interface postList {
 export enum Post_Query_Keys {
   Id = "id",
 }
+
+export type DashboardResponse = {
+  status: number;
+  message: string;
+  data: {
+    allUserCount: number;
+    activeUserCount: number;
+    inactiveUserCount: number;
+    allReportedExperienceCount: number;
+    pendingReportedExperienceCount: number;
+    allExperienceCount: number;
+    pendingExperienceCount: number;
+    getUserDemographics: {
+      count: number;
+      ageBracket: string;
+    }[];
+    finalRating: {
+      rating: number;
+      count: number;
+    }[];
+  };
+};
+
+// Define the structure for a single graph data entry
+interface GraphDataEntry {
+  month: string;
+  year: number;
+  experienceCount: number;
+  reportedExperienceCount: number;
+  usersCount: number;
+}
+
+// Define the structure for the "data" object
+export interface FinalGraphData {
+  finalGraph: GraphDataEntry[];
+}
+
+
+// enquiry
+export type EnquiryResponse = {
+  status: number;
+  message: string;
+  data: Enquiry[];
+  totalCount: number;
+};
+
+export type Enquiry = {
+  _id: string;
+  email: string;
+  message: string;
+  name: string;
+  userId: string;
+  userDetails: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+};
+
+
+
+export type addReply = {
+  message: string;
+  name: string;
+  enquiryId: string;
+};

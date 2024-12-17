@@ -16,6 +16,7 @@ import {
   addAdmin,
   addKeywords,
   forgotPass,
+  addReply,
 } from "./type";
 
 // sign up
@@ -356,4 +357,60 @@ export const fetchUserPostById = async (id: string, token: string) => {
   });
   console.log(response);
   return response.data;
+};
+
+
+//======= get admin dashboard =========
+export const fetchFetchDashboard = async (token: string) => {
+  const response = await axios.get(`${apiUrl}/auth/admin/dashboard`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
+
+//======= get admin dashboard graph =========
+export const fetchFetchDashboardGraph = async (token: string) => {
+  const response = await axios.get(`${apiUrl}/auth/admin/dashboard/graph?year=2024`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
+
+//======= get quiry =========
+export const fetchEnquiry = async (token: string) => {
+  const response = await axios.get(`${apiUrl}/feedback/admin/enquiry/all`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
+
+//======= get quiry reply =========
+export const fetchEnquiryReply = async (token: string, id: string) => {
+  const response = await axios.get(`${apiUrl}/feedback/admin/replies/enquiries/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
+
+
+// =========== add reply =======
+export const addChatReply = async (replyRequest: addReply, token: string) => {
+  const res = await axios.post(`${apiUrl}/feedback/admin/enquiry/reply`, replyRequest, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return res.data;
 };

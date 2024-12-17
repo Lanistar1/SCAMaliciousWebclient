@@ -77,7 +77,6 @@ const UserCardGrid = ({ data }: ContentInfoProps) => {
         <div className="flex-1 text-left ml-6">Name</div>
         <div className="flex-1 text-left ">Email</div>
         <div className="flex-1  text-left">Date Registered</div>
-        <div className="flex-1  text-left">Role</div>
         <div className="flex-1  text-left">Status</div>
         <div className="flex-1  text-left w-10">Action</div>
       </div>
@@ -90,7 +89,6 @@ const UserCardGrid = ({ data }: ContentInfoProps) => {
             firstName={user.firstname}
             lastName={user.lastname}
             email={user.email}
-            role={user.role}
             dateRegistered={user.createdAt}
             status={user.isEnabled ? "active" : "blocked"}
             onViewDetails={() => handleViewDetails(user._id)}
