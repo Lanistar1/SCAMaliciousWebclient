@@ -373,7 +373,7 @@ export const fetchFetchDashboard = async (token: string) => {
 
 //======= get admin dashboard graph =========
 export const fetchFetchDashboardGraph = async (token: string) => {
-  const response = await axios.get(`${apiUrl}/auth/admin/dashboard/graph?year=2024`, {
+  const response = await axios.get(`${apiUrl}/auth/admin/dashboard/graph`, {
     headers: {
       Authorization: token,
     },

@@ -9,7 +9,6 @@ import { useAuthContext } from "@/app/context/AuthContext";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
-
 type Chat = {
   _id: string;
   name: string;
@@ -67,14 +66,11 @@ export default function Message() {
       });
 
       // refetch chat reply
-      setrefetchChat("trigger")
-
+      setrefetchChat("trigger");
     } catch (error) {
       console.error("Error replying chat:", error);
     }
   };
-
-  
 
   // Fetch all chats
   const {
@@ -145,6 +141,8 @@ export default function Message() {
                   src="/assets/images/logo.png"
                   alt={chat.name || "User"}
                   className="w-10 h-10 rounded-full"
+                  width={50}
+                  height={50}
                 />
                 <div className="ml-4 flex-1">
                   <h2 className="text-[14px] font-medium">
@@ -180,6 +178,8 @@ export default function Message() {
                   src="/assets/images/logo.png"
                   alt={selectedChat.name}
                   className="w-8 h-8 rounded-full"
+                  width={50}
+                  height={50}
                 />
                 <div className="ml-2 p-3 bg-gray-200 rounded-lg">
                   <p className="text-gray-700">{selectedChat.message}</p>
@@ -202,6 +202,8 @@ export default function Message() {
                     src="/assets/images/logo.png"
                     alt="You"
                     className="ml-2 w-8 h-8 rounded-full"
+                    width={50}
+                    height={50}
                   />
                 </div>
               ))}
