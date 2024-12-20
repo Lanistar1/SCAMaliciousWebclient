@@ -44,14 +44,14 @@ const LineChart: React.FC<LineChartProps> = ({ graphData }) => {
       labels,
       datasets: [
         {
-          label: "Experience Count",
+          label: "Content Count",
           data: graphData.map((item) => item.experienceCount),
           borderColor: "#3e95cd",
           backgroundColor: "rgba(62, 149, 205, 0.2)",
           fill: false,
         },
         {
-          label: "Reported Experience Count",
+          label: "Reported Content Count",
           data: graphData.map((item) => item.reportedExperienceCount),
           borderColor: "#ffa500",
           backgroundColor: "rgba(255, 165, 0, 0.2)",
@@ -82,7 +82,7 @@ const LineChart: React.FC<LineChartProps> = ({ graphData }) => {
   };
 
   return (
-    <div className="items-start h-[300px] md:h-[450px] pl-20 mb-10 py-10 bg-white rounded-lg shadow">
+    <div className="items-start md:w-[900px] xl:w-[1010px]  h-[300px] md:h-[450px] pl-20 mb-10 py-10 bg-white rounded-lg shadow">
       <h2>Chart</h2>
       <Line data={chartData} />
     </div>

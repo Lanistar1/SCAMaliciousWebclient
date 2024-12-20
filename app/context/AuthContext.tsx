@@ -1,8 +1,14 @@
-"use client"
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
-import {jwtDecode} from 'jwt-decode';
-import { User } from '../actions/type';
+"use client";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { useRouter } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
+import { User } from "../actions/type";
 
 // Define the initial user object
 export const INITIAL_USER = {
@@ -13,7 +19,8 @@ export const INITIAL_USER = {
   role: "",
   firstname: "",
   lastname: "",
-  profileImgeUrl: ""
+  profileImgeUrl: "",
+  isTempPassword: true, // Add this property
 };
 
 // Define the initial state for the context
@@ -22,7 +29,7 @@ const INITIAL_STATE = {
   token: "",
   isAuthenticated: false,
   login: () => {},
-  logout: () => {}
+  logout: () => {},
 };
 
 // Define the type for the context state
@@ -35,8 +42,8 @@ interface AuthContextType {
 }
 
 interface JWTPayload {
-  exp: number;  
-  [key: string]: any;  
+  exp: number;
+  [key: string]: any;
 }
 
 // Create the AuthContext with a default value of null
@@ -45,7 +52,7 @@ const AuthContext = createContext<AuthContextType>(INITIAL_STATE);
 // AuthProvider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>(INITIAL_USER);
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
@@ -54,8 +61,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const decodedToken: JWTPayload = jwtDecode(authToken);
       if (decodedToken.exp) {
-        const currentTime = Date.now() / 1000;  // Convert to seconds
-        return decodedToken.exp < currentTime;  // Compare expiration time
+        const currentTime = Date.now() / 1000; // Convert to seconds
+        return decodedToken.exp < currentTime; // Compare expiration time
       }
       return false;
     } catch (error) {
@@ -66,10 +73,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Load token and user data from local storage (if present)
   useEffect(() => {
-    console.log('Checking token validity on route change or component mount...');
-    const storedToken = localStorage.getItem('authToken');
-    const storedUser = localStorage.getItem('user');
-    
+    console.log(
+      "Checking token validity on route change or component mount..."
+    );
+    const storedToken = localStorage.getItem("authToken");
+    const storedUser = localStorage.getItem("user");
+
     if (storedToken && storedUser) {
       if (isTokenExpired(storedToken)) {
         // If token is expired, logout the user
@@ -80,7 +89,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
       }
     } else {
-      router.push('/sign-in'); // Automatically redirect to login page if no token
+      router.push("/sign-in"); // Automatically redirect to login page if no token
     }
   }, [router]);
 
@@ -94,17 +103,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("authToken", authToken);
 
-    router.push('/');
+    // Route based on isTempPassword
+    // if (userData.isTempPassword) {
+    //   router.push('/change-password'); // Redirect to reset password page
+    // } else {
+    //   router.push('/'); // Redirect to the home page
+    // }
+
+    router.push("/");
   };
 
   // Function to log out the user
   const logout = () => {
     setUser(INITIAL_USER);
-    setToken('');
+    setToken("");
     setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('authToken');
-    router.push('/sign-in');
+    localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
+    router.push("/sign-in");
   };
 
   // Context value to be shared
@@ -116,7 +132,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     logout,
   };
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
 };
 
 // Custom hook to use AuthContext

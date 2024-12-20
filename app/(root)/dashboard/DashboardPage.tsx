@@ -9,7 +9,9 @@ const DashboardPage = () => {
   const { token } = useAuthContext();
   const [content, setContent] = useState<any>(null);
   const [contentGraph, setContentGraph] = useState<any>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear()); // State for selected year
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear()
+  ); // State for selected year
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -94,7 +96,7 @@ const DashboardPage = () => {
   }));
 
   return (
-    <div className="flex flex-col items-center px-4 md:px-12 pt-12 space-y-8 bg-gray-100 ml-10">
+    <div className="flex flex-col items-center px-4 md:px-12 pt-12 space-y-8 bg-gray-100 ml-1">
       <header className="flex justify-between items-center w-full max-w-screen-lg">
         <div className="text-[14px] text-center border-b border-[#A52A2A] items-center w-[100px] h-[30px]">
           Dashboard
@@ -106,7 +108,7 @@ const DashboardPage = () => {
 
       {!isLoading && !isError && content && contentGraph && (
         <>
-          <div className="w-full max-w-screen-lg grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="w-full max-w-screen-lg grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="flex flex-col rounded-xl bg-[#EEE9ED] p-6 space-y-3">
               <p className="text-[#1C1C1C] font-normal text-[13px] text-center">
                 Total Reported Content
@@ -117,7 +119,7 @@ const DashboardPage = () => {
             </div>
             <div className="flex flex-col rounded-xl bg-[#EEE9ED] p-6 space-y-3">
               <p className="text-[#1C1C1C] font-normal text-[13px] text-center">
-                Total Pending Reports
+                Pending Reported Content
               </p>
               <p className="text-[#1C1C1C] font-semibold text-[16px] text-center">
                 {data.pendingReportedExperienceCount}
@@ -139,17 +141,25 @@ const DashboardPage = () => {
                 {data.allExperienceCount}
               </p>
             </div>
+            <div className="flex flex-col rounded-xl bg-[#EEE9ED] p-6 space-y-3">
+              <p className="text-[#1C1C1C] font-normal text-[14px] text-center">
+                Pending Contents
+              </p>
+              <p className="text-[#1C1C1C] font-semibold text-[16px] text-center">
+                {data.pendingExperienceCount}
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-10">
-            <div className="w-full md:w-[750px] h-[300px]">
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 ">
+            <div className="w-full md:w-[750px] md:h-[300px]">
               <AppRating data={appRatings} />
             </div>
             <UserEngagement data={ageData} />
           </div>
 
           {/* Graph Filtered by Year */}
-          <div className="w-full md:w-[1020px] h-[300px]">
+          <div className="w-full md:w-[900px] xl:w-[1010px] h-[300px]">
             <div className="w-full max-w-xs mt-10 mb-3">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Year to filter graph

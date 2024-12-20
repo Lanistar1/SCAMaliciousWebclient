@@ -107,8 +107,7 @@ const Adminpage = () => {
 
    //=========total page count =========
    const count = content?.totalCount;
-   const totalPages = count / 5;
-
+   const totalPages = Math.round(count / 6);
   // Reset filter and query
   const handleReset = () => {
     setQuery(initialQuery);

@@ -14,13 +14,13 @@ const UserEngagement = ({ data }: ContentProps) => {
   const demographics = Array.isArray(data) ? data : [];
   console.log("demography", demographics)
   return (
-    <div className="bg-gray-100 p-6 rounded-lg shadow-md max-w-sm">
+    <div className="bg-gray-100 px-6 py-3 rounded-lg shadow-md max-w-sm md:py-1 lg:py-6">
       <h2 className="text-lg font-medium text-gray-700 mb-4">
         User Engagement
       </h2>
-      <div className="flex space-x-8 border-b border-gray-300 pb-3 mb-5">
-        <span className="text-gray-900 font-semibold">Age</span>
-        <span className="text-gray-400">Demographics</span>
+      <div className="flex justify-between space-x-8 border-b border-gray-300 pb-3 mb-5">
+        <span className="text-gray-900 font-medium">Age range</span>
+        <span className="text-gray-900 text-end">Count</span>
       </div>
       <ul>
         {demographics.map((item, index) => (

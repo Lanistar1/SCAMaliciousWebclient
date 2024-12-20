@@ -20,6 +20,7 @@ export default function Message() {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [refetchChat, setrefetchChat] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(""); // New state for search query
 
   const [formData, setFormData] = useState({
     message: "",
@@ -53,7 +54,7 @@ export default function Message() {
       const response = await createReply(formData);
 
       if (response.status !== 201) {
-        return toast.error("Failed to reply cht, try again");
+        return toast.error("Failed to reply chat, try again");
       }
 
       toast.success("Reply posted successfully.");
@@ -65,7 +66,7 @@ export default function Message() {
         name: "",
       });
 
-      // refetch chat reply
+      // Refetch chat reply
       setrefetchChat("trigger");
     } catch (error) {
       console.error("Error replying chat:", error);
@@ -94,6 +95,11 @@ export default function Message() {
   // Chats array
   const chats: Chat[] = Array.isArray(content?.data) ? content.data : [];
 
+  // Filtered chats based on search query
+  const filteredChats = chats.filter((chat) =>
+    chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   // Function to handle chat selection
   const handleChatSelect = (chat: Chat) => {
     setSelectedChat(chat);
@@ -115,8 +121,10 @@ export default function Message() {
           <h1 className="text-lg font-normal">All Messages</h1>
           <input
             type="text"
-            placeholder="Search or start a new chat"
+            placeholder="Search by name..."
             className="mt-2 w-full px-4 py-2 border rounded-[5px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={searchQuery} // Bind search query to input
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
           />
         </div>
 
@@ -126,7 +134,7 @@ export default function Message() {
         )}
 
         <ul>
-          {chats.map((chat) => (
+          {filteredChats.map((chat) => (
             <li
               key={chat._id}
               className={`flex flex-col p-4 cursor-pointer ${

@@ -17,14 +17,14 @@ const UserHeader = ({ title }: { title: string }) => {
             height={24}
           />
         </div> */}
-        <div className="flex bg-white w-[50px] h-[48px] justify-center items-center rounded-xl ">
+        {/* <div className="flex bg-white w-[50px] h-[48px] justify-center items-center rounded-xl ">
           <Image
             src="/assets/icons/Group 3.png"
             alt="Bell Icon"
             width={24}
             height={24}
           />
-        </div>
+        </div> */}
       </div>
     </header>
   );

@@ -82,12 +82,23 @@ const Reporting = ({ id, openModal }: Props) => {
           </div>
         </div>
 
-        <div className="text-2xl text-[#09192CCC]">
+        <div className="text-xl text-[#09192CCC]">
           {reportData.experienceDetails.title}
         </div>
 
-        <div className="flex flex-col border-b gap-y-2 pb-4">
-          <p>{reportData.experienceDetails.message}</p>
+        <div className="flex flex-col border-b gap-y-1 pb-4">
+          <p className="text-[14px]">{reportData.experienceDetails.message}</p>
+
+          <div className="flex flex-row">
+            <p className="text-gray-600 text-[14px]">Reason for reporting title: </p>
+            <p className="ml-2 text-[14px]">{reportData.reasonReportedTitle}</p>
+          </div>
+
+          <div className="flex flex-row">
+            <p className="text-gray-600 text-[14px]">Reason for reporting message: </p>
+            <p className="ml-2 text-[14px]">{reportData.reasonReportedBody}</p>
+          </div>
+
 
           <div className=" flex justify-start gap-4">
             {/* <div className="flex items-center gap-2">

@@ -8,7 +8,7 @@ import useDebounce from "@/app/actions/debounce";
 import PaginationBar from "@/app/components/PaginationBar";
 
 const ContentPage = () => {
-  const [activeTab, setActiveTab] = useState("Awaiting Approval");
+  const [activeTab, setActiveTab] = useState("Pending");
   const tabs = ["Pending", "Approved", "Declined", "Revoked"];
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,8 +84,7 @@ const ContentPage = () => {
 
   //=========total page count =========
   const count = content?.totalCount;
-  const totalPages = count / 6;
-
+  const totalPages = Math.round(count / 6);
 
   return (
     <section className="bg-white rounded-[10px] mx-12 my-8 px-6 md:px-12 py-8">

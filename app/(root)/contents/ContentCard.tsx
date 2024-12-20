@@ -83,7 +83,7 @@ const ContentCard: React.FC<CardProps> = ({
 
       {/* Middle Section */}
       <div>
-        <h5 className="text-[#09192CCC] font-bold text-[14px]">{title}</h5>
+        <h5 className="text-[#09192CCC] font-bold text-[12px]">{title}</h5>
       </div>
 
       {/* Bottom Section */}
