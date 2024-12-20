@@ -165,9 +165,6 @@ export const useChangePassword = () => {
       // Show success toast notification
       toast.success(`Password changed successfully`);
 
-      const router = useRouter();
-
-      router.push('/sign-in');
     },
     onError: (error) => {
       // Show error toast notification
