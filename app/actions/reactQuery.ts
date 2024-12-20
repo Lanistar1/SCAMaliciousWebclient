@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient, keepPreviousData } from "@tanstack/react-query";
+import { useRouter } from 'next/navigation';
 import {
   signIn,
   signUp,
@@ -163,6 +164,10 @@ export const useChangePassword = () => {
     onSuccess: () => {
       // Show success toast notification
       toast.success(`Password changed successfully`);
+
+      const router = useRouter();
+
+      router.push('/sign-in');
     },
     onError: (error) => {
       // Show error toast notification

@@ -82,8 +82,7 @@ const ReportPage = () => {
 
    //=========total page count =========
    const count = content?.totalCount;
-   const totalPages = count / 6;
-
+   const totalPages = Math.round(count / 6);
   return (
     <section className="bg-white rounded-[10px] mx-12 my-8 px-6 md:px-12 py-8">
       <div className="flex justify-between items-end border-b">

@@ -7,6 +7,7 @@ export type User = {
   firstname: string;
   lastname: string;
   profileImgeUrl: string;
+  isTempPassword: boolean; // Add this property
 };
 
 export type createUser = {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { z } from "zod";
@@ -12,51 +12,57 @@ const changePasswordSchema = z.object({
   confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-
 const Changepassword = () => {
-
-  const [formData,setFormData] = useState({
-    oldPassword:"",
-    newPassword:"",
-    confirmPassword:""
-  })
+  const [formData, setFormData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   const [formErrors, setFormErrors] = useState<{ [key: string]: string[] }>({});
-  const {mutateAsync:changePassword,isPending:isChangingPassword} = useChangePassword()
-  const {token,logout} = useAuthContext()
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { mutateAsync: changePassword, isPending: isChangingPassword } =
+    useChangePassword();
+  const { token, logout } = useAuthContext();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)  =>{
-    const {name,value}= e.target
-    setFormData((prev)=>({
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]:value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
-  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const result = changePasswordSchema.safeParse(formData)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const result = changePasswordSchema.safeParse(formData);
     if (!result.success) {
       const formattedErrors = result.error.flatten().fieldErrors;
-      setFormErrors(formattedErrors); 
+      setFormErrors(formattedErrors);
       return;
     }
 
-    setFormErrors({})
+    setFormErrors({});
 
     try {
-    // Attempt to change the password
-    await changePassword({ oldPassword: formData.oldPassword, newPassword: formData.newPassword, token });
-    // If successful, logout the user
-    logout();
-  } catch (error) {
-    
-  }
+      // Attempt to change the password
+      await changePassword({
+        oldPassword: formData.oldPassword,
+        newPassword: formData.newPassword,
+        token,
+      });
+      // If successful, logout the user
+      logout();
+    } catch (error) {}
+  };
 
-   
-  }
-
-
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -84,42 +90,120 @@ const Changepassword = () => {
           <form onSubmit={handleSubmit} className="mt-2">
             <div>
               <label className="block text-[#384554]">Current Password</label>
+              <div className="relative mt-1">
               <input
-                type="password"
-                name="old password"
+                type={isPasswordVisible ? 'text' : 'password'}
+                name="password"
                 value={formData.oldPassword}
                 onChange={handleInputChange}
-                placeholder="Current Password"
-                className="w-full p-3 mb-3 rounded-md focus:outline-none focus:border-gray-400 mt-1"
+                placeholder="Password"
+                className="w-full p-3 mb-1 rounded-md focus:outline-none focus:border-gray-400"
               />
+              <span
+                className="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                <Image
+                  src={
+                    isPasswordVisible
+                      ? '/assets/icons/eyedd.png'
+                      : '/assets/icons/eyezz.png'
+                  }
+                  alt="toggle visibility icon"
+                  width={20}
+                  height={20}
+                />
+              </span>
+              {formErrors.password && (
+                <span className="text-red-500 text-sm">
+                  {formErrors.password[0]}
+                </span>
+              )}
             </div>
-            {formErrors.oldPassword &&<span className="text-red-500 text-sm">{formErrors.oldPassword[0]}</span> }
+            </div>
+            {formErrors.oldPassword && (
+              <span className="text-red-500 text-sm">
+                {formErrors.oldPassword[0]}
+              </span>
+            )}
             <div>
               <label className="block text-[#384554]">New Password</label>
+              <div className="relative mt-1">
               <input
-                type="password"
-                name="new password"
+                type={isPasswordVisible ? 'text' : 'password'}
+                name="password"
                 value={formData.newPassword}
                 onChange={handleInputChange}
-                placeholder="New Password"
-                className="w-full p-3 mb-3 rounded-md focus:outline-none focus:border-gray-400 mt-1"
+                placeholder="Password"
+                className="w-full p-3 mb-1 rounded-md focus:outline-none focus:border-gray-400"
               />
+              <span
+                className="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                <Image
+                  src={
+                    isPasswordVisible
+                      ? '/assets/icons/eyedd.png'
+                      : '/assets/icons/eyezz.png'
+                  }
+                  alt="toggle visibility icon"
+                  width={20}
+                  height={20}
+                />
+              </span>
+              {formErrors.password && (
+                <span className="text-red-500 text-sm">
+                  {formErrors.password[0]}
+                </span>
+              )}
             </div>
-            {formErrors.newPassword &&<span className="text-red-500 text-sm">{formErrors.newPassword[0]}</span> }
+            </div>
+            {formErrors.newPassword && (
+              <span className="text-red-500 text-sm">
+                {formErrors.newPassword[0]}
+              </span>
+            )}
             <div>
               <label className="block text-[#384554]">Confirm Password</label>
-              <input
-                type="password"
-                name="confirm password"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                placeholder="Confirm Password"
-                className="w-full p-3 mb-6 rounded-md focus:outline-none focus:border-gray-400 mt-1"
-              />
+              <div className="relative mt-1">
+                <input
+                  type={isPasswordVisible ? "text" : "password"}
+                  name="password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  placeholder="Password"
+                  className="w-full p-3 mb-1 rounded-md focus:outline-none focus:border-gray-400"
+                />
+                <span
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
+                  <Image
+                    src={
+                      isPasswordVisible
+                        ? "/assets/icons/eyedd.png"
+                        : "/assets/icons/eyezz.png"
+                    }
+                    alt="toggle visibility icon"
+                    width={20}
+                    height={20}
+                  />
+                </span>
+                {formErrors.password && (
+                  <span className="text-red-500 text-sm">
+                    {formErrors.password[0]}
+                  </span>
+                )}
+              </div>
             </div>
-            {formErrors.confirmPassword &&<span className="text-red-500 text-sm">{formErrors.confirmPassword[0]}</span> }
+            {formErrors.confirmPassword && (
+              <span className="text-red-500 text-sm">
+                {formErrors.confirmPassword[0]}
+              </span>
+            )}
             <button className="w-full p-3 bg-[#A52A2A] text-white rounded-md mt-3">
-              Change Password
+              {isChangingPassword ? "....." : "Change Pasword"}
             </button>
           </form>
         </div>

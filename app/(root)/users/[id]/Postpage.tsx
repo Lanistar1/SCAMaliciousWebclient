@@ -113,6 +113,37 @@ const Page = ({ id }: Props) => {
     }
   );
 
+
+  //============== fetch post by ID================
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        const postResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/experience/admin/user/${id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+
+        const postContent = postResponse;
+        console.log(postContent);
+
+
+       
+      } catch (error) {
+        console.error("Error fetching post data:", error);
+      } finally {
+      }
+    };
+
+    fetchPostData();
+
+  }, [token]);
+
   return (
     <div className="bg-gray-100 px-12 py-8">
       <div className="bg-white rounded-[10px] shadow-lg w-full mx-auto">

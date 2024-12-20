@@ -10,12 +10,12 @@ import { useRouter } from 'next/navigation';
 // Define the Zod schema for form validation
 const signinSchema = z.object({
   email: z.string().email('Invalid email address'),
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters long')
-    .regex(/[A-Z]/, 'Password must contain at least one capital letter')
-    .regex(/\d/, 'Password must contain at least one number')
-    .regex(/[\W_]/, 'Password must contain at least one special character'),
+  // password: z
+  //   .string()
+  //   .min(8, 'Password must be at least 8 characters long')
+  //   .regex(/[A-Z]/, 'Password must contain at least one capital letter')
+  //   .regex(/\d/, 'Password must contain at least one number')
+  //   .regex(/[\W_]/, 'Password must contain at least one special character'),
 });
 
 const Signin = () => {
