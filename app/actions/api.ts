@@ -44,10 +44,7 @@ export const resetPassword = async (data: resetPass) => {
   return res.data;
 };
 
-export const changePassword = async (data: changePass) => {
-  const res = await axios.post("${apiUrl}/auth/change-password", data);
-  return res.data;
-};
+
 
 export const fetchReports = async (queryKey: reportQuery) => {
   const { status, page, limit, token } = queryKey;
@@ -83,6 +80,26 @@ export const declineReport = async (decline: Declinetype) => {
     {
       headers: {
         Authorization: decline.token,
+      },
+    }
+  );
+  return response.data;
+};
+
+//change password=======
+export const changePassword = async (data: changePass) => {
+  // const res = await axios.put(`${apiUrl}/auth/change-password`, data);
+  // return res.data;
+
+  const response = await axios.put(
+    `${apiUrl}/auth/change-password`,
+    {
+      oldPassword: data.oldPassword,
+      newPassword: data.newPassword,
+    },
+    {
+      headers: {
+        Authorization: data.token,
       },
     }
   );

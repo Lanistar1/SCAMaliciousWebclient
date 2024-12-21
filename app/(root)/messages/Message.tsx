@@ -96,8 +96,12 @@ export default function Message() {
   const chats: Chat[] = Array.isArray(content?.data) ? content.data : [];
 
   // Filtered chats based on search query
+  // const filteredChats = chats.filter((chat) =>
+  //   chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
+
   const filteredChats = chats.filter((chat) =>
-    chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+    (chat.name || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Function to handle chat selection

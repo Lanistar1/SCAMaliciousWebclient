@@ -4,9 +4,12 @@ import LineChart from "@/app/components/linechart";
 import UserEngagement from "@/app/components/UserEngagement";
 import { useAuthContext } from "@/app/context/AuthContext";
 import AppRating from "./AppRating";
+import { useRouter } from "next/navigation"; 
+
 
 const DashboardPage = () => {
   const { token } = useAuthContext();
+  const router = useRouter(); 
   const [content, setContent] = useState<any>(null);
   const [contentGraph, setContentGraph] = useState<any>(null);
   const [selectedYear, setSelectedYear] = useState<number>(
@@ -14,6 +17,13 @@ const DashboardPage = () => {
   ); // State for selected year
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
+
+  // Redirect to /sign-in if there's no token
+  useEffect(() => {
+    if (!token) {
+      router.push("/sign-in"); // Redirect if token is missing
+    }
+  }, [token, router]);
 
   // Function to fetch graph data based on the selected year
   const fetchGraphData = async (year: number) => {
