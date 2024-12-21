@@ -31,10 +31,10 @@ const Signin = () => {
   const router = useRouter();
 
   // Redirect to homepage if user is already authenticated
-  if (isAuthenticated) {
-    router.push('/');
-    return null;
-  }
+  // if (isAuthenticated) {
+  //   router.push('/');
+  //   return null;
+  // }
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>

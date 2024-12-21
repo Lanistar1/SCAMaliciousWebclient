@@ -118,7 +118,10 @@ const Userpage = () => {
   const data = content?.data || [];
   const count = content?.totalCount;
 
-  const totalPages = count/5;
+  // const totalPages = count/5;
+
+  const totalPages = Math.ceil(count / 5);
+
 
 
   // Reset filter and query
