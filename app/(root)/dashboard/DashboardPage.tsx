@@ -162,7 +162,7 @@ const DashboardPage = () => {
           </div>
 
           <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 ">
-            <div className="w-full md:w-[750px] md:h-[300px]">
+            <div className="w-full md:w-[620px] md:h-[300px]">
               <AppRating data={appRatings} />
             </div>
             <UserEngagement data={ageData} />
@@ -170,7 +170,7 @@ const DashboardPage = () => {
 
           {/* Graph Filtered by Year */}
           <div className="w-full md:w-[900px] xl:w-[1010px] h-[300px]">
-            <div className="w-full max-w-xs mt-10 mb-3">
+            <div className="w-full max-w-xs mb-3">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Year to filter graph
               </label>
