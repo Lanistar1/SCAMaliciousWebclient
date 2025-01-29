@@ -33,6 +33,8 @@ import {
   fetchEnquiry,
   fetchEnquiryReply,
   addChatReply,
+  fetchVideos,
+  makeVideoInactive,
 } from "./api";
 import {
   addAdmin,
@@ -48,6 +50,7 @@ import {
   forgotPass,
   loggedInUser,
   login,
+  Post_ArchiveVideo,
   Post_Query_Keys,
   postQuery,
   Query_Keys,
@@ -534,3 +537,30 @@ export const useAddReply = (token: string) => {
     },
   });
 };
+
+
+// ======= fetch videos =========
+export const useFetchVideo = (token: string) => {
+  return useQuery({
+    queryKey: [],
+    queryFn: () => fetchVideos(token),
+  });
+};
+
+// ======= make video inactive =========
+export const useArchiveVideo = () => {
+  return useMutation({
+    mutationFn: async ({ id, token }: { id: string; token: string }) => {
+      return makeVideoInactive(id, token);
+    },
+    onSuccess: () => {
+      toast.success("Video archived successfully.");
+    },
+    onError: (error: any) => {
+      toast.error(
+        error.response?.data?.message || `Error occurred: ${error.message}`
+      );
+    },
+  });
+};
+

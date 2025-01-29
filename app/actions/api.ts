@@ -17,6 +17,7 @@ import {
   addKeywords,
   forgotPass,
   addReply,
+  Post_ArchiveVideo,
 } from "./type";
 
 // sign up
@@ -425,6 +426,29 @@ export const fetchEnquiryReply = async (token: string, id: string) => {
 // =========== add reply =======
 export const addChatReply = async (replyRequest: addReply, token: string) => {
   const res = await axios.post(`${apiUrl}/feedback/admin/enquiry/reply`, replyRequest, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return res.data;
+};
+
+
+// ======= get videos =========
+export const fetchVideos = async (token: string) => {
+  const response = await axios.get(`${apiUrl}/video/admin/all`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
+
+
+// =========== add reply =======
+export const makeVideoInactive = async (id: string , token: string) => {
+  const res = await axios.put(`${apiUrl}/video/admin/deactivate/${id}`, {
     headers: {
       Authorization: token,
     },
