@@ -13,6 +13,7 @@ const menuItems = [
   { name: "Reports", icon: "/assets/icons/report.png", link: "/reports" },
   { name: "Inquiry", icon: "/assets/icons/inquiry.png", link: "/messages" },
   { name: "Admins", icon: "/assets/icons/admin.png", link: "/admins" },
+  { name: "Videos", icon: "/assets/icons/profile.png", link: "/videos" },
   { name: "Profile", icon: "/assets/icons/profile.png", link: "/profile" },
 ];
 

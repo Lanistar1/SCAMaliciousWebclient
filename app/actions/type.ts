@@ -157,7 +157,7 @@ interface UserDetails {
   _id: string;
   username: string;
   firstname: string;
-  lastname: string
+  lastname: string;
 }
 
 export interface ExperiencePostDetail {
@@ -191,7 +191,6 @@ export type ApprovePostType = {
   id: string;
   token: string;
 };
-
 
 export interface userList {
   _id: string;
@@ -236,11 +235,11 @@ export type KeywordResponse = {
   data: {
     keyword: string[];
   };
-}
+};
 
 export type addKeywords = {
   keyword: string[];
-}
+};
 
 // ========== query key for get user and admin by ID =======
 export enum User_Query_Keys {
@@ -248,7 +247,7 @@ export enum User_Query_Keys {
 }
 
 export interface postList {
-  data: []
+  data: [];
 }
 
 export enum Post_Query_Keys {
@@ -291,7 +290,6 @@ export interface FinalGraphData {
   finalGraph: GraphDataEntry[];
 }
 
-
 // enquiry
 export type EnquiryResponse = {
   status: number;
@@ -312,10 +310,29 @@ export type Enquiry = {
   __v: number;
 };
 
-
-
 export type addReply = {
   message: string;
   name: string;
   enquiryId: string;
+};
+
+//======== video response type =============
+interface Video {
+  _id: string;
+  url: string;
+  title: string;
+  status: "ACTIVE" | "INACTIVE"; // Assuming only these two statuses exist
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+}
+
+interface VideoResponse {
+  status: number;
+  message: string;
+  data: Video[];
+}
+
+export type Post_ArchiveVideo = {
+  id: string;
 };
