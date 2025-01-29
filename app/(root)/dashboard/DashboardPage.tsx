@@ -4,12 +4,12 @@ import LineChart from "@/app/components/linechart";
 import UserEngagement from "@/app/components/UserEngagement";
 import { useAuthContext } from "@/app/context/AuthContext";
 import AppRating from "./AppRating";
-import { useRouter } from "next/navigation"; 
-
+import { useRouter } from "next/navigation";
+import CountryEngagement from "./CountryEngagement";
 
 const DashboardPage = () => {
   const { token } = useAuthContext();
-  const router = useRouter(); 
+  const router = useRouter();
   const [content, setContent] = useState<any>(null);
   const [contentGraph, setContentGraph] = useState<any>(null);
   const [selectedYear, setSelectedYear] = useState<number>(
@@ -94,6 +94,7 @@ const DashboardPage = () => {
   // Extract data safely
   const data = content?.data || {};
   const ageData = content?.data?.getUserDemographics || [];
+  const countryData = content?.data?.getCountryDemographics || [];
   const appRatings = content?.data?.finalRating || [];
   const finalGraphData = contentGraph?.data?.finalGraph || [];
 
@@ -191,7 +192,12 @@ const DashboardPage = () => {
                 })}
               </select>
             </div>
-            <LineChart graphData={graphData} />
+            <div className="flex flex-row space-x-2">
+              <LineChart graphData={graphData} />
+              <div className="">
+                <CountryEngagement data={countryData} />
+              </div>
+            </div>
           </div>
         </>
       )}
