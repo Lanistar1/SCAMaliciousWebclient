@@ -22,7 +22,7 @@ const CountryEngagement = ({ data }: ContentProps) => {
       <div className="grid grid-cols-2 gap-4 mb-5">
         <span className="text-black text-[12px] font-medium">Country</span>
         <span className="text-black text-[12px] font-medium text-center">
-          Total Count
+          Count
         </span>
       </div>
 
@@ -32,7 +32,7 @@ const CountryEngagement = ({ data }: ContentProps) => {
             key={index}
             className="grid grid-cols-2 gap-4 items-center mb-4 text-gray-700"
           >
-            <span className="text-[13px]">{item.country}</span>
+            <span className="text-[13px] uppercase">{item.country}</span>
             <span className="text-center text-[13px]">{item.count}</span>
           </li>
         ))}

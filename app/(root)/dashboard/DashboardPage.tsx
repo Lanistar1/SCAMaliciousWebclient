@@ -192,7 +192,7 @@ const DashboardPage = () => {
                 })}
               </select>
             </div>
-            <div className="flex flex-row space-x-2">
+            <div className="flex flex-col md:flex-row space-x-2">
               <LineChart graphData={graphData} />
               <div className="">
                 <CountryEngagement data={countryData} />
