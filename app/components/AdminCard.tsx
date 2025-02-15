@@ -28,7 +28,7 @@ const AdminCard: React.FC<AdminCardProps> = ({
   return (
     <div className=" grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[55px] items-center shadow-md rounded-[10px]">
       {/* User Name */}
-      <div className="font-sm text-[#09192CCC] ml-6">{lastName} {firstName}</div>
+      <div className="font-sm text-[#09192CCC] ml-6">{firstName} {lastName} </div>
       {/* Email */}
       <div className="text-sm text-[#09192CCC]">{email}</div>
       {/* Date Registered */}
