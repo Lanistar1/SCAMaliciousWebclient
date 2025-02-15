@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
@@ -18,7 +17,8 @@ const UploadVideo = () => {
 
   const handleUpload = async () => {
     if (!title) return toast.error("Please enter a video title.");
-    if (!videoUrl) return toast.error("Please provide a video URL or upload a file.");
+    if (!videoUrl)
+      return toast.error("Please provide a video URL or upload a file.");
 
     try {
       setIsUploading(true);
@@ -53,7 +53,10 @@ const UploadVideo = () => {
     try {
       setIsUploading(true);
       const res = await axios.post(`${apiUrl}/auth/upload-image`, formData, {
-        headers: { Authorization: token, "Content-Type": "multipart/form-data" },
+        headers: {
+          Authorization: token,
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (res.status === 200) {
@@ -70,7 +73,7 @@ const UploadVideo = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-lg mt-10">
+    <div className="container mx-auto p-10  max-w-lg mt-20 bg-[#ffffff] rounded-[10px]">
       {/* <button
         onClick={() => router.push("/")}
         className="mb-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
@@ -80,30 +83,36 @@ const UploadVideo = () => {
 
       <h2 className="text-2xl font-bold mb-4">Upload Video</h2>
 
-      <label className="block mb-2">Video Title:</label>
+      <label className="block ">Video Title</label>
       <input
         type="text"
         className="border w-full p-2 rounded mb-4"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        placeholder="Enter video Title"
       />
 
-      <label className="block mb-2">Video URL:</label>
+      {/* <label className="block mb-2">Video URL:</label>
       <input
         type="text"
         className="border w-full p-2 rounded mb-4"
         value={videoUrl}
         onChange={(e) => setVideoUrl(e.target.value)}
         placeholder="Enter video URL or upload a file"
-      />
+      /> */}
 
       <label className="block mb-2">Upload Video File:</label>
-      <input type="file" accept="video/*" className="mb-4" onChange={handleFileUpload} />
+      <input
+        type="file"
+        accept="video/*"
+        className="mb-4"
+        onChange={handleFileUpload}
+      />
 
       <button
         onClick={handleUpload}
         disabled={isUploading}
-        className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="w-full bg-[#A52A2A] text-white px-4 py-2 rounded hover:bg-[#722424]"
       >
         {isUploading ? "Uploading..." : "Upload Video"}
       </button>
@@ -112,4 +121,3 @@ const UploadVideo = () => {
 };
 
 export default UploadVideo;
-

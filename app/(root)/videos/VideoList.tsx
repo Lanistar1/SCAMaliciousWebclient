@@ -36,10 +36,18 @@ const VideoList = () => {
           ? `${apiUrl}/video/admin/deactivate/${id}`
           : `${apiUrl}/video/admin/activate/${id}`;
 
-      const res = await axios.put(endpoint, {}, { headers: { Authorization: token } });
+      const res = await axios.put(
+        endpoint,
+        {},
+        { headers: { Authorization: token } }
+      );
 
       if (res.status === 201) {
-        toast.success(`Video ${status === "ACTIVE" ? "archived" : "unarchived"} successfully.`);
+        toast.success(
+          `Video ${
+            status === "ACTIVE" ? "archived" : "unarchived"
+          } successfully.`
+        );
         refetch(); // Refresh the list
       } else {
         toast.error("Failed to update video status.");
@@ -55,7 +63,7 @@ const VideoList = () => {
     <div className="container mx-6 p-6">
       <button
         onClick={() => router.push("/upload-video")}
-        className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        className="mb-4 bg-[#A52A2A] text-white px-4 py-2 rounded hover:bg-[#722424]"
       >
         Upload Video
       </button>
@@ -64,10 +72,18 @@ const VideoList = () => {
         {response?.data?.map((video: Video) => (
           <div key={video._id} className="bg-white shadow-lg rounded p-4">
             <h3 className="text-lg font-semibold">{video.title}</h3>
-            <p className={`text-sm ${video.status === "ACTIVE" ? "text-green-600" : "text-red-600"}`}>
+            <p
+              className={`text-sm ${
+                video.status === "ACTIVE" ? "text-green-600" : "text-red-600"
+              }`}
+            >
               {video.status}
             </p>
-            <video className="w-full h-40 mt-2 rounded" controls src={video.url}></video>
+            <video
+              className="w-full h-40 mt-2 rounded"
+              controls
+              src={video.url}
+            ></video>
             <div className="flex justify-between mt-4">
               <button
                 onClick={() => setPlayingVideo(video.url)}
@@ -78,9 +94,17 @@ const VideoList = () => {
               <button
                 onClick={() => handleUpdateStatus(video._id, video.status)}
                 disabled={isUpdating}
-                className={`px-4 py-2 rounded text-white ${video.status === "ACTIVE" ? "bg-red-600 hover:bg-red-700" : "bg-yellow-600 hover:bg-yellow-700"}`}
+                className={`px-4 py-2 rounded text-white ${
+                  video.status === "ACTIVE"
+                    ? "bg-red-600 hover:bg-red-700"
+                    : "bg-yellow-600 hover:bg-yellow-700"
+                }`}
               >
-                {isUpdating ? "Processing..." : video.status === "ACTIVE" ? "Archive" : "Unarchive"}
+                {isUpdating
+                  ? "Processing..."
+                  : video.status === "ACTIVE"
+                  ? "Archive"
+                  : "Unarchive"}
               </button>
             </div>
           </div>
@@ -91,7 +115,11 @@ const VideoList = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
             <h3 className="text-lg font-semibold mb-2">Now Playing</h3>
-            <video className="w-full rounded" controls src={playingVideo}></video>
+            <video
+              className="w-full rounded"
+              controls
+              src={playingVideo}
+            ></video>
             <button
               onClick={() => setPlayingVideo(null)}
               className="mt-4 w-full bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
