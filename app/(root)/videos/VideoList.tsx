@@ -59,6 +59,28 @@ const VideoList = () => {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      setIsUpdating(true);
+      const endpoint = `${apiUrl}/video/admin/remove/${id}`;
+
+      const res = await axios.delete(endpoint, {
+        headers: { Authorization: token },
+      });
+
+      if (res.status === 200) {
+        toast.success("Video deleted successfully.");
+        window.location.reload();
+      } else {
+        toast.error("Failed to update video status.");
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || `Error: ${error.message}`);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <div className="container mx-6 p-6">
       <button
@@ -90,6 +112,12 @@ const VideoList = () => {
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Play
+              </button>
+              <button
+                onClick={() => handleDelete(video._id)}
+                className="bg-[#325403] text-white px-4 py-2 rounded hover:bg-[#325403]"
+              >
+                Delete
               </button>
               <button
                 onClick={() => handleUpdateStatus(video._id, video.status)}
