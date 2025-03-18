@@ -75,8 +75,14 @@ const Page = ({ id }: Props) => {
   const { data: content, isLoading, isError } = useUserId(id, token);
   const [userData, setUserData] = useState<userList | null>(null);
   const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
+    const storedUserRole = localStorage.getItem("userRole");
+    if (storedUserRole) {
+      setUserRole(storedUserRole);
+      console.log("my role is:", storedUserRole);
+    }
     // When content is fetched successfully, update the local state
     if (content && !isLoading && !isError) {
       const { data } = content;
@@ -139,9 +145,7 @@ const Page = ({ id }: Props) => {
             <p className="text-sm text-gray-500 text-center">
               Last Seen: {userProfile.lastSeen}
             </p>
-            {userData?.role == "SubAdmin" ? (
-              ""
-            ) : (
+            {userRole == "Admin" || "admin" ? (
               <div className="flex flex-col  items-center">
                 <button
                   className="w-[250px] h-[60px] bg-[#A52A2A] text-white py-2 rounded-[5px] mt-6"
@@ -150,6 +154,8 @@ const Page = ({ id }: Props) => {
                   {userData?.isEnabled ? "Block Admin" : "Unblock Admin"}
                 </button>
               </div>
+            ) : (
+              ""
             )}
           </div>
 

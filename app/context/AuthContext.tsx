@@ -93,6 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(true);
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("authToken", authToken);
+    localStorage.setItem("userRole", userData.role);
 
     if (userData.isTempPassword) {
       router.push("/change-password");
