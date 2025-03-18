@@ -44,6 +44,12 @@ const UploadVideo = () => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
+    // Check if the file size exceeds 100MB (104857600 bytes)
+    if (selectedFile.size > 104857600) {
+      toast.error("File size exceeds 100MB. Please upload a smaller file.");
+      return;
+    }
+
     setFile(selectedFile);
 
     const formData = new FormData();
@@ -59,7 +65,7 @@ const UploadVideo = () => {
       });
 
       if (res.status === 200) {
-        toast.success("Video url generated successfully.");
+        toast.success("Video URL generated successfully.");
         setVideoUrl(res.data.data.url); // Use returned URL for video
       } else if (res.status === 413) {
         toast.error("File size is too large.");
@@ -72,6 +78,7 @@ const UploadVideo = () => {
       setIsUploading(false);
     }
   };
+
 
   return (
     <div className="container mx-auto p-10  max-w-lg mt-20 bg-[#ffffff] rounded-[10px]">
