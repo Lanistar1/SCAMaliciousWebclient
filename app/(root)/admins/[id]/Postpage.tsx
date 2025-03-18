@@ -139,17 +139,18 @@ const Page = ({ id }: Props) => {
             <p className="text-sm text-gray-500 text-center">
               Last Seen: {userProfile.lastSeen}
             </p>
-            <div className="flex flex-col  items-center">
-              <button
-                className="w-[250px] h-[60px] bg-[#A52A2A] text-white py-2 rounded-[5px] mt-6"
-                onClick={() => setIsBlockModalOpen(true)}
-              >
-                {/* {userProfile.status === "Blocked"
-                  ? "Unblock Admin"
-                  : "Block Admin"} */}
-                {userData?.isEnabled ? "Block Admin" : "Unblock Admin"}
-              </button>
-            </div>
+            {userData?.role == "SubAdmin" ? (
+              ""
+            ) : (
+              <div className="flex flex-col  items-center">
+                <button
+                  className="w-[250px] h-[60px] bg-[#A52A2A] text-white py-2 rounded-[5px] mt-6"
+                  onClick={() => setIsBlockModalOpen(true)}
+                >
+                  {userData?.isEnabled ? "Block Admin" : "Unblock Admin"}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Right Column - Recent Posts */}

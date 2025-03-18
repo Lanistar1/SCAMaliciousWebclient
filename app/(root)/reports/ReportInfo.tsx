@@ -131,7 +131,7 @@ const ReportInfo = ({ data, activeTab }: ContentInfoProps) => {
           {data.map((card) => (
             <ReportCard
               key={card._id}
-              id={card.experienceId}
+              id={card._id}
               firstName={card.firstname}
               lastName={card.lastname}
               role={card.experienceDetails.title}

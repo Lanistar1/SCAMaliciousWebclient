@@ -17,8 +17,7 @@ const UploadVideo = () => {
 
   const handleUpload = async () => {
     if (!title) return toast.error("Please enter a video title.");
-    if (!videoUrl)
-      return toast.error("Please provide a video URL or upload a file.");
+    if (!videoUrl) return toast.error("Please upload a video file.");
 
     try {
       setIsUploading(true);
@@ -60,8 +59,10 @@ const UploadVideo = () => {
       });
 
       if (res.status === 200) {
-        toast.success("File uploaded successfully.");
+        toast.success("Video url generated successfully.");
         setVideoUrl(res.data.data.url); // Use returned URL for video
+      } else if (res.status === 413) {
+        toast.error("File size is too large.");
       } else {
         toast.error("Failed to upload file.");
       }
@@ -101,7 +102,12 @@ const UploadVideo = () => {
         placeholder="Enter video URL or upload a file"
       /> */}
 
-      <label className="block mb-2">Upload Video File:</label>
+      <label className="block mb-2">
+        Upload Video File:{" "}
+        <span className="text-[12px] text-red-500">
+          File should not be more than 100mb
+        </span>
+      </label>
       <input
         type="file"
         accept="video/*"
@@ -112,7 +118,11 @@ const UploadVideo = () => {
       <button
         onClick={handleUpload}
         disabled={isUploading}
-        className="w-full bg-[#A52A2A] text-white px-4 py-2 rounded hover:bg-[#722424]"
+        className={`w-full px-4 py-2 rounded ${
+          isUploading
+            ? "bg-gray-400 cursor-not-allowed" // Gray background when disabled
+            : "bg-[#A52A2A] hover:bg-[#722424] text-white"
+        }`}
       >
         {isUploading ? "Uploading..." : "Upload Video"}
       </button>

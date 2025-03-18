@@ -74,8 +74,9 @@ const AdminCardGrid = ({ data }: ContentInfoProps) => {
   return (
     <div className=" space-y-4 w-full overflow-x-auto">
       {/* Headings Row - Keep 6 columns on all screens */}
-      <div className="grid grid-cols-[2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[55px] items-center rounded-[10px]">
-        <div className="flex-1 text-left ml-6">Name</div>
+      <div className="grid grid-cols-[2fr_2fr_2fr_2fr_2fr_2fr_1fr] bg-white h-[55px] items-center rounded-[10px]">
+        <div className="flex-1 text-left ml-6">First Name</div>
+        <div className="flex-1 text-left ">Last Name</div>
         <div className="flex-1 text-left ">Email</div>
         <div className="flex-1  text-left">Date Registered</div>
         <div className="flex-1  text-left">Role</div>
